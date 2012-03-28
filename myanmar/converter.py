@@ -22,8 +22,6 @@ To split the number and get properties for each part:
 
 """
 import re
-import json
-import myanmar
 
 class TlsMyanmarConverter ():
 
@@ -143,7 +141,8 @@ class TlsMyanmarConverter ():
             else:
                 pattern += "?"
 
-        return re.compile(unicode(pattern), re.UNICODE)
+        #print pattern
+        return re.compile(pattern, re.UNICODE)
 
     def sortLongestFirst (self, a,b):
         #print a.encode ('utf-8'), b.encode ('utf-8')
@@ -348,8 +347,4 @@ class TlsMyanmarConverter ():
                 syllable[component] = self.data[component][match]
 
 def convert (fro, to):
-    print "convert"
-    # #print converters
-    # cstr = u'ကၽြန္ေတာ္သာ ဆုိရင္'
-    # s =  converters['zawgyi'].convertToUnicode (cstr)
-    # print s['outputText'], '\t\t\t'
+    print "convert" 

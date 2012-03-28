@@ -32,9 +32,9 @@ if 'sdist' in sys.argv:
 
 setup(name='python-myanmar',
       version='0.1',
-      packages=find_packages(exclude='tests'),
+      packages= find_packages(exclude='tests'),
       package_data={
-        '': ['data/conversion/*.json']
+        'myanmar': ['data/*.json'],
         },
       author='Thura Hlaing',
       author_email='trhura@gmail.com',

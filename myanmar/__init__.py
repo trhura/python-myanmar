@@ -23,18 +23,17 @@ and codes in different formats.
 
 """
 
-import os
 import json
 from myanmar.converter import TlsMyanmarConverter
 
-__ROOT = os.path.abspath(os.path.dirname(__file__))
-
-def __get_data__(path):
-    return os.path.join(__ROOT, 'data', path)
-
 __CONVERTERS = {}
-for jsonFile in __get_data__ ('zawgyi.json'):
-    fil = open (jsonFile, 'r')
-    __CONVERTERS[jsonFile[:jsonFile.find('.')]] = TlsMyanmarConverter (json.load (fil))
-    fil.close ()
+for jFile in  ['zawgyi.json']: #'wininnwa.json', 'wwin_burmese.json']:
+    try:
+        import pkgutil
+        data = pkgutil.get_data(__name__, 'data/' + jFile)
+    except ImportError:
+        import pkg_resources
+        data = pkg_resources.resource_string(__name__, 'data/' + jFile)
 
+    data = unicode(data.decode ('utf-8'))
+    __CONVERTERS[jFile[:jFile.find('.')]] = TlsMyanmarConverter (json.loads (data))
