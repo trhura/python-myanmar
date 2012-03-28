@@ -22,6 +22,7 @@ To split the number and get properties for each part:
 
 """
 import re
+import myanmar
 
 class TlsMyanmarConverter ():
 
@@ -346,5 +347,12 @@ class TlsMyanmarConverter ():
                 unicodeSyllable[component] = match
                 syllable[component] = self.data[component][match]
 
-def convert (fro, to):
-    print "convert" 
+ 
+def get_available_encodings ():
+    """
+    return a list of available encodings.
+    """
+    return myanmar.__CONVERTERS.keys ()
+        
+def convert (from_encoding, to_encoding):
+    print "Hello world"
