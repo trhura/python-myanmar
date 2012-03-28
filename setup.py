@@ -32,9 +32,10 @@ if 'sdist' in sys.argv:
 
 setup(name='python-myanmar',
       version='0.1',
-      packages=find_packages(),
-      scripts = ['mmconverter.py'],
-      package_data={ 'conversion-json': ['data/conversion/*.json'] },
+      packages=find_packages(exclude='tests'),
+      package_data={
+        '': ['data/conversion/*.json']
+        },
       author='Thura Hlaing',
       author_email='trhura@gmail.com',
       url='http://code.google.com/p/python-myanmar',
@@ -50,4 +51,7 @@ setup(name='python-myanmar',
           'Topic :: Software Development :: Libraries :: Python Modules',
           'Topic :: Text Processing :: General',
           ],
+      entry_points = {
+        'console_scripts' : ['mmconverter = myanmar.scripts:convert']
+        },
       )

@@ -1,8 +1,29 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""This module contains functions for conversion between unicode and Myanmar legacy
+encodings.
+To read a database from a file:
+
+>>> dbfile = read(open('test.dat', 'r'))
+
+To split a number:
+
+>>> dbfile.split('01006')
+['0', '100', '6']
+>>> dbfile.split('902006')
+['90', '20', '06']
+>>> dbfile.split('909856')
+['90', '985', '6']
+
+To split the number and get properties for each part:
+
+>>> dbfile.info('01006')
+
+"""
 import re
 import json
+import myanmar
 
 class TlsMyanmarConverter ():
 
@@ -326,14 +347,9 @@ class TlsMyanmarConverter ():
                 unicodeSyllable[component] = match
                 syllable[component] = self.data[component][match]
 
-if __name__ == "__main__":
-    converters = {}
-    for jsonFile in ['zawgyi.json']:
-        fil = open (jsonFile, 'r')
-        converters[jsonFile[:jsonFile.find('.')]] = TlsMyanmarConverter (json.load (fil))#encoding='utf8'))
-        fil.close ()
-
-    #print converters
-    cstr = u'ကၽြန္ေတာ္သာ ဆုိရင္'
-    s =  converters['zawgyi'].convertToUnicode (cstr)
-    print s['outputText'], '\t\t\t'
+def convert (fro, to):
+    print "convert"
+    # #print converters
+    # cstr = u'ကၽြန္ေတာ္သာ ဆုိရင္'
+    # s =  converters['zawgyi'].convertToUnicode (cstr)
+    # print s['outputText'], '\t\t\t'

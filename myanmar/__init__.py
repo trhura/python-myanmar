@@ -21,28 +21,20 @@
 """A Python module to parse, validate and reformat standard numbers
 and codes in different formats.
 
-Currently this module supports the following formats:
-
- * ISBN (International Standard Book Number)
- * ISSN (International Standard Serial Number)
- * ISMN (International Standard Music Number)
- * ISAN (International Standard Audiovisual Number)
- * EAN (International Article Number)
- * BSN (Burgerservicenummer, the Dutch national identification number)
- * CPF (Cadastro de Pessoas Físicas, the Brazillian national identification
-   number)
- * SSN (U.S. Social Security Number)
- * IMEI (International Mobile Equipment Identity)
- * MEID (Mobile Equipment Identifier)
- * GRid (Global Release Identifier)
- * IBAN (International Bank Account Number)
- * ISIL (International Standard Identifier for Libraries and Related
-   Organizations)
-
-Furthermore a number of generic check digit algorithms are available:
-
- * the Verhoeff algorithm
- * the Luhn and Luhn mod N algorithms
- * some algorithms described in ISO/IEC 7064: Mod 11, 2, Mod 37, 2,
-   Mod 97, 10, Mod 11, 10 and Mod 37, 36
 """
+
+import os
+import json
+from myanmar.converter import TlsMyanmarConverter
+
+__ROOT = os.path.abspath(os.path.dirname(__file__))
+
+def __get_data__(path):
+    return os.path.join(__ROOT, 'data', path)
+
+__CONVERTERS = {}
+for jsonFile in __get_data__ ('zawgyi.json'):
+    fil = open (jsonFile, 'r')
+    __CONVERTERS[jsonFile[:jsonFile.find('.')]] = TlsMyanmarConverter (json.load (fil))
+    fil.close ()
+
