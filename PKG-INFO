@@ -1,0 +1,17 @@
+Metadata-Version: 1.0
+Name: python-myanmar
+Version: 0.1
+Summary: Python module for Myanmar Language Processing
+Home-page: http://code.google.com/p/python-myanmar
+Author: Thura Hlaing
+Author-email: trhura@gmail.com
+License: GPL-3
+Description:  Python module for Myanmar Language Processing
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License (LGPL)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Text Processing :: General
