@@ -175,7 +175,7 @@ class TlsMyanmarConverter ():
 
         if (pos < len(inputText)):
             nonMatched = inputText[pos:len(inputText)]
-            print type(nonMatched), type(outputText)
+            #print type(nonMatched), type(outputText)
             outputText += nonMatched
             syllables += nonMatched 
     
@@ -208,7 +208,7 @@ class TlsMyanmarConverter ():
                                 #else:
                                     #self.debug.print("Unhandled yapin ligature: " + syllable[component])
                                 syllable[component] = syllable[component][0:1]
-                        elif (syllable[component][1] == "ှ"or syllable[component].length > 2):
+                        elif (syllable[component][1] == "ှ"or len(syllable[componen]) > 2):
                             syllable["hatoh"] = "ှ"
                             syllable[component] = syllable[component][0:1]
                     elif (component == "yayit"):
@@ -217,6 +217,7 @@ class TlsMyanmarConverter ():
                         elif (syllable[component][1] == "ု"):
                             syllable["lVowel"] = "ု"
                         elif (syllable[component][1] == "ိ" and
+                              len(syllable[component]) > 2 and
                               syllable[component][2] == "ု"):
                             syllable["uVowel"] = "ိ"
                             syllable["lVowel"] = "ု"                
@@ -237,10 +238,11 @@ class TlsMyanmarConverter ():
                         syllable[component] = syllable[component][0:1]
                     elif (component == "kinzi"):
                         # kinzi is length 3 to start with
-                        if (syllable[component][3] == "ံ" or syllable[component].length > 4 and
-                            syllable[component][4] == "ံ"):
-                            syllable["anusvara"] = "ံ"
-                        if (syllable[component][3] == "ိ" or syllable[component][3] == "ီ"):
+                        if ((len(syllable[component]) > 3 and syllable[component][3] == "ံ" )or
+                            (len(syllable[component]) > 4 and syllable[component][4] == "ံ")):
+                                  syllable["anusvara"] = "ံ"
+                        if (len(syllable[component]) > 3 and
+                            (syllable[component][3] == "ိ" or syllable[component][3] == "ီ")):
                             syllable["uVowel"] = syllable[component][3]
                         syllable[component] = syllable[component][0:3]
                     elif (component == "cons"):
@@ -262,20 +264,20 @@ class TlsMyanmarConverter ():
                   syllable.has_key ("lVowel"))):
                 syllable["contraction"] = syllable["asat"]
                 del syllable["asat"]
-            if (syllable["cons"] == u"ဥ"):
+            if (syllable.has_key ("cons") and syllable["cons"] == u"ဥ"):
                 syllable["cons"] = u"ဉ"
                     
-        if (syllable["cons"] == u"ဥ" and syllable.has_key("uVowel")):
+        if (syllable.has_key ("cons") and syllable["cons"] == u"ဥ" and syllable.has_key("uVowel")):
             syllable["cons"] = u"ဦ"
             if syllable.has_key ("uVowel"):
                 del syllable["uVowel"]
 
-        elif (syllable["cons"] == u"စ" and syllable.has_key("yapin")):
+        elif (syllable.has_key ("cons") and syllable["cons"] == u"စ" and syllable.has_key("yapin")):
             syllable["cons"] = u"ဈ"
             if syllable.has_key ("yapin"):
                 del syllable["yapin"]
 
-        elif (syllable["cons"] == u"သ" and syllable.has_key("yayit")):
+        elif (syllable.has_key ("cons") and syllable["cons"] == u"သ" and syllable.has_key("yayit")):
             if (syllable["eVowel"] and syllable["aVowel"] and syllable["asat"]):
                 syllable["cons"] = u"ဪ"
                 if syllable.has_key ("yayit"):
@@ -291,15 +293,16 @@ class TlsMyanmarConverter ():
                 if syllable.has_key ("yayit"):
                     del syllable["yayit"]
 
-        elif (syllable["cons"] == u"၄" and matchData.find (u'င်း') != matchData.find (u'၄') + 1):
+        elif (syllable.has_key ("cons") and syllable["cons"] == u"၄" and
+              matchData.find (u'င်း') != matchData.find (u'၄') + 1):
             syllable["cons"] = u'၎'
 
-        elif (syllable["cons"] == u'၇' and
-              (syllable.has_key["eVowel"] or syllable.has_key["uVowel"] or
-               syllable.has_key["lVowel"] or syllable.has_key["anusvara"] or 
-               syllable.has_key["aVowel"] or syllable.has_key["lDot"] or
-               syllable.has_key["asat"] or syllable.has_key["wasway"] or
-               syllable.has_key["hatoh"])):
+        elif (syllable.has_key ("cons") and syllable["cons"] == u'၇' and
+              (syllable.has_key("eVowel") or syllable.has_key("uVowel") or
+               syllable.has_key("lVowel") or syllable.has_key("anusvara") or 
+               syllable.has_key("aVowel") or syllable.has_key("lDot") or
+               syllable.has_key("asat") or syllable.has_key("wasway") or
+               syllable.has_key("hatoh"))):
             syllable ["cons"] = u'ရ'
 
         outputOrder = ["kinzi","lig","cons","numbers","stack",
@@ -358,11 +361,11 @@ def convert (text, from_encoding, to_encoding):
     """
     convert from one encoding to another.
     """
-    if type(text) != type(u''):
-        try:
-            text = text.decode ('utf-8')
-        except:
-            raise UnicodeDecodeError
+    # if type(text) != type(u''):
+    #     try:
+    #         text = text.decode ('utf-8')
+    #     except:
+    #         raise UnicodeDecodeError
         
     if from_encoding == to_encoding:
         raise ValueError ('from_encoding and to_encoding can not be equal')
