@@ -3,8 +3,8 @@
 
 """This module contains functions for conversion between unicode and Myanmar legacy
 encodings.
-To read a database from a file:
 
+To get the 
 >>> dbfile = read(open('test.dat', 'r'))
 
 To split a number:
@@ -21,8 +21,8 @@ To split the number and get properties for each part:
 >>> dbfile.info('01006')
 
 """
+import json
 import re
-import myanmar
 
 class TlsMyanmarConverter ():
 
@@ -320,7 +320,7 @@ class TlsMyanmarConverter ():
         return outputText
     
     def convertToUnicode (self, inputText):
-        return self.convertToUnicodeSyllables (inputText)
+        return self.convertToUnicodeSyllables (inputText)['outputText']
 
     def convertFromUnicode (self, inputText):
         inputText = re.sub (ur'\u200B\u2060', '', inputText);
@@ -352,7 +352,36 @@ def get_available_encodings ():
     """
     return a list of available encodings.
     """
-    return myanmar.__CONVERTERS.keys ()
+    return __CONVERTERS__.keys () + ['unicode']
         
-def convert (from_encoding, to_encoding):
-    print "Hello world"
+def convert (text, from_encoding, to_encoding):
+    """
+    convert from one encoding to another.
+    """
+    if type(text) != type(u''):
+        try:
+            text = text.decode ('utf-8')
+        except:
+            raise UnicodeDecodeError
+        
+    if from_encoding == to_encoding:
+        raise ValueError ('from_encoding and to_encoding can not be equal')
+
+    for encoding in [from_encoding, to_encoding]:
+        if encoding not in get_available_encodings ():
+            raise ValueError ('%s encoding is not available' %encoding)
+
+    return __CONVERTERS__['zawgyi'].convertToUnicode (text)
+    
+        
+__CONVERTERS__ = {}
+for jFile in  ['zawgyi.json']: #'wininnwa.json', 'wwin_burmese.json']:
+    try:
+        import pkgutil
+        data = pkgutil.get_data(__name__, 'data/' + jFile)
+    except ImportError:
+        import pkg_resources
+        data = pkg_resources.resource_string(__name__, 'data/' + jFile)
+
+    data = unicode(data.decode ('utf-8'))
+    __CONVERTERS__[jFile[:jFile.find('.')]] = TlsMyanmarConverter (json.loads (data))

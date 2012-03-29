@@ -21,19 +21,4 @@
 """A Python module to parse, validate and reformat standard numbers
 and codes in different formats.
 
-"""
-
-import json
-from myanmar.converter import TlsMyanmarConverter
-
-__CONVERTERS = {}
-for jFile in  ['zawgyi.json']: #'wininnwa.json', 'wwin_burmese.json']:
-    try:
-        import pkgutil
-        data = pkgutil.get_data(__name__, 'data/' + jFile)
-    except ImportError:
-        import pkg_resources
-        data = pkg_resources.resource_string(__name__, 'data/' + jFile)
-
-    data = unicode(data.decode ('utf-8'))
-    __CONVERTERS[jFile[:jFile.find('.')]] = TlsMyanmarConverter (json.loads (data))
+""" 
