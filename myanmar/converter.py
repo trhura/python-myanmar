@@ -200,27 +200,27 @@ class TlsMyanmarConverter ():
                 # check a few sequences putting ligature components in right place
                 if (len(syllable[component]) > 1):
                     if (component == "yapin"):
-                        if (syllable[component][1] == "ွ"):
-                            syllable["wasway"] = "ွ"
+                        if (syllable[component][1] == u"ွ"):
+                            syllable["wasway"] = u"ွ"
                             if (len(syllable[component]) > 2):
-                                if (syllable[component][2] == "ှ"):
-                                    syllable["hatoh"] = "ှ"
+                                if (syllable[component][2] == u"ှ"):
+                                    syllable["hatoh"] = u"ှ"
                                 #else:
                                     #self.debug.print("Unhandled yapin ligature: " + syllable[component])
                                 syllable[component] = syllable[component][0:1]
-                        elif (syllable[component][1] == "ှ"or len(syllable[componen]) > 2):
-                            syllable["hatoh"] = "ှ"
+                        elif (syllable[component][1] == u"ှ"or len(syllable[componen]) > 2):
+                            syllable["hatoh"] = u"ှ"
                             syllable[component] = syllable[component][0:1]
                     elif (component == "yayit"):
-                        if (syllable[component][1] == "ွ"):
-                            syllable["wasway"] = "ွ"
-                        elif (syllable[component][1] == "ု"):
-                            syllable["lVowel"] = "ု"
-                        elif (syllable[component][1] == "ိ" and
+                        if (syllable[component][1] == u"ွ"):
+                            syllable["wasway"] = u"ွ"
+                        elif (syllable[component][1] == u"ု"):
+                            syllable["lVowel"] = u"ု"
+                        elif (syllable[component][1] == u"ိ" and
                               len(syllable[component]) > 2 and
-                              syllable[component][2] == "ု"):
-                            syllable["uVowel"] = "ိ"
-                            syllable["lVowel"] = "ု"                
+                              syllable[component][2] == u"ု"):
+                            syllable["uVowel"] = u"ိ"
+                            syllable["lVowel"] = u"ု"                
     #                    else:
     #                        self.debug.print("unhandled yayit ligature: " + syllable[component])
                         syllable[component] = syllable[component][0:1]
@@ -238,15 +238,15 @@ class TlsMyanmarConverter ():
                         syllable[component] = syllable[component][0:1]
                     elif (component == "kinzi"):
                         # kinzi is length 3 to start with
-                        if ((len(syllable[component]) > 3 and syllable[component][3] == "ံ" )or
-                            (len(syllable[component]) > 4 and syllable[component][4] == "ံ")):
-                                  syllable["anusvara"] = "ံ"
+                        if ((len(syllable[component]) > 3 and syllable[component][3] == u"ံ" )or
+                            (len(syllable[component]) > 4 and syllable[component][4] == u"ံ")):
+                                  syllable["anusvara"] = u"ံ"
                         if (len(syllable[component]) > 3 and
-                            (syllable[component][3] == "ိ" or syllable[component][3] == "ီ")):
+                            (syllable[component][3] == u"ိ" or syllable[component][3] == u"ီ")):
                             syllable["uVowel"] = syllable[component][3]
                         syllable[component] = syllable[component][0:3]
                     elif (component == "cons"):
-                        if (syllable[component][1] == "ာ"):
+                        if (syllable[component][1] == u"ာ"):
                             syllable["aVowel"] = syllable[component][1]
                             syllable[component] = syllable[component][0:1]
                     elif (component == "stack" or component == "lig"):
@@ -297,11 +297,9 @@ class TlsMyanmarConverter ():
             index  = matchData.find (u'၀')
             def is_mynum (c):
                 return (c >= u'၁' and c <= u'၉')
-            print matchData[index+1]
             if (index-1 > 0 and not is_mynum(matchData[index-1])):
                 syllable["cons"] == u'ဝ'
             if (index+1 < len(matchData) and not is_mynum(matchData[index+1])):
-                print 'yes'
                 syllable["cons"] = u'ဝ'
                 
         elif (syllable.has_key ("cons") and syllable["cons"] == u"၄" and
@@ -324,7 +322,7 @@ class TlsMyanmarConverter ():
         outputText = ""
         if (self.useZwsp and not syllable["kinzi"] and not syllable["lig"]
             and not syllable["stack"] and not syllable["contraction"]
-            and not syllable["asat"] and (prevSyllable != "​အ") and (prevSyllable != None)):
+            and not syllable["asat"] and (prevSyllable != u"အ") and (prevSyllable != None)):
             outputText += u"\u200B"
         
         for output in outputOrder:
