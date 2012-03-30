@@ -293,6 +293,17 @@ class TlsMyanmarConverter ():
                 if syllable.has_key ("yayit"):
                     del syllable["yayit"]
 
+        elif (syllable.has_key ("cons") and syllable["cons"] == u"၀"):
+            index  = matchData.find (u'၀')
+            def is_mynum (c):
+                return (c >= u'၁' and c <= u'၉')
+            print matchData[index+1]
+            if (index-1 > 0 and not is_mynum(matchData[index-1])):
+                syllable["cons"] == u'ဝ'
+            if (index+1 < len(matchData) and not is_mynum(matchData[index+1])):
+                print 'yes'
+                syllable["cons"] = u'ဝ'
+                
         elif (syllable.has_key ("cons") and syllable["cons"] == u"၄" and
               matchData.find (u'င်း') != matchData.find (u'၄') + 1):
             syllable["cons"] = u'၎'
