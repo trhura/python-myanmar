@@ -278,7 +278,9 @@ class TlsMyanmarConverter ():
                 del syllable["yapin"]
 
         elif (syllable.has_key ("cons") and syllable["cons"] == u"သ" and syllable.has_key("yayit")):
-            if (syllable["eVowel"] and syllable["aVowel"] and syllable["asat"]):
+            if (syllable.has_key("eVowel") and
+                syllable.has_key ("aVowel") and
+                syllable.has_key ["asat"):
                 syllable["cons"] = u"ဪ"
                 if syllable.has_key ("yayit"):
                     del syllable["yayit"]
