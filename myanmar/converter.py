@@ -142,20 +142,19 @@ class TlsMyanmarConverter ():
             else:
                 pattern += "?"
 
-        #print pattern
-        return re.compile(pattern, re.UNICODE)
+        return re.compile(re.escape(pattern), re.UNICODE)
 
     def sortLongestFirst (self, a,b):
         #print a.encode ('utf-8'), b.encode ('utf-8')
         if len(a) > len(b):
-            return -1;
+            return -1
         elif len(a) <len (b):
-            return 1;
+            return 1
         elif (a < b):
-            return -1;
+            return -1
         elif (a > b):
-            return 1;
-        return 0; 
+            return 1
+        return 0 
 
     def convertToUnicodeSyllables (self, inputText):
         outputText = u""
@@ -336,166 +335,280 @@ class TlsMyanmarConverter ():
     def convertToUnicode (self, inputText):
         return self.convertToUnicodeSyllables (inputText)['outputText']
 
-    # def convertFromUnicode (self, inputText):
-    #     inputText = re.sub (ur'\u200B\u2060', '', inputText);
-    #     outputText = u""
-    #     pos = 0
-    #     for match in self.unicodePattern.finditer (inputText):
-    #         outputText += inputText[pos:match.start()]
-    #         pos = match.end ()
-    #         outputText += self.fromUnicodeMapper(inputText, match.group())
+    def convertFromUnicode (self, inputText):
+        inputText = re.sub (ur'\u200B\u2060', '', inputText)
+        outputText = u""
+        pos = 0
+        for match in self.unicodePattern.finditer (inputText):
+            outputText += inputText[pos:match.start()]
+            pos = match.end ()
+            outputText += self.fromUnicodeMapper(inputText, match.group())
 
-    #     if (pos < len(inputText)):
-    #         outputText += inputText[pos:len(inputText)]
-    #     return outputText
+        if (pos < len(inputText)):
+            outputText += inputText[pos:len(inputText)]
+        return outputText
 
-    # def fromUnicodeMapper (self, inputText, matchData):
-    #     #TODO 
-    #     unicodeSyllable = {}
-    #     syllable = {}
+    def fromUnicodeMapper (self, inputText, matchData):
+        #TODO 
+        unicodeSyllable = {}
+        syllable = {}
 
-    #     for match in matchData:
-    #         for component in self.unicodeSequence:
-    #             if (component == None):
-    #                 continue
-    #             unicodeSyllable[component] = match
-    #             syllable[component] = self.data[component][match]
+        for match in matchData:
+            for component in self.unicodeSequence:
+                if (component == None):
+                    continue
+                unicodeSyllable[component] = match
+                syllable[component] = self.data[component][match]
 
-    #     if (unicodeSyllable.has_key ("kinzi")):
-    #         if (unicodeSyllable.has_key ("uVowel")):
-    #             if (unicodeSyllable.has_key ("anusvara")):
-    #                 key = unicodeSyllable["anusvara"] + unicodeSyllable["uVowel"] + unicodeSyllable["anusvara"] + "_lig"
-    #                 if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
-    #                     syllable["kinzi"] = self.data["kinzi"][key]
-    #                     del syllable["anusvara"]
-    #             else:
-    #                 key = unicodeSyllable["kinzi"] + unicodeSyllable["uVowel"] + "_lig"
-    #                 if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
-    #                     syllable["kinzi"] = self.data["kinzi"][key]
-    #                     del syllable["uVowel"]
-    #         if (unicodeSyllable.has_key ("anusvara")):
-    #             key = unicodeSyllable["kinzi"] + unicodeSyllable["anusvara"] + "_lig"
-    #             if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
-    #                 syllable["kinzi"] = self.data["kinzi"][key]
-    #                 del syllable["anusvara"]
+        if (unicodeSyllable.has_key ("kinzi")):
+            if (unicodeSyllable.has_key ("uVowel")):
+                if (unicodeSyllable.has_key ("anusvara")):
+                    key = unicodeSyllable["anusvara"] + unicodeSyllable["uVowel"] + unicodeSyllable["anusvara"] + "_lig"
+                    if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
+                        syllable["kinzi"] = self.data["kinzi"][key]
+                        del syllable["anusvara"]
+                else:
+                    key = unicodeSyllable["kinzi"] + unicodeSyllable["uVowel"] + "_lig"
+                    if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
+                        syllable["kinzi"] = self.data["kinzi"][key]
+                        del syllable["uVowel"]
+            if (unicodeSyllable.has_key ("anusvara")):
+                key = unicodeSyllable["kinzi"] + unicodeSyllable["anusvara"] + "_lig"
+                if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
+                    syllable["kinzi"] = self.data["kinzi"][key]
+                    del syllable["anusvara"]
                     
-    #     if (unicodeSyllable["cons"] == u"ဉ"):
-    #         if (unicodeSyllable.has_key("asat")):
-    #             syllable["cons"] = self.data["cons"][u"ဥ"];
-    #         elif (unicodeSyllable.has_key ("stack")):
-    #             syllable["cons"] = self.data["cons"][u"ဉ_alt"];
-    #         elif (unicodeSyllable.has_key("aVowel") and self.data["cons"][u"ဉာ_lig"]):
-    #             syllable["cons"] = self.data["cons"][u"ဉာ_lig"]
-    #             del syllable["aVowel"]
-    #             # self hatoh can occur with aVowel, so no else
-    #         if (unicodeSyllable.has_key ("hatoh")):
-    #             syllable["hatoh"] = self.data["hatoh"][u"ှ_small"];
+        if (unicodeSyllable["cons"] == u"ဉ"):
+            if (unicodeSyllable.has_key("asat")):
+                syllable["cons"] = self.data["cons"][u"ဥ"]
+            elif (unicodeSyllable.has_key ("stack")):
+                syllable["cons"] = self.data["cons"][u"ဉ_alt"]
+            elif (unicodeSyllable.has_key("aVowel") and self.data["cons"][u"ဉာ_lig"]):
+                syllable["cons"] = self.data["cons"][u"ဉာ_lig"]
+                del syllable["aVowel"]
+                # self hatoh can occur with aVowel, so no else
+            if (unicodeSyllable.has_key ("hatoh")):
+                syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
                 
-    #     elif (unicodeSyllable["cons"] == u"ဠ"):
-    #         if (unicodeSyllable.has_key("hatoh")):
-    #             syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]:
+        elif (unicodeSyllable["cons"] == u"ဠ"):
+            if (unicodeSyllable.has_key("hatoh")):
+                syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
                 
-    #     elif (unicodeSyllable["cons"] == u"ဈ" and len(self.data["cons"][u"ဈ"]) == 0):
-    #         syllable["cons"] = self.data["cons"][u"စ"]
-    #         syllable["yapin"] = self.data["yapin"][u"ျ"];
+        elif (unicodeSyllable["cons"] == u"ဈ" and len(self.data["cons"]["ဈ"]) == 0):
+            syllable["cons"] = self.data["cons"][u"စ"]
+            syllable["yapin"] = self.data["yapin"][u"ျ"]
             
-    #     elif (unicodeSyllable["cons"] == u"ဩ" and len(self.data["cons"][u"ဩ"]) == 0):
-    #         syllable["cons"] = self.data["cons"][u"သ"];
-    #         syllable["yayit"] = self.data["yayit"][u"ြ_wide"]
+        elif (unicodeSyllable["cons"] == u"ဩ" and len(self.data["cons"][u"ဩ"]) == 0):
+            syllable["cons"] = self.data["cons"][u"သ"]
+            syllable["yayit"] = self.data["yayit"][u"ြ_wide"]
 
-    #     elif (unicodeSyllable["cons"] == u"ဪ"  and len(self.data["cons"][u"ဪ"].) == 0):
-    #         syllable["cons"] = self.data[u"သ"];
-    #         syllable["yayit"] = self.data["ြ_wide"];
-    #         syllable["eVowel"] = self.data[u"ေ"];
-    #         syllable["aVowel"] = self.data[u"ာ"];
-    #         syllable["asat"] = self.data[u"်"]
+        elif (unicodeSyllable["cons"] == u"ဪ"  and len(self.data["cons"]["ဪ"]) == 0):
+            syllable["cons"] = self.data[u"သ"]
+            syllable["yayit"] = self.data["ြ_wide"]
+            syllable["eVowel"] = self.data[u"ေ"]
+            syllable["aVowel"] = self.data[u"ာ"]
+            syllable["asat"] = self.data[u"်"]
 
-    #     elif (unicodeSyllable["cons"] == u"၎င်း" and  len(self.data["cons"][u"၎င်း"]) == 0):
-    #         if (len(self.data[u"၎"])):
-    #             syllable["cons"] = self.data["cons"][u"၎"] + self.data["cons"][u"င"] + \
-    #                 self.data["asat"][u"်"] + self.data["visarga"][u"း"];
-    #         else:
-    #             syllable["cons"] = self.data["number"][u"၄"] + self.data["cons"][u"င"] + \
-    #                 self.data["asat"][u"်"] + self.data["visarga"][u"း"];
+        elif (unicodeSyllable["cons"] == u"၎င်း" and  len(self.data["cons"][u"၎င်း"]) == 0):
+            if (len(self.data[u"၎"])):
+                syllable["cons"] = self.data["cons"][u"၎"] + self.data["cons"][u"င"] + \
+                    self.data["asat"][u"်"] + self.data["visarga"][u"း"]
+            else:
+                syllable["cons"] = self.data["number"][u"၄"] + self.data["cons"][u"င"] + \
+                    self.data["asat"][u"်"] + self.data["visarga"][u"း"]
 
-    #     elif (unicodeSyllable["cons"] == u"န" or unicodeSyllable["cons"] == u"ည"):
-    #         if (unicodeSyllable.has_key("stack") or unicodeSyllable.has_key("yapin") or
-    #             unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh")
-    #             or unicodeSyllable.has_key("lVowel")):
-    #             syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
+        elif (unicodeSyllable["cons"] == u"န" or unicodeSyllable["cons"] == u"ည"):
+            if (unicodeSyllable.has_key("stack") or unicodeSyllable.has_key("yapin") or
+                unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh")
+                or unicodeSyllable.has_key("lVowel")):
+                syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
         
-    #     elif (unicodeSyllable["cons"] == u"ရ"):
-    #         if (unicodeSyllable.has_key("yapin") or unicodeSyllable.has_key("wasway") or
-    #             unicodeSyllable.has_key("lVowel")):
-    #             syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
-    #         elif (unicodeSyllable.has_key("hatoh") and len(self.data["cons"][unicodeSyllable["cons"] + "_tall"])):
-    #             syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_tall"];
+        elif (unicodeSyllable["cons"] == u"ရ"):
+            if (unicodeSyllable.has_key("yapin") or unicodeSyllable.has_key("wasway") or
+                unicodeSyllable.has_key("lVowel")):
+                syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
+            elif (unicodeSyllable.has_key("hatoh") and len(self.data["cons"][unicodeSyllable["cons"] + "_tall"])):
+                syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_tall"]
         
-    #     elif (unicodeSyllable["cons"] == u"ဦ"):
-    #         if (len(self.data["cons"]["ဦ"]) == 0):
-    #             syllable["cons"] = self.data["cons"]["ဥ"];
-    #             syllable["uVowel"] = self.data["uVowel"]["ီ"];
+        elif (unicodeSyllable["cons"] == u"ဦ"):
+            if (len(self.data["cons"]["ဦ"]) == 0):
+                syllable["cons"] = self.data["cons"]["ဥ"]
+                syllable["uVowel"] = self.data["uVowel"]["ီ"]
 
-    #     # stack with narrow upper cons
-    #     if ((unicodeSyllable["cons"] == u"ခ" or unicodeSyllable["cons"] == u"ဂ" or
-    #          unicodeSyllable["cons"] == u"င" or unicodeSyllable["cons"] == u"စ" or
-    #          unicodeSyllable["cons"] == u"ဎ" or unicodeSyllable["cons"] == u"ဒ" or
-    #          unicodeSyllable["cons"] == u"ဓ" or unicodeSyllable["cons"] == u"န" or
-    #          unicodeSyllable["cons"] == u"ပ" or unicodeSyllable["cons"] == u"ဖ" or
-    #          unicodeSyllable["cons"] == u"ဗ" or unicodeSyllable["cons"] == u"မ" or
-    #          unicodeSyllable["cons"] == u"ဝ") and
-    #         unicodeSyllable.has_key("stack") and self.data["stack"][unicodeSyllable["stack"]+"_narrow"] and
-    #         len(self.data["stack"][unicodeSyllable["stack"]+"_narrow"]) > 0):
-    #         syllable["stack"] = self.data["stack"][unicodeSyllable["stack"]+"_narrow"];
+        # stack with narrow upper cons
+        if ((unicodeSyllable["cons"] == u"ခ" or unicodeSyllable["cons"] == u"ဂ" or
+             unicodeSyllable["cons"] == u"င" or unicodeSyllable["cons"] == u"စ" or
+             unicodeSyllable["cons"] == u"ဎ" or unicodeSyllable["cons"] == u"ဒ" or
+             unicodeSyllable["cons"] == u"ဓ" or unicodeSyllable["cons"] == u"န" or
+             unicodeSyllable["cons"] == u"ပ" or unicodeSyllable["cons"] == u"ဖ" or
+             unicodeSyllable["cons"] == u"ဗ" or unicodeSyllable["cons"] == u"မ" or
+             unicodeSyllable["cons"] == u"ဝ") and
+            unicodeSyllable.has_key("stack") and self.data["stack"][unicodeSyllable["stack"]+"_narrow"] and
+            len(self.data["stack"][unicodeSyllable["stack"]+"_narrow"]) > 0):
+            syllable["stack"] = self.data["stack"][unicodeSyllable["stack"]+"_narrow"]
 
-    #     # yapin variants
-    #     if (unicodeSyllable.has_key("yapin") and
-    #         (unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh"))):
-    #         if (len(this.data["yapin"]["ျ_alt"])):
-    #             syllable["yapin"] = this.data["yapin"]["ျ_alt"];
-    #         else: # assume we have the ligatures
-    #             key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") +
-    #             (unicodeSyllable.has_key["hatoh"] and "ှ" or :"") + "_lig";
-    #             if (this.data["yapin"][key]):
-    #                 syllable["yapin"] = this.data["yapin"][key];
-    #                 if (unicodeSyllable.has_key("wasway")):
-    #                     del syllable["wasway"]
-    #                 if (unicodeSyllable.has_key("hatoh")):
-    #                     del syllable["hatoh"];
-    #             else:
-    #                 pass
-    #                 #this.debug.print(key + " not found");
-        
-    #     if (unicodeSyllable.has_key ("wasway")):
-    #         if (unicodeSyllable.has_key ("hatoh")):
-    #             if (len(self.data["wasway"]["ွှ_small"])):
-    #                 if (len(self.data["yayit"]["ြ" + upperVariant + widthVariant])):
-    #                     syllable["yayit"] = self.data["yayit"]["ြ" + upperVariant + widthVariant];
-    #                 else:
-    #                     if (widthVariant == "_narrow"):
-    #                         widthVariant = "";
-    #                     syllable["yayit"] = self.data["yayit"]["ြ" + widthVariant]
-    #                 syllable["wasway"] = self.data["wasway"]["ွှ_small"];
-    #                 del syllable["hatoh"]
-    #             elif (len(self.data["yayit"]["ြ_lower" + widthVariant])):
-    #                 if (len(this.data["yayit"]["ြ_lower" + upperVariant + widthVariant])):
-    #                     syllable["yayit"] = this.data["yayit"]["ြ_lower" + upperVariant + widthVariant];
-    #                 else:
-    #                     syllable["yayit"] = this.data["yayit"]["ြ_lower" + widthVariant];
+        # yapin variants
+        if (unicodeSyllable.has_key("yapin") and
+            (unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh"))):
+            if (len(this.data["yapin"]["ျ_alt"])):
+                syllable["yapin"] = this.data["yapin"]["ျ_alt"]
+            else: # assume we have the ligatures
+                key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") + \
+                    (unicodeSyllable.has_key["hatoh"] and "ှ" or "") + "_lig"
+                if (this.data["yapin"][key]):
+                    syllable["yapin"] = this.data["yapin"][key]
+                    if (unicodeSyllable.has_key("wasway")):
+                        del syllable["wasway"]
+                    if (unicodeSyllable.has_key("hatoh")):
+                        del syllable["hatoh"]
+                else:
+                    pass
+                    #self.debug.print(key + " not found")
+        if (unicodeSyllable.has_key("yayit")):
+            widthVariant = "_wide"
+            upperVariant = ""
+            if (unicodeSyllable["cons"] == "ခ" or unicodeSyllable["cons"] == "ဂ" or
+                unicodeSyllable["cons"] == "င" or  unicodeSyllable["cons"] == "စ" or
+                unicodeSyllable["cons"] == "ဎ" or unicodeSyllable["cons"] == "ဒ" or
+                unicodeSyllable["cons"] == "ဓ" or unicodeSyllable["cons"] == "န" or
+                unicodeSyllable["cons"] == "ပ" or unicodeSyllable["cons"] == "ဖ" or
+                unicodeSyllable["cons"] == "ဗ" or unicodeSyllable["cons"] == "မ" or
+                unicodeSyllable["cons"] == "ဝ"):
+                widthVariant = "_narrow"
 
-    #         elif (len(self.data["yayit"]["ြွ" + upperVariant + widthVariant])):
-    #             syllable["yayit"] = self.data["yayit"]["ြွ" + upperVariant + widthVariant];
-    #             del syllable["wasway"]
+            if (unicodeSyllable.has_key("uVowel") or
+                unicodeSyllable.has_key("kinzi") or
+                unicodeSyllable.has_key("anusvara")):
+                upperVariant = "_upper"
+
+            if (unicodeSyllable.has_key ("wasway")):
+                if (unicodeSyllable.has_key ("hatoh")):
+                    if (len(self.data["wasway"]["ွှ_small"])):
+                        if (len(self.data["yayit"]["ြ" + upperVariant + widthVariant])):
+                            syllable["yayit"] = self.data["yayit"]["ြ" + upperVariant + widthVariant]
+                        else:
+                            if (widthVariant == "_narrow"):
+                                widthVariant = ""
+                            syllable["yayit"] = self.data["yayit"]["ြ" + widthVariant]
+                        syllable["wasway"] = self.data["wasway"]["ွှ_small"]
+                        del syllable["hatoh"]
+                    elif (len(self.data["yayit"]["ြ_lower" + widthVariant])):
+                        if (len(self.data["yayit"]["ြ_lower" + upperVariant + widthVariant])):
+                            syllable["yayit"] = self.data["yayit"]["ြ_lower" + upperVariant + widthVariant]
+                        else:
+                            syllable["yayit"] = self.data["yayit"]["ြ_lower" + widthVariant]
+
+                elif (len(self.data["yayit"]["ြွ" + upperVariant + widthVariant])):
+                    syllable["yayit"] = self.data["yayit"]["ြွ" + upperVariant + widthVariant]
+                    del syllable["wasway"]
+
+                elif (len(self.data["yayit"]["ြွ" + widthVariant])):
+                    syllable["yayit"] = self.data["yayit"]["ြွ" + widthVariant]
+                    del syllable["wasway"]
+
+                elif (len(self.data["yayit"]["ြ_lower_wide"])):
+                    if (len(self.data["yayit"]["ြ" + "_lower" + upperVariant + widthVariant])):
+                        syllable["yayit"] = self.data["yayit"]["ြ" + "_lower" + upperVariant + widthVariant]
+                    else:
+                        syllable["yayit"] = self.data["yayit"]["ြ" + "_lower" + widthVariant]
+
+            elif (unicodeSyllable.has_key("hatoh")):
+                if (len(upperVariant) == 0 and widthVariant == "_narrow"):
+                    widthVariant = u""
+                if (len(self.data["yayit"]["ြ" + upperVariant + widthVariant])):
+                    syllable["yayit"] = self.data["yayit"]["ြ" + upperVariant + widthVariant]
+                elif (len(self.data["yayit"]["ြ" + widthVariant])):
+                    syllable["yayit"] = self.data["yayit"]["ြ" + widthVariant]
+                else:
+                    syllable["yayit"] = self.data["yayit"]["ြ"]
+                syllable["hatoh"] = self.data["hatoh"]["ှ_small"]
+
+            elif (unicodeSyllable.has_key ("lVowel") and
+                  unicodeSyllable["lVowel"] == "ု" and
+                  self.data["yayit"]["ြု_wide"]):
+                if (syllable["uVowel"] == self.data["uVowel"]["ိ"] and self.data["yayit"]["ြို" + widthVariant]):
+                    syllable["yayit"] = self.data["yayit"]["ြို" + widthVariant]
+                    del syllable["uVowel"]
+                else:
+                    if (len(self.data["yayit"]["ြု" + upperVariant + widthVariant])):
+                        syllable["yayit"] = self.data["yayit"]["ြု" + upperVariant + widthVariant]
+                    else:
+                        syllable["yayit"] = self.data["yayit"]["ြု" + widthVariant]
+                del syllable["lVowel"]
+
+            else:
+                if (len(upperVariant) == 0 and widthVariant == "_narrow"):
+                    widthVariant = ""
+                syllable["yayit"] = self.data["yayit"]["ြ" + upperVariant + widthVariant]
                 
-    #         elif (len(self.data["yayit"]["ြွ" + widthVariant])):
-    #             syllable["yayit"] = self.data["yayit"]["ြွ" + widthVariant];
-    #             del syllable["wasway"]
+        if (syllable.has_key("wasway") and syllable.has_Key("hatoh")):
+            del syllable["hatoh"]
+            syllable["wasway"] = self.data["wasway"]["ွှ_lig"]
 
-    #         elif (len(self.data["yayit"]["ြ_lower_wide"])):
-    #             if (len(self.data["yayit"]["ြ" + "_lower" + upperVariant + widthVariant])):
-    #                 syllable["yayit"] = self.data["yayit"]["ြ" + "_lower" + upperVariant + widthVariant];
-    #             else:
-    #                 syllable["yayit"] = self.data["yayit"]["ြ" + "_lower" + widthVariant];
+        if (syllable.has_key("hatoh") and syllable.has_key ("lVowel") and
+            not syllable.has_key("yapin") and not syllable.has_key("yayit")):
+            syllable["hatoh"] = self.data["hatoh"]["ှ" + unicodeSyllable["lVowel"] + "_lig"]
+            del syllable["lVowel"]
+        
+        if (syllable.has_key("uVowel") and
+            unicodeSyllable["uVowel"] == "ိ" and
+            syllable.has_key["anusvara"] and
+            unicodeSyllable["anusvara"] == "ံ"):
+            syllable["uVowel"] = self.data["uVowel"]["ိံ_lig"]
+            del syllable["anusvara"]
+        
+        if (syllable.has_key("lVowel") and
+            (unicodeSyllable.has_key("yayit") or unicodeSyllable.has_key("yapin") or
+             unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh") or
+             unicodeSyllable.has_key("lig") or unicodeSyllable.has_key("stack") or
+             unicodeSyllable["cons"] == u"ဍ" or unicodeSyllable["cons"] == u"ဋ" or
+             unicodeSyllable["cons"] == u"ဌ" or unicodeSyllable["cons"] == u"ဈ" or
+             unicodeSyllable["cons"] == u"ဥ" or unicodeSyllable["cons"] == u"ဠ")):
+            syllable["lVowel"] = self.data["lVowel"][unicodeSyllable["lVowel"] + "_tall"]
+        
+        if (unicodeSyllable.has_key("aVowel") and
+            unicodeSyllable.has_Key("asat")  and
+            unicodeSyllable["aVowel"] == u"ါ"):
+            syllable["aVowel"] = self.data["aVowel"]["ါ်_lig"]
+            del syllable["asat"]
+
+        if (unicodeSyllable.has_key("lDot") and
+            (unicodeSyllable.has_key("aVowel") or not
+             (unicodeSyllable.has_key("yayit") or unicodeSyllable.has_key("lig") or
+              unicodeSyllable.has_key("stack") or unicodeSyllable.has_key("yapin") or
+              unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key ("hatoh") or
+              unicodeSyllable.has_key("lVowel") or unicodeSyllable["cons"] == "ဍ" or
+              unicodeSyllable["cons"] == "ဋ" or unicodeSyllable["cons"] == "ဌ" or
+              unicodeSyllable["cons"] == "ဈ" or  unicodeSyllable["cons"] == "ရ"))):
+            if (unicodeSyllable["cons"] == "န"):
+                syllable["lDot"] = self.data["lDot"]["့_alt"]
+            else:
+                syllable["lDot"] = self.data["lDot"]["့_left"]
+
+        if (unicodeSyllable.has_key("lDot") and not syllable.has_key ("yayit")
+            and not (unicodeSyllable["cons"] == "ရ") and
+            ((syllable.has_key ("hatoh") and len(syllable["hatoh"]) == 1 and not syllable.has_key("lVowel")) or
+             (syllable["lVowel"] and syllable["lVowel"] == self.data["lVowel"]["ု"]))):
+            syllable["lDot"] = self.data["lDot"]["့_alt"]
+        
+        if (syllable.has_key("asat")):
+                if (not syllable.has_key ("eVowel") and
+                    (syllable.has_key("yayit")  or syllable.has_key("yapin") or
+                     syllable.has_key("wasway") or syllable.has_key("lVowel"))):
+                    syllable["contraction"] = syllable["asat"]
+                    del syllable["asat"]
+
+        outputOrder = ["eVowel","yayit","lig","cons","stack","contraction",
+                       "yapin","kinzi", "wasway","hatoh","uVowel","lVowel",
+                       "anusvara","aVowel","asat","lDot","visarga"]
+        
+        outputText = u""
+
+        for o in outputOrder:
+            if (syllable[o]):
+                outputText += syllable[0]
+
+        return outputText
 
 def get_available_encodings ():
     """
@@ -524,7 +637,7 @@ def convert (text, from_encoding, to_encoding):
     
         
 __CONVERTERS__ = {}
-for jFile in  ['zawgyi.json']: #'wininnwa.json', 'wwin_burmese.json']:
+for jFile in  ['zawgyi.json', 'wininnwa.json', 'wwin_burmese.json']:
     try:
         import pkgutil
         data = pkgutil.get_data(__name__, 'data/' + jFile)
