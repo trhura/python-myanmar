@@ -1,32 +1,22 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""self module contains functions for conversion between unicode and Myanmar legacy
-encodings.
+"""routines for conversion between unicode and Myanmar legacy encodings.
 
-To get the 
->>> dbfile = read(open('test.dat', 'r'))
+To get supported encodings –
+>>> print myanmar.converter.get_available_encodings ()
 
-To split a number:
-
->>> dbfile.split('01006')
-['0', '100', '6']
->>> dbfile.split('902006')
-['90', '20', '06']
->>> dbfile.split('909856')
-['90', '985', '6']
-
-To split the number and get properties for each part:
-
->>> dbfile.info('01006')
+>>> myanmar.converter.convert (u'
 
 """
-import json
-import re
+_converters = {}
 
-class TlsMyanmarConverter ():
-
+class _TlsMyanmarConverter ():
+    """
+    Private class which convert unicode to/from legacy encoding.
+    """
     def __init__ (self, data):
+
         self.data = data
         self.useZwsp = False
         self.sourceEncoding = self.data['fonts'][0]
@@ -53,6 +43,7 @@ class TlsMyanmarConverter ():
             i = i + 1
 
     def buildRegExp (self, sequence, isUnicode):
+        import re
         pattern = u""
         escapeRe = re.compile (ur"([\^\$\\\.\*\+\?\(\)\[\]\{\}\|])", re.UNICODE) 
         if not self.reverse:
@@ -207,7 +198,7 @@ class TlsMyanmarConverter ():
                                 #else:
                                     #self.debug.print("Unhandled yapin ligature: " + syllable[component])
                                 syllable[component] = syllable[component][0:1]
-                        elif (syllable[component][1] == u"ှ"or len(syllable[componen]) > 2):
+                        elif (syllable[component][1] == u"ှ"or len(syllable[component]) > 2):
                             syllable["hatoh"] = u"ှ"
                             syllable[component] = syllable[component][0:1]
                     elif (component == "yayit"):
@@ -336,6 +327,7 @@ class TlsMyanmarConverter ():
         return self.convertToUnicodeSyllables (inputText)['outputText']
 
     def convertFromUnicode (self, inputText):
+        import re
         inputText = re.sub (ur'\u200B\u2060', '', inputText)
         outputText = u""
         pos = 0
@@ -450,13 +442,13 @@ class TlsMyanmarConverter ():
         # yapin variants
         if (unicodeSyllable.has_key("yapin") and
             (unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh"))):
-            if (len(this.data["yapin"]["ျ_alt"])):
-                syllable["yapin"] = this.data["yapin"]["ျ_alt"]
+            if (len(self.data["yapin"]["ျ_alt"])):
+                syllable["yapin"] = self.data["yapin"]["ျ_alt"]
             else: # assume we have the ligatures
                 key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") + \
                     (unicodeSyllable.has_key["hatoh"] and "ှ" or "") + "_lig"
-                if (this.data["yapin"][key]):
-                    syllable["yapin"] = this.data["yapin"][key]
+                if (self.data["yapin"][key]):
+                    syllable["yapin"] = self.data["yapin"][key]
                     if (unicodeSyllable.has_key("wasway")):
                         del syllable["wasway"]
                     if (unicodeSyllable.has_key("hatoh")):
@@ -612,13 +604,22 @@ class TlsMyanmarConverter ():
 
 def get_available_encodings ():
     """
-    return a list of available encodings.
+    return a list of supported encodings.
+    
+    >>> myanmar.converter.get_available_encodings ()
+    ['zawgyi', 'wwin_burmese', 'wininnwa', 'unicode']
     """
-    return __CONVERTERS__.keys () + ['unicode']
+    global _converters
+    return _converters.keys () + ['unicode']
         
 def convert (text, from_encoding, to_encoding):
     """
     convert from one encoding to another.
+
+    from_encoding and to_encoding must be one of the encodings
+    from get_available_encodings ()
+
+    text must be a unicode string object.
     """
     # if type(text) != type(u''):
     #     try:
@@ -633,17 +634,37 @@ def convert (text, from_encoding, to_encoding):
         if encoding not in get_available_encodings ():
             raise ValueError ('%s encoding is not available' %encoding)
 
-    return __CONVERTERS__['zawgyi'].convertToUnicode (text)
-    
-        
-__CONVERTERS__ = {}
-for jFile in  ['zawgyi.json', 'wininnwa.json', 'wwin_burmese.json']:
-    try:
-        import pkgutil
-        data = pkgutil.get_data(__name__, 'data/' + jFile)
-    except ImportError:
-        import pkg_resources
-        data = pkg_resources.resource_string(__name__, 'data/' + jFile)
+    if from_encoding != 'unicode':
+        utext = _converters[from_encoding].convertToUnicode (text)
+    else:
+        utext = text
 
-    data = unicode(data.decode ('utf-8'))
-    __CONVERTERS__[jFile[:jFile.find('.')]] = TlsMyanmarConverter (json.loads (data))
+    #print utext
+    if to_encoding != 'unicode':
+        rtext = _converters[to_encoding].convertFromUnicode (utext)
+    else:
+        rtext = utext
+
+    return rtext
+    #return _converters['zawgyi'].convertToUnicode (text)
+    
+
+def _load_converters ():
+    """
+    load available encodings from json files
+    """
+    global _converters
+    import json
+
+    for _file in  ['zawgyi.json', 'wininnwa.json', 'wwin_burmese.json']:
+        try:
+            import pkgutil
+            _data = pkgutil.get_data (__name__, 'data/' + _file)
+        except ImportError:
+            import pkg_resources
+            _data = pkg_resources.resource_string(__name__, 'data/' + _file)
+
+        _data = unicode(_data.decode ('utf-8'))
+        _converters[_file[:_file.find('.')]] = _TlsMyanmarConverter (json.loads (_data))
+
+_load_converters ()
