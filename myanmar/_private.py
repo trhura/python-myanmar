@@ -64,4 +64,8 @@ def convert ():
                 print e
                 sys.exit (-1)
 
+    if not data:
+        print "No data to convert."
+        sys.exit (-1)
+
     print myanmar.converter.convert (data, options.fro, options.to).encode ('utf8'),
