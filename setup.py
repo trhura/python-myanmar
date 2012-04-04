@@ -40,7 +40,7 @@ setup(name='python-myanmar',
       author_email='trhura@gmail.com',
       url='http://code.google.com/p/python-myanmar',
       license='GPL-3',
-      description='Python module for Myanmar Langauge Processing',
+      description='Python Routines for Myanmar Language Processing',
 #      long_description=stdnum.__doc__,
       classifiers=[
           'Development Status :: 3 - Alpha',
