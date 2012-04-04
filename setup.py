@@ -52,6 +52,6 @@ setup(name='python-myanmar',
           'Topic :: Text Processing :: General',
           ],
       entry_points = {
-        'console_scripts' : ['mmconverter = myanmar.scripts:convert']
+        'console_scripts' : ['mmconverter = myanmar._private:convert']
         },
       )

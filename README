@@ -1,4 +1,12 @@
-python-myanmar
-=============
+This module contains routines for conversion between unicode
+and Myanmar legacy encodings, such as zawgyi, wininwa.
 
-A Python module for Myanmar Language Processing
+This is a python port of Thanlwinsoft's javascript converter.
+
+
+INSTALL
+-------
+
+To install, run this command.
+
+    python setup.py install

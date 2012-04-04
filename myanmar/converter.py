@@ -626,11 +626,11 @@ def convert (text, from_encoding, to_encoding):
 
     text must be a unicode string object.
     """
-    # if type(text) != type(u''):
-    #     try:
-    #         text = text.decode ('utf-8')
-    #     except:
-    #         raise UnicodeDecodeError
+    if type(text) != type(u''):
+        try:
+            text = text.decode ('utf-8')
+        except:
+            raise UnicodeDecodeError
         
     if from_encoding == to_encoding:
         raise ValueError ('from_encoding and to_encoding can not be equal')
