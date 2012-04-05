@@ -15,7 +15,7 @@ from optparse import OptionParser
 def convert ():
     
     parser = OptionParser(usage="Usage: %prog [OPTIONS...] [FILE...]",
-                          version="%prog 0.1",
+                          version="%prog 0.0.1",
                           description="Convert between Myanmar legacy encodings and unicode.\n")
 
     parser.add_option("-l", "--list", dest="list",

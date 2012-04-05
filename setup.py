@@ -25,13 +25,8 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-# fix permissions for sdist
-if 'sdist' in sys.argv:
-    os.system('chmod -R a+rX .')
-    os.umask(int('022', 8))
-
 setup(name='python-myanmar',
-      version='0.1',
+      version='0.0.1',
       packages= find_packages(exclude='tests'),
       package_data={
         'myanmar': ['data/*.json'],
@@ -52,7 +47,7 @@ setup(name='python-myanmar',
           'Topic :: Text Processing :: General',
           ],
       entry_points = {
-        'console_scripts' : ['mmconverter = myanmar._private:convert']
+        'console_scripts' : ['myanmar-converter = myanmar._private:convert']
         },
       test_suite = 'tests',
       )
