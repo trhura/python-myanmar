@@ -450,7 +450,7 @@ class _TlsMyanmarConverter ():
                 syllable["yapin"] = self.data["yapin"]["ျ_alt"]
             else: # assume we have the ligatures
                 key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") + \
-                    (unicodeSyllable.has_key["hatoh"] and "ှ" or "") + "_lig"
+                    (unicodeSyllable.has_key("hatoh") and "ှ" or "") + "_lig"
                 if (self.data["yapin"][key]):
                     syllable["yapin"] = self.data["yapin"][key]
                     if (unicodeSyllable.has_key("wasway")):
@@ -548,7 +548,7 @@ class _TlsMyanmarConverter ():
         
         if (syllable.has_key("uVowel") and
             unicodeSyllable["uVowel"] == u"ိ" and
-            syllable.has_key["anusvara"] and
+            syllable.has_key("anusvara") and
             unicodeSyllable["anusvara"] == u"ံ"):
             syllable["uVowel"] = self.data["uVowel"][u"ိံ_lig"]
             del syllable["anusvara"]

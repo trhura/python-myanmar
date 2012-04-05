@@ -62,10 +62,20 @@ def convert ():
                 ifile.close ()
             except Exception, e:
                 print e
-                sys.exit (-1)
+                sys.exit (-1) 
 
     if not data:
         print "No data to convert."
         sys.exit (-1)
 
-    print myanmar.converter.convert (data, options.fro, options.to).encode ('utf8'),
+    if not options.output_file:
+        print myanmar.converter.convert (data, options.fro, options.to).encode ('utf8'),
+    else:
+        try:
+            ifil = open (options.output_file, 'w')
+        except Exception,e :
+            print e
+
+        output = myanmar.converter.convert (data, options.fro, options.to).encode ('utf8')
+        ifil.write (output)
+        ifil.close ()

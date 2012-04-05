@@ -1,5 +1,5 @@
-python-myanmar (0.1-1) unstable; urgency=low
+python-myanmar (0.0.1-1) unstable; urgency=low
 
-  * source package automatically created by stdeb 0.6.0
+  * Initial alpha relase
 
  -- Thura Hlaing <trhura@gmail.com>  Thu, 05 Apr 2012 10:57:27 +0800

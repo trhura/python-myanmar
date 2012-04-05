@@ -3,6 +3,9 @@ and Myanmar legacy encodings, such as zawgyi, wininwa.
 
 This is a python port of Thanlwinsoft's javascript converter.
 
+This module also comes with a script, namely myanmar-converter,
+which can be used to convert encodings from CLI.
+
 
 INSTALL
 -------
