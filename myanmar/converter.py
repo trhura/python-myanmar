@@ -439,7 +439,7 @@ class _TlsMyanmarConverter ():
              unicodeSyllable.get ("cons", None) == u"ပ" or unicodeSyllable.get ("cons", None) == u"ဖ" or
              unicodeSyllable.get ("cons", None) == u"ဗ" or unicodeSyllable.get ("cons", None) == u"မ" or
              unicodeSyllable.get ("cons", None) == u"ဝ") and
-            unicodeSyllable.has_key("stack") and self.data["stack"][unicodeSyllable["stack"]+"_narrow"] and
+            unicodeSyllable.has_key("stack") and self.data["stack"].has_key(unicodeSyllable["stack"]+"_narrow") and
             len(self.data["stack"][unicodeSyllable["stack"]+"_narrow"]) > 0):
             syllable["stack"] = self.data["stack"][unicodeSyllable["stack"]+"_narrow"]
 
@@ -632,9 +632,6 @@ def convert (text, from_encoding, to_encoding):
         except:
             raise UnicodeDecodeError
         
-    if from_encoding == to_encoding:
-        raise ValueError ('from_encoding and to_encoding can not be equal')
-
     for encoding in [from_encoding, to_encoding]:
         if encoding not in get_available_encodings ():
             raise ValueError ('%s encoding is not available' %encoding)
@@ -672,12 +669,4 @@ def _load_converters ():
         _data = unicode(_data.decode ('utf-8'))
         _converters[_file[:_file.find('.')]] = _TlsMyanmarConverter (json.loads (_data))
 
-_load_converters ()
-
-# if __name__ == "__main__":
-#     print convert (u'ျမန္မာသခ်ၤာအကၡရာ',  'zawgyi', 'unicode')
-#     print convert (u'jrefrmocsFmtu©&m',  'wininnwa', 'unicode')
-#     print convert (u'jrefrmocsFmtuQ&m',  'wwin_burmese', 'unicode')
-#     print convert (u'မြန်မာ​သင်္ချာ​အက္ခ​ရာ', 'unicode', 'zawgyi')
-#     print convert (u'မြန်မာ​သင်္ချာ​အက္ခ​ရာ', 'unicode', 'wininnwa')
-#     print convert (u'မြန်မာ​သင်္ချာ​အက္ခ​ရာ', 'unicode', 'wwin_burmese')
+_load_converters () 

@@ -54,4 +54,5 @@ setup(name='python-myanmar',
       entry_points = {
         'console_scripts' : ['mmconverter = myanmar._private:convert']
         },
+      test_suite = 'tests',
       )
