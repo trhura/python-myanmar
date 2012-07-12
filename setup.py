@@ -21,8 +21,6 @@
 
 """python-myanmar installation script."""
 
-import os
-import sys
 from setuptools import setup, find_packages
 
 setup(name='python-myanmar',

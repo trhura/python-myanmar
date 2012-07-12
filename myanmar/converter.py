@@ -45,7 +45,7 @@ class _TlsMyanmarConverter ():
     def buildRegExp (self, sequence, isUnicode):
         import re
         pattern = ""
-        escapeRe = re.compile (r"([\^\$\\\.\*\+\?\(\)\[\]\{\}\|])", re.UNICODE) 
+        escapeRe = re.compile (r"([\^\$\\\.\*\+\?\(\)\[\]\{\}\|])", re.UNICODE)
         if not self.reverse:
             self.reverse = {}
 
@@ -62,7 +62,7 @@ class _TlsMyanmarConverter ():
                 #print self.maxCodePoint, self.minCodePoint
             for j in self.data[sequence[i]]:
                 #print 'j =  ', j.encode ('utf-8')
-                if self.data[sequence[i]][j] and len(self.data[sequence[i]][j]) > 0: 
+                if self.data[sequence[i]][j] and len(self.data[sequence[i]][j]) > 0:
                     for k in range(0, len(self.data[sequence[i]][j])):
                         codePoint = ord(self.data[sequence[i]][j][k])
                         if codePoint != 0x20:
@@ -116,7 +116,7 @@ class _TlsMyanmarConverter ():
                 self.legacyLigPattern = re.compile (subPattern, re.UNICODE)
 
             pattern += subPattern + ")"
-            
+
             if (sequence[i] == "cons"):
                 pass
             elif (sequence[i] == "lig"):
@@ -133,7 +133,7 @@ class _TlsMyanmarConverter ():
             else:
                 pattern += "?"
 
-	#print pattern
+                #print pattern
 	return re.compile(pattern, re.UNICODE)
 
     def sortLongestFirst (self, a,b):
@@ -146,7 +146,7 @@ class _TlsMyanmarConverter ():
             return -1
         elif (a > b):
             return 1
-        return 0 
+        return 0
 
     def convertToUnicodeSyllables (self, inputText):
         outputText = u""
@@ -158,7 +158,7 @@ class _TlsMyanmarConverter ():
                 prevSyllable = None
                 nonMatched = inputText[pos:match.pos]
                 outputText += nonMatched
-                syllables += nonMatched 
+                syllables += nonMatched
             prevSyllable = self.toUnicodeMapper(inputText, match.group(), prevSyllable)
             syllables += prevSyllable
             outputText += prevSyllable
@@ -168,8 +168,8 @@ class _TlsMyanmarConverter ():
             nonMatched = inputText[pos:len(inputText)]
             #print type(nonMatched), type(outputText)
             outputText += nonMatched
-            syllables += nonMatched 
-    
+            syllables += nonMatched
+
         ret = {}
         ret['outputText'] = outputText
         ret['syllables'] = syllables
@@ -187,7 +187,7 @@ class _TlsMyanmarConverter ():
                     syllable[component] = self.reverse[component][match]
                 else:
                     continue
-                
+
                 # check a few sequences putting ligature components in right place
                 if (len(syllable[component]) > 1):
                     if (component == "yapin"):
@@ -211,7 +211,7 @@ class _TlsMyanmarConverter ():
                               len(syllable[component]) > 2 and
                               syllable[component][2] == u"ု"):
                             syllable["uVowel"] = u"ိ"
-                            syllable["lVowel"] = u"ု"                
+                            syllable["lVowel"] = u"ု"
     #                    else:
     #                        self.debug.print("unhandled yayit ligature: " + syllable[component])
                         syllable[component] = syllable[component][0:1]
@@ -257,7 +257,7 @@ class _TlsMyanmarConverter ():
                 del syllable["asat"]
             if (syllable.has_key ("cons") and syllable["cons"] == u"ဥ"):
                 syllable["cons"] = u"ဉ"
-                    
+
         if (syllable.has_key ("cons") and syllable["cons"] == u"ဥ" and syllable.has_key("uVowel")):
             syllable["cons"] = u"ဦ"
             if syllable.has_key ("uVowel"):
@@ -294,14 +294,14 @@ class _TlsMyanmarConverter ():
                 syllable["cons"] == u'ဝ'
             if (index+1 < len(matchData) and not is_mynum(matchData[index+1])):
                 syllable["cons"] = u'ဝ'
-                
+
         elif (syllable.has_key ("cons") and syllable["cons"] == u"၄" and
               matchData.find (u'င်း') != matchData.find (u'၄') + 1):
             syllable["cons"] = u'၎'
 
         elif (syllable.has_key ("cons") and syllable["cons"] == u'၇' and
               (syllable.has_key("eVowel") or syllable.has_key("uVowel") or
-               syllable.has_key("lVowel") or syllable.has_key("anusvara") or 
+               syllable.has_key("lVowel") or syllable.has_key("anusvara") or
                syllable.has_key("aVowel") or syllable.has_key("lDot") or
                syllable.has_key("asat") or syllable.has_key("wasway") or
                syllable.has_key("hatoh"))):
@@ -317,13 +317,13 @@ class _TlsMyanmarConverter ():
             and not syllable["stack"] and not syllable["contraction"]
             and not syllable["asat"] and (prevSyllable != u"အ") and (prevSyllable != None)):
             outputText += u"\u200B"
-        
+
         for output in outputOrder:
             if syllable.has_key(output):
                 outputText += u"".join(syllable[output])
 
         return outputText
-    
+
     def convertToUnicode (self, inputText):
         return self.convertToUnicodeSyllables (inputText)['outputText']
 
@@ -343,7 +343,7 @@ class _TlsMyanmarConverter ():
         return outputText
 
     def fromUnicodeMapper (self, inputText, matchData):
-        #TODO 
+        #TODO
         unicodeSyllable = {}
         syllable = {}
 
@@ -373,7 +373,7 @@ class _TlsMyanmarConverter ():
                 if (self.data["kinzi"][key] and len(self.data["kinzi"][key])):
                     syllable["kinzi"] = self.data["kinzi"][key]
                     del syllable["anusvara"]
-                    
+
         if (unicodeSyllable.get ("cons", None) == u"ဉ"):
             if (unicodeSyllable.has_key("asat")):
                 syllable["cons"] = self.data["cons"][u"ဥ"]
@@ -385,15 +385,15 @@ class _TlsMyanmarConverter ():
                 # self hatoh can occur with aVowel, so no else
             if (unicodeSyllable.has_key ("hatoh")):
                 syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
-                
+
         elif (unicodeSyllable.get ("cons", None) == u"ဠ"):
             if (unicodeSyllable.has_key("hatoh")):
                 syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
-                
+
         elif (unicodeSyllable.get ("cons", None) == u"ဈ" and len(self.data["cons"]["ဈ"]) == 0):
             syllable["cons"] = self.data["cons"][u"စ"]
             syllable["yapin"] = self.data["yapin"][u"ျ"]
-            
+
         elif (unicodeSyllable.get ("cons", None) == u"ဩ" and len(self.data["cons"][u"ဩ"]) == 0):
             syllable["cons"] = self.data["cons"][u"သ"]
             syllable["yayit"] = self.data["yayit"][u"ြ_wide"]
@@ -418,14 +418,14 @@ class _TlsMyanmarConverter ():
                 unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh")
                 or unicodeSyllable.has_key("lVowel")):
                 syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
-        
+
         elif (unicodeSyllable.get ("cons", None) == u"ရ"):
             if (unicodeSyllable.has_key("yapin") or unicodeSyllable.has_key("wasway") or
                 unicodeSyllable.has_key("lVowel")):
                 syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_alt"]
             elif (unicodeSyllable.has_key("hatoh") and len(self.data["cons"][unicodeSyllable["cons"] + "_tall"])):
                 syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_tall"]
-        
+
         elif (unicodeSyllable.get ("cons", None) == u"ဦ"):
             if (len(self.data["cons"]["ဦ"]) == 0):
                 syllable["cons"] = self.data["cons"]["ဥ"]
@@ -536,7 +536,7 @@ class _TlsMyanmarConverter ():
                 if (len(upperVariant) == 0 and widthVariant == "_narrow"):
                     widthVariant = ""
                 syllable["yayit"] = self.data["yayit"][u"ြ" + upperVariant + widthVariant]
-                
+
         if (syllable.has_key("wasway") and syllable.has_key("hatoh")):
             del syllable["hatoh"]
             syllable["wasway"] = self.data["wasway"][u"ွှ_lig"]
@@ -545,14 +545,14 @@ class _TlsMyanmarConverter ():
             not syllable.has_key("yapin") and not syllable.has_key("yayit")):
             syllable["hatoh"] = self.data["hatoh"][u"ှ" + unicodeSyllable["lVowel"] + "_lig"]
             del syllable["lVowel"]
-        
+
         if (syllable.has_key("uVowel") and
             unicodeSyllable["uVowel"] == u"ိ" and
             syllable.has_key("anusvara") and
             unicodeSyllable["anusvara"] == u"ံ"):
             syllable["uVowel"] = self.data["uVowel"][u"ိံ_lig"]
             del syllable["anusvara"]
-        
+
         if (syllable.has_key("lVowel") and
             (unicodeSyllable.has_key("yayit") or unicodeSyllable.has_key("yapin") or
              unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh") or
@@ -561,7 +561,7 @@ class _TlsMyanmarConverter ():
              unicodeSyllable.get ("cons", None) == u"ဌ" or unicodeSyllable.get ("cons", None) == u"ဈ" or
              unicodeSyllable.get ("cons", None) == u"ဥ" or unicodeSyllable.get ("cons", None) == u"ဠ")):
             syllable["lVowel"] = self.data["lVowel"][unicodeSyllable["lVowel"] + "_tall"]
-        
+
         if (unicodeSyllable.has_key("aVowel") and
             unicodeSyllable.has_key("asat")  and
             unicodeSyllable["aVowel"] == u"ါ"):
@@ -586,7 +586,7 @@ class _TlsMyanmarConverter ():
             ((syllable.has_key ("hatoh") and len(syllable["hatoh"]) == 1 and not syllable.has_key("lVowel")) or
              (syllable["lVowel"] and syllable["lVowel"] == self.data["lVowel"][u"ု"]))):
             syllable["lDot"] = self.data["lDot"][u"့_alt"]
-        
+
         if (syllable.has_key("asat")):
                 if (not syllable.has_key ("eVowel") and
                     (syllable.has_key("yayit")  or syllable.has_key("yapin") or
@@ -597,7 +597,7 @@ class _TlsMyanmarConverter ():
         outputOrder = ["eVowel","yayit","lig","cons","stack","contraction",
                        "yapin","kinzi", "wasway","hatoh","uVowel","lVowel",
                        "anusvara","aVowel","asat","lDot","visarga"]
-        
+
         outputText = u""
 
         #print syllable
@@ -610,13 +610,13 @@ class _TlsMyanmarConverter ():
 def get_available_encodings ():
     """
     return a list of supported encodings.
-    
+
     >>> myanmar.converter.get_available_encodings ()
     ['zawgyi', 'wwin_burmese', 'wininnwa', 'unicode']
     """
     global _converters
     return _converters.keys () + ['unicode']
-        
+
 def convert (text, from_encoding, to_encoding):
     """
     convert from one encoding to another.
@@ -631,7 +631,7 @@ def convert (text, from_encoding, to_encoding):
             text = text.decode ('utf-8')
         except:
             raise UnicodeDecodeError
-        
+
     for encoding in [from_encoding, to_encoding]:
         if encoding not in get_available_encodings ():
             raise ValueError ('%s encoding is not available' %encoding)
@@ -648,8 +648,8 @@ def convert (text, from_encoding, to_encoding):
         rtext = utext
 
     return rtext
-    #return _converters['zawgyi'].convertToUnicode (text)
-    
+#return _converters['zawgyi'].convertToUnicode (text)
+
 
 def _load_converters ():
     """
@@ -669,4 +669,6 @@ def _load_converters ():
         _data = unicode(_data.decode ('utf-8'))
         _converters[_file[:_file.find('.')]] = _TlsMyanmarConverter (json.loads (_data))
 
-_load_converters () 
+_load_converters ()
+
+convert ("wmrDe,frStokH;ðyykH", "wwin_burmese", "unicode")
