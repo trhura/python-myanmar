@@ -142,7 +142,8 @@ class ClusterIter (object):
             # Checks whether the consonant is followed by asat
             k = j;
             while (k + 1 < self.len and ismydiac (self.string[k+1])):
-                if (self.string[k + 1] == VOWEL_SIGN_AA):
+                if (self.string[k + 1] == VOWEL_SIGN_AA) or \
+                    (self.string[k + 1] == VOWEL_SIGN_TALL_AA):
                     break
 
                 if (self.string[k + 1] == SIGN_ASAT):

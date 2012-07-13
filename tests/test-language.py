@@ -1,50 +1,49 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import os
+import sys
 import unittest
 import codecs
+
+tests_dir   = os.path.dirname(os.path.abspath(__file__))
+root_dir    = os.path.dirname(tests_dir)
+
+import imp
+sys.path += [os.path.join (root_dir, 'myanmar')]
+ml = imp.load_source ('language',
+                      os.path.join (root_dir,
+                                    'myanmar',
+                                    'language.py'))
 
 class TestLanguage (unittest.TestCase):
 
     def setUp (self):
-        self.tests_dir = os.path.dirname(os.path.abspath(__file__))
-        sys.path += [os.path.dirname(self.tests_dir)]
-
-        #print sys.path
-        try:
-            self.l = __import__ ('myanmar.language')
-        except Exception, e:
-            print e
-            sys.exit (-1)
+        pass
 
     def test_myfuncs (self):
-        import myanmar.language as l
+        for i in ml.digits_:
+            self.assertTrue (ml.ismydigit (i))
 
-        for i in l.digits_:
-            self.assertTrue (l.ismydigit (i))
+        for i in ml.consonants_:
+            self.assertTrue (ml.ismyconsonant (i))
 
-        for i in l.consonants_:
-            self.assertTrue (l.ismyconsonant (i))
+        for i in ml.medials_:
+            self.assertTrue (ml.ismymedial (i))
 
-        for i in l.medials_:
-            self.assertTrue (l.ismymedial (i))
-
-        for i in l.vowels_:
-            self.assertTrue (l.ismyvowel (i))
+        for i in ml.vowels_:
+            self.assertTrue (ml.ismyvowel (i))
 
     def test_unicode_repr (self):
-        import myanmar.language as l
-        fil = codecs.open (os.path.join (self.tests_dir,
+        fil = codecs.open (os.path.join (tests_dir,
                                          'language-tests.txt'),
                                          'r')
         for line in fil.readlines ():
             string = line.strip ()
-            #print "----------", string, "----------"
-            iter_  = l.ClusterIter (string)
+            print "----------", string, "----------"
+            iter_  = ml.ClusterIter (string)
             for i in iter_:
-                #print i.encode ('utf-8')
+                print i.encode ('utf-8')
                 pass
         fil.close ()
 

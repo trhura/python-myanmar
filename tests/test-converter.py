@@ -6,19 +6,22 @@ import sys
 import os
 import codecs
 
+tests_dir   = os.path.dirname(os.path.abspath(__file__))
+root_dir    = os.path.dirname(tests_dir)
+
+import imp
+sys.path += [os.path.join (root_dir, 'myanmar')]
+converter = imp.load_source ('converter',
+                      os.path.join (root_dir,
+                                    'myanmar',
+                                    'converter.py'))
+
 class TestConversion (unittest.TestCase):
 
     def setUp (self):
-        sys.path += [os.path.dirname(os.path.dirname(os.path.abspath(__file__)))]
-        print sys.path
-        try:
-            import myanmar.converter
-        except Exception, e:
-            print e
-            sys.exit (-1)
+        pass
 
     def test_conversion (self):
-        import myanmar.converter as converter
         try:
             path = os.path.join (os.path.dirname(__file__), 'converter-tests.txt')
             fil = codecs.open (path, 'r', encoding='utf-8')
