@@ -133,7 +133,8 @@ class _TlsMyanmarConverter ():
             else:
                 pattern += "?"
 
-                #print pattern
+        #if isUnicode:
+            #print pattern
 	return re.compile(pattern, re.UNICODE)
 
     def sortLongestFirst (self, a,b):

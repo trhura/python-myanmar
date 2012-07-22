@@ -150,14 +150,14 @@ def normalize (string):
         try:
             return func(iter_[i+1])
         except IndexError, e:
-            print str(e)
+            #print str(e)
             return False
 
     def try_previous (func, iter_, i):
         try:
             return func(iter_[i-1])
         except IndexError, e:
-            print str(e)
+            #print str(e)
             return False
 
     string = string.replace (LETTER_U + VOWEL_SIGN_II,
@@ -242,7 +242,7 @@ class ClusterIter (object):
                 self.pos = j
                 return self.string[i:j]
 
-            if (self.string[j-1] == SIGN_VIRAMA):
+            if ((j-1 > 0) and self.string[j-1] == SIGN_VIRAMA):
                 # preceded by virama
                 j += 1;
                 devowelized = True
