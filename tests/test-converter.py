@@ -44,6 +44,8 @@ class TestConversion (unittest.TestCase):
                 i += 1
 
             for encoding in encodings:
+                if strings[encoding] == '-':
+                    continue
                 self.assertEqual (strings[encoding],
                                   converter.convert (strings['unicode'], 'unicode', encoding))
                 self.assertEqual (strings['unicode'],

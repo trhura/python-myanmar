@@ -157,7 +157,7 @@ class _TlsMyanmarConverter ():
         for match in self.legacyPattern.finditer(inputText):
             if (match.start() != pos):
                 prevSyllable = None
-                nonMatched = inputText[pos:match.pos]
+                nonMatched = inputText[pos:match.start()]
                 outputText += nonMatched
                 syllables += nonMatched
             prevSyllable = self.toUnicodeMapper(inputText, match.group(), prevSyllable)
