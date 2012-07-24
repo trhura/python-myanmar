@@ -1,3 +1,9 @@
+python-myanmar (0.0.2-0) precise; urgency=low
+
+  * Initial beta release
+
+ -- Naing Ye` Minn <naingyeminn@gmail.com>  Tue, 24 Jul 2012 16:18:53 +0630
+
 python-myanmar (0.0.1-1) unstable; urgency=low
 
   * Initial alpha relase
