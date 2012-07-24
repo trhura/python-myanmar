@@ -391,7 +391,7 @@ class _TlsMyanmarConverter ():
             if (unicodeSyllable.has_key("hatoh")):
                 syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
 
-        elif (unicodeSyllable.get ("cons", None) == u"ဈ" and len(self.data["cons"]["ဈ"]) == 0):
+        elif (unicodeSyllable.get ("cons", None) == u"ဈ" and len(self.data["cons"][u"ဈ"]) == 0):
             syllable["cons"] = self.data["cons"][u"စ"]
             syllable["yapin"] = self.data["yapin"][u"ျ"]
 
@@ -428,9 +428,9 @@ class _TlsMyanmarConverter ():
                 syllable["cons"] = self.data["cons"][unicodeSyllable["cons"] + "_tall"]
 
         elif (unicodeSyllable.get ("cons", None) == u"ဦ"):
-            if (len(self.data["cons"]["ဦ"]) == 0):
-                syllable["cons"] = self.data["cons"]["ဥ"]
-                syllable["uVowel"] = self.data["uVowel"]["ီ"]
+            if (len(self.data["cons"][u"ဦ"]) == 0):
+                syllable["cons"] = self.data["cons"][u"ဥ"]
+                syllable["uVowel"] = self.data["uVowel"][u"ီ"]
 
         # stack with narrow upper cons
         if ((unicodeSyllable.get ("cons", None) == u"ခ" or unicodeSyllable.get ("cons", None) == u"ဂ" or
@@ -447,8 +447,8 @@ class _TlsMyanmarConverter ():
         # yapin variants
         if (unicodeSyllable.has_key("yapin") and
             (unicodeSyllable.has_key("wasway") or unicodeSyllable.has_key("hatoh"))):
-            if (len(self.data["yapin"]["ျ_alt"])):
-                syllable["yapin"] = self.data["yapin"]["ျ_alt"]
+            if (len(self.data["yapin"][u"ျ_alt"])):
+                syllable["yapin"] = self.data["yapin"][u"ျ_alt"]
             else: # assume we have the ligatures
                 key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") + \
                     (unicodeSyllable.has_key("hatoh") and "ှ" or "") + "_lig"
@@ -566,7 +566,7 @@ class _TlsMyanmarConverter ():
         if (unicodeSyllable.has_key("aVowel") and
             unicodeSyllable.has_key("asat")  and
             unicodeSyllable["aVowel"] == u"ါ"):
-            syllable["aVowel"] = self.data["aVowel"]["ါ်_lig"]
+            syllable["aVowel"] = self.data["aVowel"][u"ါ်_lig"]
             del syllable["asat"]
 
         if (unicodeSyllable.has_key("lDot") and
@@ -578,14 +578,14 @@ class _TlsMyanmarConverter ():
               unicodeSyllable.get ("cons", None) == u"ဋ" or unicodeSyllable.get ("cons", None) == u"ဌ" or
               unicodeSyllable.get ("cons", None) == u"ဈ" or  unicodeSyllable.get ("cons", None) == u"ရ"))):
             if (unicodeSyllable.get ("cons", None) == u"န"):
-                syllable["lDot"] = self.data["lDot"]["့_alt"]
+                syllable["lDot"] = self.data["lDot"][u"့_alt"]
             else:
-                syllable["lDot"] = self.data["lDot"]["့_left"]
+                syllable["lDot"] = self.data["lDot"][u"့_left"]
 
         if (unicodeSyllable.has_key("lDot") and not syllable.has_key ("yayit")
             and not (unicodeSyllable.get ("cons", None) == u"ရ") and
             ((syllable.has_key ("hatoh") and len(syllable["hatoh"]) == 1 and not syllable.has_key("lVowel")) or
-             (syllable["lVowel"] and syllable["lVowel"] == self.data["lVowel"][u"ု"]))):
+             (syllable.has_key ("lVowel") and syllable["lVowel"] == self.data["lVowel"][u"ု"]))):
             syllable["lDot"] = self.data["lDot"][u"့_alt"]
 
         if (syllable.has_key("asat")):
