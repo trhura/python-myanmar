@@ -399,7 +399,7 @@ class _TlsMyanmarConverter ():
             syllable["cons"] = self.data["cons"][u"သ"]
             syllable["yayit"] = self.data["yayit"][u"ြ_wide"]
 
-        elif (unicodeSyllable.get ("cons", None) == u"ဪ"  and len(self.data["cons"]["ဪ"]) == 0):
+        elif (unicodeSyllable.get ("cons", None) == u"ဪ"  and len(self.data["cons"][u"ဪ"]) == 0):
             syllable["cons"] = self.data[u"သ"]
             syllable["yayit"] = self.data["ြ_wide"]
             syllable["eVowel"] = self.data[u"ေ"]
