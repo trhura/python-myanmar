@@ -401,7 +401,7 @@ class _TlsMyanmarConverter ():
 
         elif (unicodeSyllable.get ("cons", None) == u"ဪ"  and len(self.data["cons"][u"ဪ"]) == 0):
             syllable["cons"] = self.data[u"သ"]
-            syllable["yayit"] = self.data["ြ_wide"]
+            syllable["yayit"] = self.data[u"ြ_wide"]
             syllable["eVowel"] = self.data[u"ေ"]
             syllable["aVowel"] = self.data[u"ာ"]
             syllable["asat"] = self.data[u"်"]
@@ -451,7 +451,7 @@ class _TlsMyanmarConverter ():
                 syllable["yapin"] = self.data["yapin"][u"ျ_alt"]
             else: # assume we have the ligatures
                 key = u"ျ" + (unicodeSyllable.has_key("wasway") and u"ွ" or "") + \
-                    (unicodeSyllable.has_key("hatoh") and "ှ" or "") + "_lig"
+                    (unicodeSyllable.has_key("hatoh") and u"ှ" or "") + "_lig"
                 if (self.data["yapin"][key]):
                     syllable["yapin"] = self.data["yapin"][key]
                     if (unicodeSyllable.has_key("wasway")):
@@ -481,7 +481,7 @@ class _TlsMyanmarConverter ():
             if (unicodeSyllable.has_key ("wasway")):
                 if (unicodeSyllable.has_key ("hatoh")):
                     if (len(self.data["wasway"][u"ွှ_small"])):
-                        if (len(self.data["yayit"]["ြ" + upperVariant + widthVariant])):
+                        if (len(self.data["yayit"][u"ြ" + upperVariant + widthVariant])):
                             syllable["yayit"] = self.data["yayit"][u"ြ" + upperVariant + widthVariant]
                         else:
                             if (widthVariant == "_narrow"):
@@ -521,7 +521,7 @@ class _TlsMyanmarConverter ():
                 syllable["hatoh"] = self.data["hatoh"][u"ှ_small"]
 
             elif (unicodeSyllable.has_key ("lVowel") and
-                  unicodeSyllable["lVowel"] == "ု" and
+                  unicodeSyllable["lVowel"] == u"ု" and
                   self.data["yayit"][u"ြု_wide"]):
                 if (syllable["uVowel"] == self.data["uVowel"][u"ိ"] and self.data["yayit"][u"ြို" + widthVariant]):
                     syllable["yayit"] = self.data["yayit"][u"ြို" + widthVariant]
@@ -658,18 +658,26 @@ def _load_converters ():
     """
     global _converters
     import json
+    import os
+    import codecs
+
+    _ROOT = os.path.dirname (os.path.abspath (__file__))
+    def get_utf8_data (filename):
+        _path = os.path.join (_ROOT, 'data', filename)
+        data = ""
+
+        try:
+            with codecs.open (_path, 'r', 'utf8') as fil:
+                data = json.loads (fil.read())
+        except:
+            print "Unable to load %s" %filename
+
+        return data
 
     for _file in  ['zawgyi.json', 'wininnwa.json', 'wwin_burmese.json']:
-        try:
-            import pkgutil
-            _data = pkgutil.get_data (__name__, 'data/' + _file)
-        except ImportError:
-            import pkg_resources
-            _data = pkg_resources.resource_string(__name__, 'data/' + _file)
-
-        _data = unicode(_data.decode ('utf-8'))
-        _converters[_file[:_file.find('.')]] = _TlsMyanmarConverter (json.loads (_data))
+        data = get_utf8_data (_file)
+        _converters[os.path.splitext(_file)[0]] = _TlsMyanmarConverter (data)
 
 _load_converters ()
 
-convert ("wmrDe,frStokH;ðyykH", "wwin_burmese", "unicode")
+#convert ("wmrDe,frStokH;ðyykH", "wwin_burmese", "unicode")
