@@ -10,6 +10,8 @@ which can be used to convert encodings from CLI.
 INSTALL
 -------
 
+Note: You must have python-chardet installed on your system.
+
 To install, run this command.
 
-    python setup.py install
+    `python setup.py install`

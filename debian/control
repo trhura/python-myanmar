@@ -8,8 +8,7 @@ XS-Python-Version: current
 
 Package: python-myanmar
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}
+Depends: ${misc:Depends}, ${python:Depends}, python-chardet
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Description: Python Routines for Myanmar Language Processing
-
