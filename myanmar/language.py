@@ -146,25 +146,27 @@ def to_unicode_repr (string):
     return  "".join (x)
 
 def normalize (string):
-    def try_next (func, iter_, i):
+    def try_next (func, iter_, i, else=False):
         try:
             return func(iter_[i+1])
         except IndexError, e:
             #print str(e)
-            return False
+            return else
 
-    def try_previous (func, iter_, i):
+    def try_previous (func, iter_, i, else=False):
         try:
             return func(iter_[i-1])
-        except IndexError, e:
+        except IndexError:
             #print str(e)
-            return False
+            return else
 
     string = string.replace (LETTER_U + VOWEL_SIGN_II,
                              LETTER_UU)
     string = string.replace (DIGIT_FOUR + LETTER_NGA,
                              SYMBOL_AFOREMENTIONED + LETTER_NGA)
-
+    string = string.replace (SIGN_ASAT + SIGN_DOT_BELOW,
+                             SIGN_DOT_BELOW + SIGN_ASAT)
+    to_replace = []
     for i, ch in enumerate(string):
         for x, y in [(DIGIT_ZERO, LETTER_WA),
                      (DIGIT_SEVEN, LETTER_RA)]:
@@ -176,6 +178,20 @@ def normalize (string):
         if ch == LETTER_U and try_next (ismydiac, string, i):
             #print type(string), string[i],
             string = string[:i] + LETTER_NYA + string[i+1:]
+
+        if ismydiac (ch) and try_previous (lambda x: x == ch, string, i):
+            # marks duplicates
+            print [ch+ch, ch]
+            to_replace.append ([ch + ch, ch])
+
+        if ch == VOWEL_SIGN_E and try_previous (lambda x: not (ismyconsonant(x) and
+                                                               ismymedial (x)),
+                                                string, i, else=True) and \
+            try_next (ismyconsonant, string, i):
+            string = string[:i] + string[i+1] + VOWEL_SIGN_E + string[i+2:]
+
+    for x, y in to_replace:
+        string = string.replace (x, y)
 
     return string
 
