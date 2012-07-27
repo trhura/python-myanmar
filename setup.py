@@ -34,7 +34,7 @@ setup(name='python-myanmar',
       url='http://code.google.com/p/python-myanmar',
       license='GPL-3',
       description='Python Routines for Myanmar Language Processing',
-#      long_description=stdnum.__doc__,
+      long_description=open('README').read(),
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Intended Audience :: Developers',
