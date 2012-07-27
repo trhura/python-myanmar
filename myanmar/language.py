@@ -146,19 +146,19 @@ def to_unicode_repr (string):
     return  "".join (x)
 
 def normalize (string):
-    def try_next (func, iter_, i, else=False):
+    def try_next (func, iter_, i, ret=False):
         try:
             return func(iter_[i+1])
-        except IndexError, e:
+        except IndexError:
             #print str(e)
-            return else
+            return ret
 
-    def try_previous (func, iter_, i, else=False):
+    def try_previous (func, iter_, i, ret=False):
         try:
             return func(iter_[i-1])
         except IndexError:
             #print str(e)
-            return else
+            return ret
 
     string = string.replace (LETTER_U + VOWEL_SIGN_II,
                              LETTER_UU)
@@ -181,12 +181,12 @@ def normalize (string):
 
         if ismydiac (ch) and try_previous (lambda x: x == ch, string, i):
             # marks duplicates
-            print [ch+ch, ch]
+            #print [ch+ch, ch]
             to_replace.append ([ch + ch, ch])
 
         if ch == VOWEL_SIGN_E and try_previous (lambda x: not (ismyconsonant(x) and
                                                                ismymedial (x)),
-                                                string, i, else=True) and \
+                                                string, i, ret=True) and \
             try_next (ismyconsonant, string, i):
             string = string[:i] + string[i+1] + VOWEL_SIGN_E + string[i+2:]
 
