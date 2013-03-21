@@ -380,7 +380,7 @@ class _TlsMyanmarConverter ():
                 syllable["cons"] = self.data["cons"][u"ဥ"]
             elif (unicodeSyllable.has_key ("stack")):
                 syllable["cons"] = self.data["cons"][u"ဉ_alt"]
-            elif (unicodeSyllable.has_key("aVowel") and self.data["cons"][u"ဉာ_lig"]):
+            elif (unicodeSyllable.has_key("aVowel") and self.data["cons"].has_key(u"ဉာ_lig")):
                 syllable["cons"] = self.data["cons"][u"ဉာ_lig"]
                 del syllable["aVowel"]
                 # self hatoh can occur with aVowel, so no else
