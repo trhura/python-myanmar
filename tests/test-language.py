@@ -22,16 +22,16 @@ class TestLanguage (unittest.TestCase):
         pass
 
     def test_myfuncs (self):
-        for i in ml.digits_:
+        for i in ml.digits:
             self.assertTrue (ml.ismydigit (i))
 
-        for i in ml.consonants_:
+        for i in ml.consonants:
             self.assertTrue (ml.ismyconsonant (i))
 
-        for i in ml.medials_:
+        for i in ml.medials:
             self.assertTrue (ml.ismymedial (i))
 
-        for i in ml.vowels_:
+        for i in ml.vowels:
             self.assertTrue (ml.ismyvowel (i))
 
     def test_unicode_repr (self):
