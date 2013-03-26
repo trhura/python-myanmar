@@ -19,7 +19,7 @@ class _TlsMyanmarConverter ():
 
         self.data = data
         self.useZwsp = False
-        self.sourceEncoding = self.data['fonts'][0]
+        self.sourceEncoding  = self.data['fonts'][0]
         self.unicodeSequence = ["kinzi",None,"lig",None,"cons","stack",
                                 "asat","yapin","yayit", "wasway","hatoh",
                                 "eVowel","uVowel","lVowel","anusvara",
@@ -57,7 +57,7 @@ class _TlsMyanmarConverter ():
             alternates = []
             if sequence[i] is None:
                 continue
-            if not self.reverse.has_key(sequence[i]):
+            if not sequence[i] in self.reverse:
                 self.reverse[sequence[i]] = {} #new Object()
                 #print self.maxCodePoint, self.minCodePoint
             for j in self.data[sequence[i]]:
@@ -184,7 +184,7 @@ class _TlsMyanmarConverter ():
                 if component == None:
                     continue
 
-                if self.reverse[component].has_key(match):
+                if match in self.reverse[component]:
                     syllable[component] = self.reverse[component][match]
                 else:
                     continue
@@ -248,7 +248,7 @@ class _TlsMyanmarConverter ():
                     #   self.debug.print("unhandled ligature: " + component + " " + syllable[component])
 
         # now some post processing
-        if (syllable.has_key("asat")):
+        if "asat" in syllable:
             if ( not syllable.has_key("eVowel") and
                  (syllable.has_key ("yayit") or
                   syllable.has_key ("yapin") or
