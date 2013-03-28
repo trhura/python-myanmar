@@ -1,188 +1,194 @@
 {
-"fonts":["Zawgyi-One"],
-"kinzi":{
-"င်္":"\u1064",
-"င်္ိ_lig":"\u108B",
-"င်္ီ_lig":"\u108C",
-"င်္ံ_lig":"\u108D"
-},
-"cons":{
-"က":"က",
-"ခ":"ခ",
-"ဂ":"ဂ",
-"ဃ":"ဃ",
-"င":"င",
-"စ":"စ",
-"ဆ":"ဆ",
-"ဇ":"ဇ",
-"ဈ":"ဈ",
-"ဉ":"ဉ",
-"ဉ_alt":"\u106A",
-"ည":"ည",
-"ည_alt":"\u106B",
-"ဋ":"ဋ",
-"ဌ":"ဌ",
-"ဍ":"ဍ",
-"ဎ":"ဎ",
-"ဏ":"ဏ",
-"တ":"တ",
-"ထ":"ထ",
-"ဒ":"ဒ",
-"ဓ":"ဓ",
-"န":"န",
-"န_alt":"\u108F",
-"ပ":"ပ",
-"ဖ":"ဖ",
-"ဗ":"ဗ",
-"ဘ":"ဘ",
-"မ":"မ",
-"ယ":"ယ",
-"ရ":"ရ",
-"ရ_alt":"\u1090",
-"ရ_tall":"",
-"လ":"လ",
-"ဝ":"ဝ",
-"သ":"သ",
-"ဟ":"ဟ",
-"ဠ":"ဠ",
-"အ":"အ",
-"ဣ":"ဣ",
-"ဤ":"ဤ",
-"ဥ":"ဥ",
-"ဦ":"ဦ",
-"ဧ":"ဧ",
-"ဩ":"ဩ",
-"ဪ":"ဪ",
-"ဿ":"\u1086",
-"၌":"၌",
-"၍":"၍",
-"၎":"",
-"၎င်း":"၎",
-"၏":"၏",
-"၀":"၀",
-"၁":"၁",
-"၂":"၂",
-"၃":"၃",
-"၄":"၄",
-"၅":"၅",
-"၆":"၆",
-"၇":"၇",
-"၈":"၈",
-"၉":"၉",
-"။":"။",
-"၊":"၊"
-},
-"lig":{
-"ဍ္ဍ":"\u106E",
-"ဍ္ဎ":"\u106F",
-"ဏ္ဍ":"\u1091",
-"ဋ္ဌ":"\u1092",
-"ဋ္ဋ":"\u1097"
-},
-"stack":{
-    "္က":"\u1060",
-    "္ခ":"\u1061",
-    "္ဂ":"\u1062",
-    "္ဃ":"\u1063",
-    "္စ":"\u1065",
-    "္ဆ":"\u1066",
-    "္ဆ_narrow":"\u1067",
-    "္ဇ":"\u1068",
-    "္ဈ":"\u1069",
-    "္ဋ":"\u106C",
-    "္ဌ":"\u106D",
-    "္ဍ":"",
-    "္ဎ":"",
-    "္ဏ":"\u1070",
-    "္တ":"\u1071",
-    "္တ_narrow":"\u1072",
-    "္တွ":"\u1096",
-    "္ထ":"\u1073",
-    "္ထ_narrow":"\u1074",
-    "္ဒ":"\u1075",
-    "္ဓ":"\u1076",
-    "္န":"\u1077",
-    "္ပ":"\u1078",
-    "္ဖ":"\u1079",
-    "္ဗ":"\u107A",
-    "္ဘ":"\u107B",
-    "္မ":"\u107C",
-    "္ယ":"",
-    "္ရ":"",
-    "္လ":"\u1085",
-    "္သ":"",
-    "္အ":""
-},
-"yapin":{
-"ျ":"\u103A",
-"ျ_alt":"\u107D",
-"ျွ_lig":"",
-"ျှ_lig":"",
-"ျွှ_lig":""
-},
-"yayit":{
-"ြ":"\u103B",
-"ြ_wide":"\u107E",
-"ြ_upper_narrow":"\u107F",
-"ြ_upper_wide":"\u1080",
-"ြ_lower_narrow":"\u1081",
-"ြ_lower_wide":"\u1082",
-"ြ_lower_upper_narrow":"\u1083",
-"ြ_lower_upper_wide":"\u1084",
-"ြွ_narrow":"",
-"ြွ_wide":"",
-"ြွ_upper_narrow":"",
-"ြွ_upper_wide":"",
-"ြု_narrow":"",
-"ြု_wide":"",
-"ြု_upper_narrow":"",
-"ြု_upper_wide":""
-},
-"wasway":{
-"ွ":"\u103C",
-"ွှ_lig":"\u108A",
-"ွှ_small":""
-},
-"hatoh":{
-"ှ":"\u103D",
-"ှ_small":"\u1087",
-"ှု_lig":"\u1088",
-"ှူ_lig":"\u1089"
-},
-"eVowel":{
-"ေ":"ေ"
-},
-"uVowel":{
-"ိ":"ိ",
-"ိံ_lig":"\u108E",
-"ီ":"ီ"
-},
-"lVowel":{
-"ု":"ု",
-"ု_tall":"\u1033",
-"ူ":"ူ",
-"ူ_tall":"\u1034"
-},
-"anusvara":{
-"ံ":"ံ",
-"ဲ":"ဲ"
-},
-"aVowel":{
-"ါ":"ါ",
-"ါ်_lig":"\u105A",
-"ာ":"ာ"
-},
-"lDot":{
-"့":"\u1095",
-"့_alt":"\u1094",
-"့_left":"\u1037",
-"့_spaceDot":" \u1037",
-"့_spaceDotAlt":" \u1094"
-},
-"asat":{
-"်":"\u1039"
-},
-"visarga":{
-"း":"း"
-}
+    "fonts": [
+        "Tharlon"
+    ],
+    "kinzi": {
+        "kinzi":"ၤ",
+        "kinzi_i_lig":"ႋ",
+        "kinzi_ii_lig":"ႌ",
+        "kinzi_anusvara_lig":""
+    },
+    "cons": {
+        "ka":"က",
+        "kha":"ခ",
+        "ga":"ဂ",
+        "gha":"ဃ",
+        "nga":"င",
+        "ca":"စ",
+        "cha":"ဆ",
+        "ja":"ဇ",
+        "jha":"ဈ",
+        "nya":"ဉ",
+        "nya_alt":"ၪ",
+        "nya_aa_lig":"",
+        "nnya":"ည",
+        "nnya_alt":"ၫ",
+        "tta":"ဋ",
+        "ttha":"ဌ",
+        "dda":"ဍ",
+        "ddha":"ဎ",
+        "nna":"ဏ",
+        "ta":"တ",
+        "tha":"ထ",
+        "da":"ဒ",
+        "dha":"ဓ",
+        "na":"န",
+        "na_alt":"ႏ",
+        "pa":"ပ",
+        "pha":"ဖ",
+        "ba":"ဗ",
+        "bha":"ဘ",
+        "ma":"မ",
+        "ya":"ယ",
+        "ra":"ရ",
+        "ra_alt":"႐",
+        "ra_tall":"",
+        "la":"လ",
+        "wa":"ဝ",
+        "sa":"သ",
+        "ha":"ဟ",
+        "lla":"ဠ",
+        "a":"အ",
+        "great_sa":"ဿ",
+        "u":"ဥ",
+        "uu":"ဦ",
+        "e":"ဧ",
+        "o":"ဩ",
+        "aforementioned":""
+    },
+    "independent": {
+        "i":"ဣ",
+        "ii":"ဤ",
+        "au":"ဪ",
+        "locative":၌"",
+        "completed":"၍",
+        "aforementioned_lig":"၎",
+        "genitive":"၏"
+    },
+    "digits": {
+        "zero":"၀",
+        "one":"၁",
+        "two":"၂",
+        "three":"၃",
+        "four":"၄",
+        "five":"၅",
+        "six":"၆",
+        "seven":"၇",
+        "eight":"၈",
+        "nine":"၉"
+    },
+    "puncts": {
+        "section":"၊",
+        "little_section":"။"
+    },
+    "lig": {
+        "dda_dda":"",
+        "tta_ddha":"",
+        "nna_dda":"",
+        "tta_ttha":"",
+        "tta_tta":"",
+        "kyat":""
+    },
+    "stack": {
+        "stack_ka":"ၠ",
+        "stack_kha":"ၡ",
+        "stack_ga":"ၢ",
+        "stack_gha":"ၣ",
+        "stack_ca":"ၥ",
+        "stack_cha":"ၦ",
+	"stack_cha_alt": "ၧ",
+        "stack_ja":"ၨ",
+	"stack_jha": "ၩ",
+        "stack_tta":"",
+        "stack_ttha":"",
+        "stack_dda":"",
+        "stack_ddha":"",
+        "stack_nna":"ၰ",
+        "stack_ta":"ၱ",
+        "stack_tha":"ၳ",
+	"stack_tha_alt": "ၴ",
+        "stack_da":"ၵ",
+        "stack_dha":"ၶ",
+        "stack_na":"ၷ",
+        "stack_pa":"ၸ",
+        "stack_pha":"ၹ",
+        "stack_ba":"ၺ",
+        "stack_bha":"ၻ",
+        "stack_ma":"ၼ",
+        "stack_ya":"",
+        "stack_ra":"",
+        "stack_la":"",
+        "stack_sa":"",
+        "stack_ha":"",
+        "stack_a":""
+    },
+    "yapin": {
+        "yapin":"",
+        "yapin_alt":"",
+        "yapin_wasway_lig":"",
+        "yapin_hatoh_lig":"",
+        "yapin_wasway_hatoh_lig":""
+    },
+    "yayit": {
+        "yayit":"",
+        "yayit_wide":"",
+        "yayit_upper_narrow":"",
+        "yayit_upper_wide":"",
+        "yayit_lower_narrow":"",
+        "yayit_lower_wide":"",
+        "yayit_lower_upper_narrow":"",
+        "yayit_lower_upper_wide":"",
+        "yayit_wasway_narrow":"",
+        "yayit_wasway_wide":"",
+        "yayit_wasway_upper_narrow":"",
+        "yayit_wasway_upper_wide":"",
+        "yayit_u_narrow":"",
+        "yayit_u_wide":"",
+        "yayit_u_upper_narrow":"",
+        "yayit_u_upper_wide":""
+    },
+    "wasway": {
+        "wasway":"",
+        "wasway_hatoh_lig":"",
+        "wasway_hatoh_small":""
+    },
+    "hatoh": {
+        "hatoh":"",
+        "hatoh_small":"",
+        "hatoh_u_lig":"",
+        "hatoh_uu_lig":""
+    },
+    "eVowel": {
+        "e":"ေ"
+    },
+    "iVowel": {
+        "i":"ိ",
+        "i_anusvara_lig":"ႎ",
+        "ii":"ီ"
+    },
+    "uVowel": {
+        "u":"ု",
+        "u_tall":"ဳ",
+        "uu":"ူ",
+        "uu_tall":"ဴ"
+    },
+    "anusvara": {
+        "anusvara":"ံ"
+    },
+    "aaVowel": {
+        "aa":"ာ",
+        "tall_aa_asat_lig":"ၚ",
+        "tall_aa":"ါ"
+    },
+    "dot_below": {
+        "dot_below":"",
+        "dot_below_alt":"",
+        "dot_below_left":""
+    },
+    "asat": {
+        "asat":""
+    },
+    "visarga": {
+        "visarga":""
+    }
 }
