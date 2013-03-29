@@ -1,12 +1,12 @@
 {
     "fonts": [
-        "Tharlon"
+        "Zawgyi-One"
     ],
     "kinzi": {
         "kinzi":"ၤ",
         "kinzi_i_lig":"ႋ",
         "kinzi_ii_lig":"ႌ",
-        "kinzi_anusvara_lig":""
+        "kinzi_anusvara_lig":"ႍ"
     },
     "cons": {
         "ka":"က",
@@ -82,11 +82,11 @@
         "little_section":"။"
     },
     "lig": {
-        "dda_dda":"",
-        "tta_ddha":"",
-        "nna_dda":"",
-        "tta_ttha":"",
-        "tta_tta":"",
+        "dda_dda":"ၮ",
+        "tta_ddha":"ၯ",
+        "nna_dda":"႑",
+        "tta_ttha":"႒",
+        "tta_tta":"႗",
         "kyat":""
     },
     "stack": {
@@ -99,8 +99,8 @@
 	"stack_cha_alt": "ၧ",
         "stack_ja":"ၨ",
 	"stack_jha": "ၩ",
-        "stack_tta":"",
-        "stack_ttha":"",
+        "stack_tta":"ၬ",
+        "stack_ttha":"ၭ",
         "stack_dda":"",
         "stack_ddha":"",
         "stack_nna":"ၰ",
@@ -123,23 +123,23 @@
         "stack_a":""
     },
     "yapin": {
-        "yapin":"",
-        "yapin_alt":"",
-        "yapin_wasway_lig":"",
-        "yapin_hatoh_lig":"",
-        "yapin_wasway_hatoh_lig":""
+        "yapin":"်",
+        "yapin_alt":"ၽ",
+        "yapin_wasway_lig":"ြၽ",
+        "yapin_hatoh_lig":"ၽႇ",
+        "yapin_wasway_hatoh_lig":"ႊၽ"
     },
     "yayit": {
-        "yayit":"",
-        "yayit_wide":"",
-        "yayit_upper_narrow":"",
-        "yayit_upper_wide":"",
-        "yayit_lower_narrow":"",
-        "yayit_lower_wide":"",
-        "yayit_lower_upper_narrow":"",
-        "yayit_lower_upper_wide":"",
+        "yayit":"ျ",
+        "yayit_wide":"ၾ",
+        "yayit_upper_narrow":"ၿ",
+        "yayit_upper_wide":"ႀ",
+        "yayit_lower_narrow":"ႁ",
+        "yayit_lower_wide":"ႂ",
+        "yayit_lower_upper_narrow":"ႃ",
+        "yayit_lower_upper_wide": "ႄ",
         "yayit_wasway_narrow":"",
-        "yayit_wasway_wide":"",
+        "yayit_wasway_wide": "",
         "yayit_wasway_upper_narrow":"",
         "yayit_wasway_upper_wide":"",
         "yayit_u_narrow":"",
@@ -148,15 +148,15 @@
         "yayit_u_upper_wide":""
     },
     "wasway": {
-        "wasway":"",
-        "wasway_hatoh_lig":"",
-        "wasway_hatoh_small":""
+        "wasway":"ြ",
+        "wasway_hatoh_lig":"ႊ",
+        "wasway_hatoh_small":"ႊ"
     },
     "hatoh": {
-        "hatoh":"",
-        "hatoh_small":"",
-        "hatoh_u_lig":"",
-        "hatoh_uu_lig":""
+        "hatoh":"ွ",
+        "hatoh_small":"ႇ",
+        "hatoh_u_lig":"ႈ",
+        "hatoh_uu_lig":"ႉ"
     },
     "eVowel": {
         "e":"ေ"
@@ -181,14 +181,14 @@
         "tall_aa":"ါ"
     },
     "dot_below": {
-        "dot_below":"",
-        "dot_below_alt":"",
-        "dot_below_left":""
+        "dot_below":"့",
+        "dot_below_alt":"႔",
+        "dot_below_left":"႕"
     },
     "asat": {
-        "asat":""
+        "asat":"္"
     },
     "visarga": {
-        "visarga":""
+        "visarga":"း"
     }
 }
