@@ -1,5 +1,4 @@
 import os.path
-import codecs
 import json
 
 class BaseEncoding (object):
@@ -8,11 +7,31 @@ class BaseEncoding (object):
         """
         """
         self.mappings = self.load_json (jsonFile)
-        self.mappings["diacritics"] = {}
-        for diac in ["yapin", "yayit", "wasway", "hatoh",
-                     "eVowel", "iVowel", "uVowel", "anusvara",
-                     "aaVowel", "dot_below", "asat", "visarga"]:
-            self.mappings["diacritics"].update (self.mappings[diac])
+
+        self.mappings["pre-diacritics"] = {}
+        for i in ["eVowel", "yayit", "kinzi"]:
+            self.mappings["pre-diacritics"].update (self.mappings[i])
+        self.mappings["post-diacritics"] = {}
+        for i in ["stack", "yapin", "iVowel", "uVowel", "anusvara",
+                  "aaVowel", "dot_below", "asat", "visarga"]:
+            self.mappings["post-diacritics"].update (self.mappings[i])
+
+        self.pattern = self.get_pattern ()
+        print (self.pattern)
+
+    def get_pattern (self):
+        def build_pattern (pattern):
+            if isinstance (pattern, str):
+                node = pattern
+                return '(?P<' + pattern + '>'+ "|".join([x for x in sorted(self.mappings[node].values ())]) + ')'
+            if isinstance (pattern, tuple):
+                node = pattern[0]
+                return '(?P<' + pattern[0] + '>' + "|".join([x for x in self.mappings[node].values ()]) + ')*'
+            if isinstance (pattern, list):
+                node = pattern
+                return '('+ ''.join([build_pattern (x) for x in  node]) + ')'
+
+        return "|".join ([build_pattern(x) for x in self.syllable_pattern])
 
     def load_json (self, jsonFile):
         if not jsonFile:
@@ -25,24 +44,28 @@ class BaseEncoding (object):
             mappings = json.load (iFile)
             return mappings
 
-
 class UnicodeEncoding (BaseEncoding):
     def __init__ (self, *args, **kwargs):
-        self.syllable_pattern = ""
+        self.syllable_pattern = []
         super ().__init__(*args, **kwargs)
-
 
 class ZawgyiEncoding (BaseEncoding):
     def __init__ (self, *args, **kwargs):
-        self.syllable_pattern = ""
+        self.syllable_pattern = [
+            "independent",
+            "digits",
+            "puncts",
+            "lig",
+            [("pre-diacritics",), "cons", ("post-diacritics",)],
+        ]
         super ().__init__(*args, **kwargs)
 
 def main  ():
     uni = UnicodeEncoding ('data/unicode.json')
     zgy = ZawgyiEncoding ('data/zawgyi.json')
 
-    import pprint
-    pprint.pprint (uni.mappings)
+    # import pprint
+    # pprint.pprint (uni.mappings)
 
 if __name__ == "__main__":
     main ()
