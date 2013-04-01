@@ -1,7 +1,4 @@
 {
-    "fonts": [
-        "Zawgyi-One"
-    ],
     "kinzi": {
         "kinzi":"ၤ",
         "kinzi_i_lig":"ႋ",
@@ -60,7 +57,7 @@
         "i":"ဣ",
         "ii":"ဤ",
         "au":"ဪ",
-        "locative":၌"",
+        "locative": "၌",
         "completed":"၍",
         "aforementioned_lig":"၎",
         "genitive":"၏"
