@@ -78,8 +78,9 @@ class ZawgyiEncoding (BaseEncoding):
             self.mappings["pre_diacritics"].update (self.mappings[i])
 
         self.mappings["post_diacritics"] = {}
-        for i in ["stack", "yapin", "wasway", "hatoh", "iVowel", "uVowel",
-                  "anusvara", "aaVowel", "dot_below", "asat", "visarga"]:
+        for i in ["stack", "yapin", "wasway", "hatoh", "iVowel",
+                  "uVowel", "aiVowel", "anusvara", "aaVowel",
+                  "dot_below", "asat", "visarga"]:
             self.mappings["post_diacritics"].update (self.mappings[i])
 
 class SyllableIter ():
@@ -90,7 +91,17 @@ class SyllableIter ():
         self.start = 0
 
     def __iter__ (self):
-        return self.pattern.finditer (self.text)
+        return self
+
+    def __next__ (self):
+        match = self.pattern.search (self.text, self.start)
+        if not match:
+            raise StopIteration
+
+        start = self.start
+        end = match.end () if match.start () == self.start else match.start ()
+        self.start = end
+        return (start, end)
 
 def main  ():
     uni = UnicodeEncoding ('data/unicode.json')
@@ -100,8 +111,8 @@ def main  ():
         data = iFile.read ()
         itr = SyllableIter (text=data, encoding=zgy)
 
-        #for m in itr:
-        #print (m.start(), m.end(), data[m.start():m.end()])
+        for start, end in itr:
+            print (start, end, data[start:end])
 
 if __name__ == "__main__":
     main ()

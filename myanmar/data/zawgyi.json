@@ -158,6 +158,9 @@
     "eVowel": {
         "e":"ေ"
     },
+	"aiVowel": {
+		"ai": "ဲ"
+	},
     "iVowel": {
         "i":"ိ",
         "i_anusvara_lig":"ႎ",

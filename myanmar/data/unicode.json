@@ -163,6 +163,9 @@
         "i_anusvara_lig": "ိံ",
         "ii": "ီ"
     },
+	"aiVowel": {
+		"ai": "ဲ"
+	},
     "uVowel": {
         "u": "ု",
         "u_tall": "ု",
