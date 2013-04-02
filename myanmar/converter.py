@@ -9,8 +9,10 @@ class BaseEncoding (object):
         """
         self.mappings = self.load_json (jsonFile)
         self.update_mappings ()
-        self.pattern = self.get_pattern ()
-        print (self.pattern)
+        self.pattern = self.get_compiled_pattern ()
+
+    def get_compiled_pattern (self):
+        return re.compile (self.get_pattern(), re.UNICODE)
 
     def get_pattern (self):
         def build_pattern (pattern):
@@ -84,14 +86,11 @@ class SyllableIter ():
 
     def __init__ (self, text="", encoding=UnicodeEncoding('data/unicode.json')):
         self.text = text
-        self.pattern  = re.compile (encoding.get_pattern (), re.UNICODE)
+        self.pattern  = encoding.get_compiled_pattern ()
         self.start = 0
 
     def __iter__ (self):
-        return self
-
-    def __next__ (self):
-        pass # TODO
+        return self.pattern.finditer (self.text)
 
 def main  ():
     uni = UnicodeEncoding ('data/unicode.json')
@@ -101,11 +100,8 @@ def main  ():
         data = iFile.read ()
         itr = SyllableIter (text=data, encoding=zgy)
 
-        for m in itr:
-            print (m)
-
-    # import pprint
-    # pprint.pprint (uni.mappings)
+        #for m in itr:
+        #print (m.start(), m.end(), data[m.start():m.end()])
 
 if __name__ == "__main__":
     main ()
