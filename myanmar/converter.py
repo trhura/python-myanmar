@@ -16,10 +16,10 @@ class BaseEncoding (object):
         def build_pattern (pattern):
             if isinstance (pattern, str):
                 node = pattern
-                return '(?P<' + pattern + '>'+ "|".join([x for x in sorted(self.mappings[node].values ())]) + ')'
+                return '(?P<' + pattern + '>'+ "|".join([x for x in sorted(self.mappings[node].values ()) if x]) + ')'
             if isinstance (pattern, tuple):
                 node = pattern[0]
-                return '(?P<' + pattern[0] + '>' + "|".join([x for x in self.mappings[node].values ()]) + ')*'
+                return '(?P<' + pattern[0] + '>' + "|".join([x for x in self.mappings[node].values () if x]) + ')*'
             if isinstance (pattern, list):
                 node = pattern
                 return '('+ ''.join([build_pattern (x) for x in  node]) + ')'
@@ -85,14 +85,13 @@ class SyllableIter ():
     def __init__ (self, text="", encoding=UnicodeEncoding('data/unicode.json')):
         self.text = text
         self.pattern  = re.compile (encoding.get_pattern (), re.UNICODE)
+        self.start = 0
 
     def __iter__ (self):
         return self
 
     def __next__ (self):
-        for match in self.pattern.finditer (self.text):
-            return match.start(), match.end()
-
+        pass # TODO
 
 def main  ():
     uni = UnicodeEncoding ('data/unicode.json')
@@ -102,7 +101,8 @@ def main  ():
         data = iFile.read ()
         itr = SyllableIter (text=data, encoding=zgy)
 
-        print (data, itr.pattern.pattern)
+        for m in itr:
+            print (m)
 
     # import pprint
     # pprint.pprint (uni.mappings)
