@@ -1,6 +1,6 @@
 import os.path
 import json
-import re
+import regex as re
 
 class BaseEncoding (object):
 
@@ -20,8 +20,8 @@ class BaseEncoding (object):
         def build_pattern (pattern):
             if isinstance (pattern, str):
                 node = pattern
-                or_expr = "|".join(["%s" %x for x in sorted(self.mappings[node].values ()) if x])
-                return '(?P<_' + pattern + '>'+  or_expr + ')'
+                or_expr = "|".join([x for x in sorted(self.mappings[node].values ()) if x])
+                return '(?P<' + pattern + '>'+  or_expr + ')'
             if isinstance (pattern, tuple):
                 ret_list = [build_pattern (x) for x in pattern]
                 if len(ret_list) > 1:
@@ -95,10 +95,12 @@ class SyllableIter ():
         if not match:
             raise StopIteration
 
-        start = self.start
-        end = match.end () if match.start () == self.start else match.start ()
-        self.start = end
-        return (start, end)
+        if match.start () == self.start:
+            self.start = match.end ()
+        else:
+            self.start = match.start ()
+
+        return { k: v for k , v in match.groupdict().items() if v }
 
 class Converter ():
 
@@ -109,7 +111,8 @@ class Converter ():
     def convert (self, text):
         itr = SyllableIter (text=text, encoding=self.zgy)
 
-        #for start, end in itr:
+        for syllable in itr:
+            print (syllable)
         #syllable = text[start:end]
 
 
