@@ -34,8 +34,12 @@ class TestConversion (unittest.TestCase):
                 zgy = converter.ZawgyiEncoding ('zawgyi.json')
                 itr = converter.SyllableIter (text=text, encoding=zgy)
 
-                for i, (start, end) in enumerate(itr):
-                    self.assertEqual (text[start:end],syllables[i])
+                for i, each in enumerate(itr):
+                    for x in ["unmatched", "syllable", "independent",
+                              "digits", "puncts", "lig"]:
+                        if x in each:
+                            self.assertEqual (each[x], syllables[i])
+                            break
 
 if __name__ == "__main__":
     unittest.main ()

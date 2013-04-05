@@ -97,10 +97,11 @@ class SyllableIter ():
 
         if match.start () == self.start:
             self.start = match.end ()
+            ret = { k: v for k , v in match.groupdict().items() if v }
         else:
+            ret = {'unmatched': self.text[self.start:match.start()]}
             self.start = match.start ()
-
-        return { k: v for k , v in match.groupdict().items() if v }
+        return ret
 
 class Converter ():
 
@@ -113,8 +114,6 @@ class Converter ():
 
         for syllable in itr:
             print (syllable)
-        #syllable = text[start:end]
-
 
 def main  ():
 
@@ -122,7 +121,6 @@ def main  ():
         data = iFile.read ()
         conv = Converter ()
         conv.convert (data)
-
 
 if __name__ == "__main__":
     main ()
