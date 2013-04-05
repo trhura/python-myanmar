@@ -5,7 +5,7 @@
         "kinzi_ii_lig": "င်္ီ",
         "kinzi_anusvara_lig": "င်္ံ"
     },
-    "cons": {
+    "consonant": {
         "ka": "က",
         "kha": "ခ",
         "ga": "ဂ",
@@ -39,7 +39,6 @@
         "ya": "ယ",
         "ra": "ရ",
         "ra_alt": "ရ",
-        "ra_tall": "ရ",
         "la": "လ",
         "wa": "ဝ",
         "sa": "သ",
@@ -62,7 +61,7 @@
         "aforementioned_lig": "၎င်း",
         "genitive": "၏"
     },
-    "digits": {
+    "digit": {
         "zero": "၀",
         "one": "၁",
         "two": "၂",
@@ -74,11 +73,11 @@
         "eight": "၈",
         "nine": "၉"
     },
-    "puncts": {
+    "punctuation": {
         "section": "။",
         "little_section": "၊"
     },
-    "lig": {
+    "ligature": {
         "dda_dda": "ဍ္ဍ",
         "tta_ddha": "ဍ္ဎ",
         "nna_dda": "ဏ္ဍ",
@@ -93,7 +92,7 @@
         "stack_gha": "္ဃ",
         "stack_ca": "္စ",
         "stack_cha": "္ဆ",
-	"stack_cha_alt": "္ဆ",
+		"stack_cha_alt": "္ဆ",
         "stack_ja": "္ဇ",
         "stack_jha": "္ဈ",
         "stack_tta": "္ဋ",

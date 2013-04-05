@@ -5,7 +5,7 @@
         "kinzi_ii_lig":"ႌ",
         "kinzi_anusvara_lig":"ႍ"
     },
-    "cons": {
+    "consonant": {
         "ka":"က",
         "kha":"ခ",
         "ga":"ဂ",
@@ -39,7 +39,6 @@
         "ya":"ယ",
         "ra":"ရ",
         "ra_alt":"႐",
-        "ra_tall":"",
         "la":"လ",
         "wa":"ဝ",
         "sa":"သ",
@@ -62,7 +61,7 @@
         "aforementioned_lig":"၎",
         "genitive":"၏"
     },
-    "digits": {
+    "digit": {
         "zero":"၀",
         "one":"၁",
         "two":"၂",
@@ -74,11 +73,11 @@
         "eight":"၈",
         "nine":"၉"
     },
-    "puncts": {
+    "punctuation": {
         "section":"၊",
         "little_section":"။"
     },
-    "lig": {
+    "ligature": {
         "dda_dda":"ၮ",
         "tta_ddha":"ၯ",
         "nna_dda":"႑",
@@ -93,9 +92,9 @@
         "stack_gha":"ၣ",
         "stack_ca":"ၥ",
         "stack_cha":"ၦ",
-	"stack_cha_alt": "ၧ",
+		"stack_cha_alt": "ၧ",
         "stack_ja":"ၨ",
-	"stack_jha": "ၩ",
+		"stack_jha": "ၩ",
         "stack_tta":"ၬ",
         "stack_ttha":"ၭ",
         "stack_dda":"",
@@ -103,7 +102,7 @@
         "stack_nna":"ၰ",
         "stack_ta":"ၱ",
         "stack_tha":"ၳ",
-	"stack_tha_alt": "ၴ",
+		"stack_tha_alt": "ၴ",
         "stack_da":"ၵ",
         "stack_dha":"ၶ",
         "stack_na":"ၷ",
