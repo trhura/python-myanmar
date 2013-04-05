@@ -156,29 +156,29 @@
         "hatoh_uu_lig": "ှူ"
     },
     "eVowel": {
-        "e": "ေ"
+        "eVowel": "ေ"
     },
     "iVowel": {
-        "i": "ိ",
-        "i_anusvara_lig": "ိံ",
-        "ii": "ီ"
+        "iVowel": "ိ",
+        "iVowel_anusvara_lig": "ိံ",
+        "iiVowel": "ီ"
     },
 	"aiVowel": {
-		"ai": "ဲ"
+		"aiVowel": "ဲ"
 	},
     "uVowel": {
-        "u": "ု",
-        "u_tall": "ု",
-        "uu": "ူ",
-        "uu_tall": "ူ"
+        "uVowel": "ု",
+        "tall_uVowel": "ု",
+        "uuVowel": "ူ",
+        "tall_uuVowel": "ူ"
     },
     "anusvara": {
         "anusvara": "ံ"
     },
     "aaVowel": {
-        "aa": "ာ",
-        "tall_aa_asat_lig": "ါ်",
-        "tall_aa": "ါ"
+        "aaVowel": "ာ",
+        "tall_aaVowel_asat_lig": "ါ်",
+        "tall_aaVowel": "ါ"
     },
     "dot_below": {
         "dot_below": "့",

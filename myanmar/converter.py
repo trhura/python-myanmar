@@ -7,24 +7,32 @@ class BaseEncoding (object):
     def __init__ (self, jsonFile=None):
         """
         """
-        self.mappings = self.load_json (jsonFile)
-        self.update_mappings ()
+        _ROOT = os.path.dirname (os.path.abspath (__file__))
+        self.mappings = self.load_json (os.path.join(_ROOT, 'data', jsonFile))
         self.pattern = self.get_compiled_pattern ()
 
     def get_compiled_pattern (self):
+        print (self.get_pattern ())
+        print ('\n\n')
         return re.compile (self.get_pattern(), re.UNICODE)
 
     def get_pattern (self):
         def build_pattern (pattern):
             if isinstance (pattern, str):
                 node = pattern
-                return '(?P<' + pattern + '>'+ "|".join([x for x in sorted(self.mappings[node].values ()) if x]) + ')'
+                or_expr = "|".join(["%s" %x for x in sorted(self.mappings[node].values ()) if x])
+                return '(?P<_' + pattern + '>'+  or_expr + ')'
             if isinstance (pattern, tuple):
-                node = pattern[0]
-                return '(?P<' + pattern[0] + '>' + "|".join([x for x in self.mappings[node].values () if x]) + ')*'
-            if isinstance (pattern, list):
-                node = pattern
-                return '('+ ''.join([build_pattern (x) for x in  node]) + ')'
+                ret_list = [build_pattern (x) for x in pattern]
+                if len(ret_list) > 1:
+                    return '(' + "|".join (ret_list) + ')*'
+                else:
+                    return ret_list[0] + '*'
+            if isinstance (pattern, dict):
+                for k, v in pattern.items ():
+                    node = v
+                    or_expr = ''.join([build_pattern (x) for x in  node])
+                    return '(?P<'+ k + '>' + or_expr + ')'
 
         return "|".join ([build_pattern(x) for x in self.syllable_pattern])
 
@@ -39,53 +47,42 @@ class BaseEncoding (object):
             mappings = json.load (iFile)
             return mappings
 
-    def update_mappings (self): pass
-
 class UnicodeEncoding (BaseEncoding):
     def __init__ (self, *args, **kwargs):
+
         self.syllable_pattern = [
             "independent",
             "digits",
             "puncts",
-            [("pre_diacritics",), "cons", ("post_diacritics",)],
+            "lig",
+            {"syllable": [("kinzi",), "cons", ("stack",),
+                           ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
+                           ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
+                           ("aiVowel",), ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+                           }
             ]
+
         super ().__init__(*args, **kwargs)
 
-    def update_mappings (self):
-        self.mappings["pre_diacritics"] = {}
-        for i in ["kinzi"]:
-            self.mappings["pre_diacritics"].update (self.mappings[i])
-
-        self.mappings["post_diacritics"] = {}
-        for i in ["stack", "yayit", "yapin", "wasway", "hatoh", "eVowel", "iVowel",
-                  "uVowel", "anusvara", "aaVowel", "dot_below", "asat", "visarga"]:
-            self.mappings["post_diacritics"].update (self.mappings[i])
-
 class ZawgyiEncoding (BaseEncoding):
+
     def __init__ (self, *args, **kwargs):
         self.syllable_pattern = [
             "independent",
             "digits",
             "puncts",
             "lig",
-            [("pre_diacritics",), "cons", ("post_diacritics",)],
-        ]
+            {"syllable": [("eVowel",), ("yayit",), "cons", ("kinzi",),
+                          ("stack",), ("yapin", "wasway", "hatoh",),
+                          ("iVowel", "uVowel", "anusvara", "aiVowel"),
+                          ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+                          }
+            ]
         super ().__init__(*args, **kwargs)
-
-    def update_mappings (self):
-        self.mappings["pre_diacritics"] = {}
-        for i in ["eVowel", "yayit", "kinzi"]:
-            self.mappings["pre_diacritics"].update (self.mappings[i])
-
-        self.mappings["post_diacritics"] = {}
-        for i in ["stack", "yapin", "wasway", "hatoh", "iVowel",
-                  "uVowel", "aiVowel", "anusvara", "aaVowel",
-                  "dot_below", "asat", "visarga"]:
-            self.mappings["post_diacritics"].update (self.mappings[i])
 
 class SyllableIter ():
 
-    def __init__ (self, text="", encoding=UnicodeEncoding('data/unicode.json')):
+    def __init__ (self, text="", encoding=UnicodeEncoding('unicode.json')):
         self.text = text
         self.pattern  = encoding.get_compiled_pattern ()
         self.start = 0
@@ -103,16 +100,26 @@ class SyllableIter ():
         self.start = end
         return (start, end)
 
+class Converter ():
+
+    def __init__ (self):
+        self.uni = UnicodeEncoding ( 'unicode.json')
+        self.zgy = ZawgyiEncoding ('zawgyi.json')
+
+    def convert (self, text):
+        itr = SyllableIter (text=text, encoding=self.zgy)
+
+        #for start, end in itr:
+        #syllable = text[start:end]
+
+
 def main  ():
-    uni = UnicodeEncoding ('data/unicode.json')
-    zgy = ZawgyiEncoding ('data/zawgyi.json')
 
     with open ('data/test.txt', mode='r', encoding='utf-8') as iFile:
         data = iFile.read ()
-        itr = SyllableIter (text=data, encoding=zgy)
+        conv = Converter ()
+        conv.convert (data)
 
-        for start, end in itr:
-            print (start, end, data[start:end])
 
 if __name__ == "__main__":
     main ()

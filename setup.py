@@ -44,8 +44,8 @@ setup(name='python-myanmar',
           'Topic :: Software Development :: Libraries :: Python Modules',
           'Topic :: Text Processing :: General',
           ],
-      entry_points = {
-        'console_scripts' : ['myanmar-converter = myanmar._private:convert']
-        },
-      test_suite = 'tests',
+#entry_points = {
+#       'console_scripts' : ['myanmar-converter = myanmar._private:convert']
+#},
+        test_suite = 'tests',
       )
