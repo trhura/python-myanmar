@@ -26,13 +26,15 @@ class BaseEncoding (object):
         return ret
 
     def get_compiled_pattern (self):
-        print (self.get_pattern () + '\n')
+        #print (self.get_pattern () + '\n')
         return re.compile (self.get_pattern(), re.UNICODE)
 
     def get_pattern (self):
         def build_pattern (pattern):
             if isinstance (pattern, str):
                 node = pattern
+                #or_expr = "|".join(["--%s--(%s)" %(x, x.encode ('unicode_escape')) \
+                #for x in sorted(self.json_data[node].values ()) if x])
                 or_expr = "|".join([x for x in sorted(self.json_data[node].values ()) if x])
                 return '(?P<' + pattern + '>'+  or_expr + ')'
 
