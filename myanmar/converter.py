@@ -1,6 +1,7 @@
 import os.path
 import json
-import regex as re
+import re
+import itertools
 
 class BaseEncoding (object):
 
@@ -48,7 +49,7 @@ class BaseEncoding (object):
             if isinstance (pattern, list):
                 return ''.join([build_pattern (x) for x in  pattern])
 
-        return "(?P<syllable>"+ "|".join ([build_pattern(x) for x in self.syllable_pattern]) + ")"
+        return "(?P<syllable>"+ "|".join ([build_pattern(x) for x in self.syllable_form]) + ")"
 
     def load_json (self, jsonFile):
         if not jsonFile:
@@ -62,17 +63,18 @@ class BaseEncoding (object):
             return data
 
 class UnicodeEncoding (BaseEncoding):
-    def __init__ (self, *args, **kwargs):
 
-        self.syllable_pattern = [
+    def __init__ (self, *args, **kwargs):
+        self.syllable_pattern = [("kinzi",), "consonant", ("stack",),
+                                 ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
+                                 ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
+                                 ("aiVowel",), ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+        self.syllable_form = [
             "independent",
             "digit",
             "punctuation",
             "ligature",
-            [("kinzi",), "consonant", ("stack",),
-             ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
-             ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
-             ("aiVowel",), ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+            self.syllable_pattern
             ]
 
         super ().__init__(*args, **kwargs)
@@ -80,15 +82,16 @@ class UnicodeEncoding (BaseEncoding):
 class ZawgyiEncoding (BaseEncoding):
 
     def __init__ (self, *args, **kwargs):
-        self.syllable_pattern = [
+        self.syllable_pattern  = [("eVowel",), ("yayit",), "consonant", ("kinzi",),
+                                  ("stack",), ("yapin", "wasway", "hatoh",),
+                                  ("iVowel", "uVowel", "anusvara", "aiVowel"),
+                                  ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+        self.syllable_form = [
             "independent",
             "digit",
             "punctuation",
             "ligature",
-            [("eVowel",), ("yayit",), "consonant", ("kinzi",),
-             ("stack",), ("yapin", "wasway", "hatoh",),
-             ("iVowel", "uVowel", "anusvara", "aiVowel"),
-             ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+            self.syllable_pattern
             ]
         super ().__init__(*args, **kwargs)
 
@@ -121,27 +124,39 @@ def convert (text, from_encoding, to_encoding):
     iterator = SyllableIter (text=text, encoding=from_encoding)
 
     otext = ""
-    for each in iterator:
-        syllable = each['syllable']
+    for each_syllable in iterator:
+        complete_syllable = each_syllable['syllable']
 
-        if len(each) == 1:
+        if len(each_syllable) == 1:
             # Unmatched, no need to convert
-            otext += syllable
+            otext += complete_syllable
             continue
 
-        if syllable in from_encoding.reverse_table:
+        if complete_syllable in from_encoding.reverse_table:
             # Direct mapping
-            key = from_encoding.reverse_table[syllable]
+            key = from_encoding.reverse_table[complete_syllable]
             otext += to_encoding.table[key]
             continue
 
-    from pprint import pprint
-    pprint(from_encoding.table)
+        # flattern syllable_pattern, convert to a list of tuples first
+        syllable_pattern = [(x,) if isinstance(x, str) else x for x in to_encoding.syllable_pattern]
+        syllable_pattern = list(itertools.chain(*syllable_pattern))
+
+        print (each_syllable)
+        syllable = ""
+        for each_pattern in syllable_pattern:
+            if each_pattern in each_syllable:
+                key = from_encoding.reverse_table[each_syllable[each_pattern]]
+                syllable += to_encoding.table[key]
+                #print (syllable)
+        otext += syllable
+
+    return otext
 
 def main  ():
     with open ('data/test.txt', mode='r', encoding='utf-8') as iFile:
         data = iFile.read ()
-        convert (data, None, None)
+        print(convert (data, None, None))
 
 if __name__ == "__main__":
     main ()
