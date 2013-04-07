@@ -2,14 +2,20 @@ import os.path
 import json
 import re
 import itertools
+import glob
+
+_ROOT = os.path.dirname (os.path.abspath (__file__))
 
 class BaseEncoding (object):
 
-    def __init__ (self, jsonFile=None):
+    def __init__ (self):
         """
         """
-        _ROOT = os.path.dirname (os.path.abspath (__file__))
-        self.json_data = self.load_json (os.path.join(_ROOT, 'data', jsonFile))
+        # get json file name dynamically from class name
+        name = self.__class__.__name__
+        name = name[:name.find('Encoding')].lower() + '.json'
+        self.json_data = self.load_json (os.path.join(_ROOT, 'data', name))
+
         self.reverse_table = self.get_reverse_table ()
         self.table = self.get_table ()
         self.pattern = self.get_compiled_pattern ()
@@ -79,7 +85,7 @@ class UnicodeEncoding (BaseEncoding):
 
         super ().__init__(*args, **kwargs)
 
-class ZawgyiEncoding (BaseEncoding):
+class LegacyEncoding (BaseEncoding):
 
     def __init__ (self, *args, **kwargs):
         self.syllable_pattern  = [("eVowel",), ("yayit",), "consonant", ("kinzi",),
@@ -95,9 +101,17 @@ class ZawgyiEncoding (BaseEncoding):
             ]
         super ().__init__(*args, **kwargs)
 
-class SyllableIter ():
+class ZawgyiEncoding (LegacyEncoding):
+    pass
 
-    def __init__ (self, text="", encoding=UnicodeEncoding('unicode.json')):
+class SyllableIter ():
+    """
+    Return an iterator of clusters, in given encoding.
+    """
+    def __init__ (self, text, encoding):
+        if not isinstance(encoding, BaseEncoding):
+            raise TypeError ("is not a valid encoding.")
+
         self.text = text
         self.pattern  = encoding.get_compiled_pattern ()
         self.start = 0
@@ -111,16 +125,39 @@ class SyllableIter ():
             raise StopIteration
 
         if match.start () == self.start:
+            # no unmatched text
             self.start = match.end ()
             ret = { k: v for k , v in match.groupdict().items() if v }
         else:
+            # if there is unmatched text,
             ret = {'syllable': self.text[self.start:match.start()]}
             self.start = match.start ()
         return ret
 
+def get_available_encodings ():
+    encodings = []
+    for path in glob.glob (os.path.join (_ROOT, 'data', '*.json')):
+        encodings += [os.path.splitext (os.path.basename(path))[0]]
+    return encodings
+
 def convert (text, from_encoding, to_encoding):
-    from_encoding = ZawgyiEncoding ('zawgyi.json')
-    to_encoding = UnicodeEncoding ( 'unicode.json')
+    """
+    Take a unicode string, and convert it to from_encoding to
+    to_encoding.
+
+    Supported encodings can be obtained by get_available_encodings ()
+    function.
+    """
+    print (get_available_encodings())
+    encodings = { encoding: globals()[encoding.title() + 'Encoding'] \
+                  for encoding in get_available_encodings() }
+
+    for encoding  in [from_encoding, to_encoding]:
+        if not encoding in encodings:
+            raise NotImplementedError ("Unsupported encoding: %s" % encoding)
+
+    from_encoding = encodings[from_encoding]()
+    to_encoding = encodings[to_encoding]()
     iterator = SyllableIter (text=text, encoding=from_encoding)
 
     otext = ""
@@ -128,7 +165,7 @@ def convert (text, from_encoding, to_encoding):
         complete_syllable = each_syllable['syllable']
 
         if len(each_syllable) == 1:
-            # Unmatched, no need to convert
+            # unmatched text, no need to convert
             otext += complete_syllable
             continue
 
@@ -142,21 +179,22 @@ def convert (text, from_encoding, to_encoding):
         syllable_pattern = [(x,) if isinstance(x, str) else x for x in to_encoding.syllable_pattern]
         syllable_pattern = list(itertools.chain(*syllable_pattern))
 
-        print (each_syllable)
+        # collect codepoints in syllable, in correct syllable order
+        #print(syllable_pattern)
         syllable = ""
         for each_pattern in syllable_pattern:
             if each_pattern in each_syllable:
                 key = from_encoding.reverse_table[each_syllable[each_pattern]]
                 syllable += to_encoding.table[key]
-                #print (syllable)
+                #print (str(each_syllable) + '\t' + syllable)
         otext += syllable
 
     return otext
 
 def main  ():
-    with open ('data/test.txt', mode='r', encoding='utf-8') as iFile:
+    with open ('data/test2.txt', mode='r', encoding='utf-8') as iFile:
         data = iFile.read ()
-        print(convert (data, None, None))
+        print(convert (data, 'unicode', 'zawgyi'))
 
 if __name__ == "__main__":
     main ()
