@@ -116,6 +116,14 @@ def has_lower_marks (syllable, filters=[]):
             return True
     return False
 
+def has_upper_marks (syllable, filters=[]):
+    MAKRS = ["kinzi", "yapin", "iVowel",
+             "aiVowel", "anusvara"]
+    for mark in [m for m in MAKRS if not m in filters]:
+        if mark in syllable:
+            return True
+    return False
+
 def choose_na_variant (syllable):
     key = "_alt" if has_lower_marks (syllable) else ""
     return key
@@ -131,7 +139,9 @@ def choose_aavowel_variant (syllable):
     return key
 
 def choose_yayit_variant (syllable):
-    key = "_wide" if is_wide_consonant(syllable['consonant']) else ""
+    key = "_wide" if is_wide_consonant(syllable['consonant']) else "_narrow"
+    key += "_lower" if has_lower_marks (syllable, "yayit") else ""
+    key += "_upper" if has_upper_marks (syllable, "yayit") else ""
     return key
 
 def choose_yapin_variant (syllable):
