@@ -4,7 +4,7 @@
 import unittest
 import sys
 import os
-import codecs
+import glob
 
 tests_dir   = os.path.dirname(os.path.abspath(__file__))
 root_dir    = os.path.dirname(tests_dir)
@@ -15,8 +15,10 @@ converter = imp.load_source ('converter',
                              os.path.join (root_dir,
                                            'myanmar',
                                            'converter.py'))
-
-import glob
+encodings = imp.load_source ('encodings',
+                             os.path.join (root_dir,
+                                           'myanmar',
+                                           'encodings.py'))
 
 class TestConversion (unittest.TestCase):
 
@@ -30,7 +32,7 @@ class TestConversion (unittest.TestCase):
                 text = iFile.readline().strip ()
                 syllables = [l.strip('\n') for l in iFile.readlines()]
 
-                zgy = converter.ZawgyiEncoding ('zawgyi.json')
+                zgy = encodings.ZawgyiEncoding ()
                 itr = converter.SyllableIter (text=text, encoding=zgy)
 
                 for i, each in enumerate(itr):
@@ -44,7 +46,7 @@ class TestConversion (unittest.TestCase):
                 text = iFile.readline().strip ()
                 syllables = [l.strip('\n') for l in iFile.readlines()]
 
-                uni = converter.UnicodeEncoding ('unicode.json')
+                uni = encodings.UnicodeEncoding ()
                 itr = converter.SyllableIter (text=text, encoding=uni)
 
                 for i, each in enumerate(itr):
