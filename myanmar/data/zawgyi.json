@@ -45,7 +45,7 @@
         "ha":"ဟ",
         "lla":"ဠ",
         "a":"အ",
-        "great_sa":"ဿ",
+        "greatSa":"ဿ",
         "u":"ဥ",
         "uu":"ဦ",
         "e":"ဧ",
@@ -58,7 +58,7 @@
         "au":"ဪ",
         "locative": "၌",
         "completed":"၍",
-        "aforementioned_lig":"၎",
+        "aforementioned-lig":"၎",
         "genitive":"၏"
     },
     "digit": {
@@ -75,73 +75,73 @@
     },
     "punctuation": {
         "section":"၊",
-        "little_section":"။"
+        "little-section":"။"
     },
     "ligature": {
-        "dda_dda":"ၮ",
-        "tta_ddha":"ၯ",
-        "nna_dda":"႑",
-        "tta_ttha":"႒",
-        "tta_tta":"႗",
+        "dda-dda":"ၮ",
+        "tta-ddha":"ၯ",
+        "nna-dda":"႑",
+        "tta-ttha":"႒",
+        "tta-tta":"႗",
         "kyat":""
     },
     "stack": {
-        "stack_ka":"ၠ",
-        "stack_kha":"ၡ",
-        "stack_ga":"ၢ",
-        "stack_gha":"ၣ",
-        "stack_ca":"ၥ",
-        "stack_cha":"ၦ",
-		"stack_cha_alt": "ၧ",
-        "stack_ja":"ၨ",
-		"stack_jha": "ၩ",
-        "stack_tta":"ၬ",
-        "stack_ttha":"ၭ",
-        "stack_dda":"",
-        "stack_ddha":"",
-        "stack_nna":"ၰ",
-        "stack_ta":"ၱ",
-        "stack_tha":"ၳ",
-		"stack_tha_alt": "ၴ",
-        "stack_da":"ၵ",
-        "stack_dha":"ၶ",
-        "stack_na":"ၷ",
-        "stack_pa":"ၸ",
-        "stack_pha":"ၹ",
-        "stack_ba":"ၺ",
-        "stack_bha":"ၻ",
-        "stack_ma":"ၼ",
-        "stack_ya":"",
-        "stack_ra":"",
-        "stack_la":"",
-        "stack_sa":"",
-        "stack_ha":"",
-        "stack_a":""
+        "stack-ka":"ၠ",
+        "stack-kha":"ၡ",
+        "stack-ga":"ၢ",
+        "stack-gha":"ၣ",
+        "stack-ca":"ၥ",
+        "stack-cha":"ၦ",
+		"stack-cha_alt": "ၧ",
+        "stack-ja":"ၨ",
+		"stack-jha": "ၩ",
+        "stack-tta":"ၬ",
+        "stack-ttha":"ၭ",
+        "stack-dda":"",
+        "stack-ddha":"",
+        "stack-nna":"ၰ",
+        "stack-ta":"ၱ",
+        "stack-tha":"ၳ",
+		"stack-tha_alt": "ၴ",
+        "stack-da":"ၵ",
+        "stack-dha":"ၶ",
+        "stack-na":"ၷ",
+        "stack-pa":"ၸ",
+        "stack-pha":"ၹ",
+        "stack-ba":"ၺ",
+        "stack-bha":"ၻ",
+        "stack-ma":"ၼ",
+        "stack-ya":"",
+        "stack-ra":"",
+        "stack-la":"",
+        "stack-sa":"",
+        "stack-ha":"",
+        "stack-a":""
     },
     "yapin": {
         "yapin":"်",
         "yapin_alt":"ၽ",
-        "yapin_wasway_lig":"ြၽ",
-        "yapin_hatoh_lig":"ၽႇ",
-        "yapin_wasway_hatoh_lig":"ႊၽ"
+        "yapin_wasway_alt":"ြၽ",
+        "yapin_hatoh_alt":"ၽႇ",
+        "yapin_wasway_hatoh_alt":"ႊၽ"
     },
     "yayit": {
         "yayit":"ျ",
         "yayit_wide":"ၾ",
-        "yayit_upper_narrow":"ၿ",
-        "yayit_upper_wide":"ႀ",
-        "yayit_lower_narrow":"ႁ",
-        "yayit_lower_wide":"ႂ",
-        "yayit_lower_upper_narrow":"ႃ",
-        "yayit_lower_upper_wide": "ႄ",
-        "yayit_wasway_narrow":"",
-        "yayit_wasway_wide": "",
-        "yayit_wasway_upper_narrow":"",
-        "yayit_wasway_upper_wide":"",
-        "yayit_u_narrow":"",
-        "yayit_u_wide":"",
-        "yayit_u_upper_narrow":"",
-        "yayit_u_upper_wide":""
+        "yayit_narrow_upper":"ၿ",
+        "yayit_wide_upper":"ႀ",
+        "yayit_narrow_lower":"ႁ",
+        "yayit_wide_lower":"ႂ",
+        "yayit_narrow_lower_upper":"ႃ",
+        "yayit_wide_lower_upper": "ႄ",
+        "yayit_narrow_wasway":"",
+        "yayit_wide_wasway": "",
+        "yayit_narrow_wasway_upper":"",
+        "yayit_wide_wasway_upper":"",
+        "yayit_narrow_u":"",
+        "yayit_wide_u":"",
+        "yayit_narrow_u_upper":"",
+        "yayit_wide_u_upper":""
     },
     "wasway": {
         "wasway":"ြ",
@@ -167,22 +167,22 @@
     },
     "uVowel": {
         "uVowel":"ု",
-        "tall_uVowel":"ဳ",
+        "uVowel_tall":"ဳ",
         "uuVowel":"ူ",
-        "tall_uuVowel":"ဴ"
+        "uuVowel_tall":"ဴ"
     },
     "anusvara": {
         "anusvara":"ံ"
     },
     "aaVowel": {
         "aaVowel":"ာ",
-        "tall_aaVowel_asat_lig":"ၚ",
-        "tall_aaVowel":"ါ"
+        "aaVowel_tall_asat_lig":"ၚ",
+        "aaVowel_tall":"ါ"
     },
-    "dot_below": {
-        "dot_below":"့",
-        "dot_below_alt":"႔",
-        "dot_below_left":"႕"
+    "dotBelow": {
+        "dotBelow":"့",
+        "dotBelow_alt":"႔",
+        "dotBelow_left":"႕"
     },
     "asat": {
         "asat":"္"

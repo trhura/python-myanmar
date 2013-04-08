@@ -71,7 +71,7 @@ class UnicodeEncoding (BaseEncoding):
         self.syllable_pattern = [("kinzi",), "consonant", ("stack",),
                                  ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
                                  ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
-                                 ("aiVowel",), ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+                                 ("aiVowel",), ("aaVowel",), ("dotBelow", "asat"), ("visarga",)]
         self.syllable_form = [
             "independent",
             "digit",
@@ -88,7 +88,7 @@ class LegacyEncoding (BaseEncoding):
         self.syllable_pattern  = [("eVowel",), ("yayit",), "consonant", ("kinzi",),
                                   ("stack",), ("yapin", "wasway", "hatoh",),
                                   ("iVowel", "uVowel", "anusvara", "aiVowel"),
-                                  ("aaVowel",), ("dot_below", "asat"), ("visarga",)]
+                                  ("aaVowel",), ("dotBelow", "asat"), ("visarga",)]
         self.syllable_form = [
             "independent",
             "digit",
