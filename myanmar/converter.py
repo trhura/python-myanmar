@@ -74,6 +74,9 @@ def convert (text, from_encoding, to_encoding):
             if each_pattern == "uVowel":
                 key += choose_uvowel_variant (each_syllable)
 
+            if each_pattern == "aaVowel":
+                key += choose_aavowel_variant (each_syllable)
+
             if each_pattern == "yapin":
                 key += choose_yapin_variant (each_syllable)
 
@@ -119,6 +122,12 @@ def choose_na_variant (syllable):
 
 def choose_uvowel_variant (syllable):
     key = "_tall" if has_lower_marks (syllable, ["uVowel"]) else ""
+    return key
+
+def choose_aavowel_variant (syllable):
+    _C = [LETTER_GHA, LETTER_NGA, LETTER_DA,
+          LETTER_DHA, LETTER_PA, LETTER_WA]
+    key = "_tall" if syllable['consonant'] in _C else ""
     return key
 
 def choose_yayit_variant (syllable):
