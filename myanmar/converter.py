@@ -57,7 +57,7 @@ def convert (text, from_encoding, to_encoding):
         # collect codepoints in syllable, in correct syllable order
         syllable = ""
         for each_pattern in syllable_pattern:
-            print(each_syllable)
+            #print(each_syllable)
             if not each_pattern in each_syllable:
                 continue
 
@@ -135,7 +135,15 @@ def choose_uvowel_variant (syllable):
 def choose_aavowel_variant (syllable):
     _C = [LETTER_GHA, LETTER_NGA, LETTER_DA,
           LETTER_DHA, LETTER_PA, LETTER_WA]
-    key = "_tall" if syllable['consonant'] in _C else ""
+
+    key = ''
+    if syllable['consonant'] in _C:
+        for c in ['yapin', 'yayit', 'wasway']:
+            if c in syllable:
+                break
+        else:
+            key = '_tall'
+
     return key
 
 def choose_yayit_variant (syllable):

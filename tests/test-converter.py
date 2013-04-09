@@ -5,6 +5,7 @@ import unittest
 import sys
 import os
 import glob
+import json
 
 tests_dir   = os.path.dirname(os.path.abspath(__file__))
 root_dir    = os.path.dirname(tests_dir)
@@ -23,7 +24,23 @@ encodings = imp.load_source ('encodings',
 class TestConversion (unittest.TestCase):
 
     def setUp (self):
-        pass
+        self.maxDiff = None
+
+    def test_json_files (self):
+        uni = encodings.UnicodeEncoding ()
+        zgy = encodings.ZawgyiEncoding ()
+
+        def sub_keys (json):
+            ret = []
+            for key, value in json.items ():
+                ret += json[key].keys ()
+            return ret
+
+        self.assertEqual (sorted(uni.json_data.keys ()),
+                          sorted(zgy.json_data.keys ()))
+
+        self.assertEqual (sorted(sub_keys(uni.json_data)),
+                          sorted(sub_keys(zgy.json_data)))
 
     def test_zawgyi_syllable_iter (self):
         for path in glob.glob (os.path.join (os.path.dirname (__file__),

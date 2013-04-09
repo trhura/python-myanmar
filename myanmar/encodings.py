@@ -54,7 +54,8 @@ class BaseEncoding ():
 
         return "(?P<syllable>"+ "|".join ([build_pattern(x) for x in self.syllable_form]) + ")"
 
-    def load_json (self, jsonFile):
+    @classmethod
+    def load_json (cls, jsonFile):
         if not jsonFile:
             raise RuntimeError ("jsonFile must not be None.")
 

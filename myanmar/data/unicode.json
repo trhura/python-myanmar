@@ -92,7 +92,7 @@
         "stack-gha": "္ဃ",
         "stack-ca": "္စ",
         "stack-cha": "္ဆ",
-		"stack_cha_alt": "္ဆ",
+		"stack-cha_alt": "္ဆ",
         "stack-ja": "္ဇ",
         "stack-jha": "္ဈ",
         "stack-tta": "္ဋ",
@@ -134,14 +134,14 @@
         "yayit_wide_lower": "ြ",
         "yayit_narrow_lower_upper": "ြ",
         "yayit_wide_lower_upper": "ြ",
-        "yayit_wasway_narrow": "ြွ",
+        "yayit_narrow_wasway": "ြွ",
         "yayit_wide_wasway": "ြွ",
         "yayit_narrow_wasway_upper": "ြွ",
         "yayit_wide_wasway_upper": "ြွ",
         "yayit_narrow_u": "ြု",
         "yayit_wide_u": "ြု",
-        "yayit_u_upper_narrow": "ြု",
-        "yayit_u_upper_wide": "ြု"
+        "yayit_narrow_u_upper": "ြု",
+        "yayit_wide_u_upper": "ြု"
     },
     "wasway": {
         "wasway": "ွ",
