@@ -175,8 +175,9 @@
         "anusvara":"ံ"
     },
     "aaVowel": {
+		"aaVowel-asat": "ာ္",
         "aaVowel":"ာ",
-        "aaVowel-asat":"ၚ",
+        "aaVowel-asat_tall":"ၚ",
         "aaVowel_tall":"ါ"
     },
     "dotBelow": {

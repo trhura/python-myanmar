@@ -175,10 +175,12 @@
         "anusvara": "ံ"
     },
     "aaVowel": {
+        "aaVowel-asat": "ာ်",
         "aaVowel": "ာ",
-        "aaVowel-asat": "ါ်",
+		"aaVowel-asat_tall": "ါ်",
         "aaVowel_tall": "ါ"
     },
+
     "dotBelow": {
         "dotBelow": "့",
         "dotBelow_alt": "့",

@@ -76,6 +76,7 @@ def convert (text, from_encoding, to_encoding):
 
             if each_pattern == "aaVowel":
                 key += choose_aavowel_variant (each_syllable)
+                print (to_encoding.table[key], '\t', each_syllable)
 
             if each_pattern == "yapin":
                 key += choose_yapin_variant (each_syllable)
@@ -137,19 +138,22 @@ def choose_aavowel_variant (syllable):
           LETTER_DHA, LETTER_PA, LETTER_WA]
 
     key = ''
+    if 'asat' in syllable:
+        key += '_asat'
+
     if syllable['consonant'] in _C:
         for c in ['yapin', 'yayit', 'wasway']:
             if c in syllable:
                 break
         else:
-            key = '_tall'
+            key += '_tall'
 
     return key
 
 def choose_yayit_variant (syllable):
     key = "_wide" if is_wide_consonant(syllable['consonant']) else "_narrow"
-    key += "_lower" if has_lower_marks (syllable, "yayit") else ""
-    key += "_upper" if has_upper_marks (syllable, "yayit") else ""
+    key += "_lower" if has_lower_marks (syllable, ["yayit", "uVowel"]) else ""
+    key += "_upper" if has_upper_marks (syllable, ["yayit"]) else ""
     return key
 
 def choose_yapin_variant (syllable):

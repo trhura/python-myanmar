@@ -1,5 +1,5 @@
 import json
-import re
+import regex as re
 import os
 
 class BaseEncoding ():
@@ -30,7 +30,7 @@ class BaseEncoding ():
         return ret
 
     def get_compiled_pattern (self):
-        #print (self.get_pattern () + '\n')
+        print (self.get_pattern () + '\n')
         return re.compile (self.get_pattern(), re.UNICODE)
 
     def get_pattern (self):
@@ -38,8 +38,11 @@ class BaseEncoding ():
             if isinstance (pattern, str):
                 node = pattern
                 #or_expr = "|".join(["--%s--(%s)" %(x, x.encode ('unicode_escape')) \
-                #for x in sorted(self.json_data[node].values ()) if x])
-                or_expr = "|".join([x for x in sorted(self.json_data[node].values ()) if x])
+                #for x in sorted(self.json_data[node].values (), reverse=True, key= lambda s: len(s)) if x])
+                or_expr = "|".join([x for x in sorted(self.json_data[node].values (),
+                                                      key=lambda s: len(s),
+                                                      reverse=True)
+                                                      if x])
                 return '(?P<' + pattern + '>'+  or_expr + ')'
 
             if isinstance (pattern, tuple):
@@ -72,7 +75,7 @@ class UnicodeEncoding (BaseEncoding):
         self.syllable_pattern = [("kinzi",), "consonant", ("stack",),
                                  ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
                                  ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
-                                 ("aiVowel",), ("aaVowel",), ("dotBelow", "asat"), ("visarga",)]
+                                 ("aiVowel",), ("aaVowel", "asat", "dotBelow"), ("visarga",)]
         self.syllable_form = [
             "independent",
             "digit",
@@ -89,7 +92,7 @@ class LegacyEncoding (BaseEncoding):
         self.syllable_pattern  = [("eVowel",), ("yayit",), "consonant", ("kinzi",),
                                   ("stack",), ("yapin", "wasway", "hatoh",),
                                   ("iVowel", "uVowel", "anusvara", "aiVowel"),
-                                  ("aaVowel",), ("dotBelow", "asat"), ("visarga",)]
+                                  ("aaVowel", "asat", "dotBelow"), ("visarga",)]
         self.syllable_form = [
             "independent",
             "digit",
