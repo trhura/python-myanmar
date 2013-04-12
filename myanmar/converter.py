@@ -58,16 +58,15 @@ def convert (text, from_encoding, to_encoding):
         syllable_pattern = list(itertools.chain(*syllable_pattern))
 
         # collect codepoints in syllable, in correct syllable order
-        syllable = ""
+        syllable = {}
 
-        for each_pattern in syllable_pattern:
-            if not each_pattern in each_syllable:
-                continue
+        for each_part in each_syllable.keys():
+            if each_part == 'syllable': continue # skip complete syllable
 
-            key = from_encoding.reverse_table[each_syllable[each_pattern]]
+            key = from_encoding.reverse_table[each_syllable[each_part]]
             key = key[:key.find('_')] if '_' in key else key # remove variant suffixes
 
-            if each_pattern == "consonant":
+            if each_part == "consonant":
                 if each_syllable["consonant"] == LETTER_NA:
                     key += choose_na_variant (each_syllable)
 
@@ -77,31 +76,28 @@ def convert (text, from_encoding, to_encoding):
                 if each_syllable["consonant"] == LETTER_NNYA:
                     key += choose_nnya_variant (each_syllable)
 
-            if each_pattern == "yapin":
+            if each_part == "yapin":
                 key += choose_yapin_variant (each_syllable)
 
-            if each_pattern == "yayit":
+            if each_part == "yayit":
                 key += choose_yayit_variant (each_syllable)
 
-            if each_pattern == "uVowel":
+            if each_part == "uVowel":
                 key += choose_uvowel_variant (each_syllable)
 
-            if each_pattern == "aaVowel":
+            if each_part == "aaVowel":
                 key += choose_aavowel_variant (each_syllable)
-                #print (to_encoding.table[key], '\t', each_syllable)
 
-            if each_pattern == "dotBelow":
+            if each_part == "dotBelow":
                 key += choose_dot_below_variant (each_syllable)
 
-            char = to_encoding.table[key]
-            syllable += char
+            syllable[each_part] = to_encoding.table[key]
 
-        # Post-processing
-        if 'uVowel' in each_syllable and 'hatoh' in each_syllable:
-            pass
-            #print (each_syllable)
+        for each_pattern in syllable_pattern:
+            if each_pattern not in syllable:
+                continue
 
-        otext += syllable
+            otext += syllable[each_pattern]
 
     #pprint (to_encoding.table)
     #pprint (from_encoding.reverse_table)
