@@ -59,6 +59,7 @@ def convert (text, from_encoding, to_encoding):
 
         # collect codepoints in syllable, in correct syllable order
         syllable = {}
+        flags = {}
 
         for each_part in each_syllable.keys():
             if each_part == 'syllable': continue # skip complete syllable
@@ -84,6 +85,7 @@ def convert (text, from_encoding, to_encoding):
 
             if each_part == "uVowel":
                 key += choose_uvowel_variant (each_syllable)
+                flags[each_part] = key
 
             if each_part == "aaVowel":
                 key += choose_aavowel_variant (each_syllable)
@@ -91,13 +93,23 @@ def convert (text, from_encoding, to_encoding):
             if each_part == "dotBelow":
                 key += choose_dot_below_variant (each_syllable)
 
-            syllable[each_part] = to_encoding.table[key]
+            syllable[each_part] = key
+
+        if 'uVowel' in syllable and 'hatoh' in syllable:
+            del syllable['uVowel']
+            syllable['hatoh'] = syllable['hatoh'] + '_' + flags['uVowel']
+            print(syllable['hatoh'])
+
+        if 'wasway' in syllable and 'hatoh' in syllable:
+            del syllable['hatoh']
+            syllable['wasway'] = syllable['wasway'] + '_' + 'hatoh'
 
         for each_pattern in syllable_pattern:
             if each_pattern not in syllable:
                 continue
 
-            otext += syllable[each_pattern]
+            key = syllable[each_pattern]
+            otext += to_encoding.table[key]
 
     #pprint (to_encoding.table)
     #pprint (from_encoding.reverse_table)
@@ -154,15 +166,16 @@ def choose_uvowel_variant (syllable):
     return key
 
 def choose_aavowel_variant (syllable):
-    _C = [LETTER_GHA, LETTER_NGA, LETTER_DA,
+    _C = [LETTER_KHA, LETTER_GHA, LETTER_NGA, LETTER_DA,
           LETTER_DHA, LETTER_PA, LETTER_WA]
 
+    #FIXME: asat
     key = ''
     if 'asat' in syllable:
         key += '-asat'
 
     if syllable['consonant'] in _C:
-        for c in ['yapin', 'yayit', 'wasway']:
+        for c in ['yapin', 'yayit', 'wasway', 'hatoh']:
             if c in syllable:
                 break
         else:
@@ -200,6 +213,7 @@ def main  ():
     with open ('data/test2.txt', mode='r', encoding='utf-8') as iFile:
         data = iFile.read ()
         print(convert (data, 'unicode', 'zawgyi'))
+        #convert (data, 'unicode', 'zawgyi')
 
 if __name__ == "__main__":
     main ()

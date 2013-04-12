@@ -145,14 +145,14 @@
     },
     "wasway": {
         "wasway": "ွ",
-        "wasway_hatoh_lig": "ွှ",
+        "wasway_hatoh": "ွှ",
         "wasway_hatoh_small": "ွှ"
     },
     "hatoh": {
         "hatoh": "ှ",
         "hatoh_small": "ှ",
-        "hatoh_u_lig": "ှု",
-        "hatoh_uu_lig": "ှူ"
+        "hatoh_uVowel": "ှု",
+        "hatoh_uuVowel": "ှူ"
     },
     "eVowel": {
         "eVowel": "ေ"
