@@ -34,9 +34,11 @@ def convert (text, from_encoding, to_encoding):
     from_encoding = encodings[from_encoding]()
     to_encoding = encodings[to_encoding]()
     iterator = SyllableIter (text=text, encoding=from_encoding)
+    #print (from_encoding.get_pattern())
 
     otext = ""
     for each_syllable in iterator:
+        #print(each_syllable)
         complete_syllable = each_syllable['syllable']
 
         if len(each_syllable) == 1:
@@ -47,6 +49,7 @@ def convert (text, from_encoding, to_encoding):
         if complete_syllable in from_encoding.reverse_table:
             # Direct mapping
             key = from_encoding.reverse_table[complete_syllable]
+            key = key[:key.find('_')] if '_' in key else key # remove variant suffixes
             otext += to_encoding.table[key]
             continue
 
@@ -56,8 +59,8 @@ def convert (text, from_encoding, to_encoding):
 
         # collect codepoints in syllable, in correct syllable order
         syllable = ""
+
         for each_pattern in syllable_pattern:
-            #print(each_syllable)
             if not each_pattern in each_syllable:
                 continue
 
@@ -66,7 +69,16 @@ def convert (text, from_encoding, to_encoding):
 
             if each_pattern == "consonant":
                 if each_syllable["consonant"] == LETTER_NA:
-                    key +=  choose_na_variant (each_syllable)
+                    key += choose_na_variant (each_syllable)
+
+                if each_syllable["consonant"] == LETTER_RA:
+                    key += choose_ra_variant (each_syllable)
+
+                if each_syllable["consonant"] == LETTER_NNYA:
+                    key += choose_nnya_variant (each_syllable)
+
+            if each_pattern == "yapin":
+                key += choose_yapin_variant (each_syllable)
 
             if each_pattern == "yayit":
                 key += choose_yayit_variant (each_syllable)
@@ -76,17 +88,21 @@ def convert (text, from_encoding, to_encoding):
 
             if each_pattern == "aaVowel":
                 key += choose_aavowel_variant (each_syllable)
-                print (to_encoding.table[key], '\t', each_syllable)
+                #print (to_encoding.table[key], '\t', each_syllable)
 
-            if each_pattern == "yapin":
-                key += choose_yapin_variant (each_syllable)
+            if each_pattern == "dotBelow":
+                key += choose_dot_below_variant (each_syllable)
 
             char = to_encoding.table[key]
             syllable += char
 
+        # Post-processing
+        if 'uVowel' in each_syllable and 'hatoh' in each_syllable:
+            pass
+            #print (each_syllable)
+
         otext += syllable
 
-    from pprint import pprint
     #pprint (to_encoding.table)
     #pprint (from_encoding.reverse_table)
     return otext
@@ -125,12 +141,20 @@ def has_upper_marks (syllable, filters=[]):
             return True
     return False
 
+def choose_ra_variant (syllable):
+    key = "_alt" if "uVowel" in syllable else ""
+    return key
+
 def choose_na_variant (syllable):
     key = "_alt" if has_lower_marks (syllable) else ""
     return key
 
+def choose_nnya_variant (syllable):
+    key = "_alt" if has_lower_marks (syllable) else ""
+    return key
+
 def choose_uvowel_variant (syllable):
-    key = "_tall" if has_lower_marks (syllable, ["uVowel"]) else ""
+    key = "_tall" if has_lower_marks (syllable, ["uVowel", "hatoh"]) else ""
     return key
 
 def choose_aavowel_variant (syllable):
@@ -139,7 +163,7 @@ def choose_aavowel_variant (syllable):
 
     key = ''
     if 'asat' in syllable:
-        key += '_asat'
+        key += '-asat'
 
     if syllable['consonant'] in _C:
         for c in ['yapin', 'yayit', 'wasway']:
@@ -157,7 +181,23 @@ def choose_yayit_variant (syllable):
     return key
 
 def choose_yapin_variant (syllable):
-    key = "_alt" if has_lower_marks (syllable, ["yapin"]) else ""
+    key = "_alt" if has_lower_marks (syllable, ["yapin", "uVowel"]) else ""
+    return key
+
+def choose_dot_below_variant (syllable):
+    key = ""
+
+    if syllable['consonant'] == LETTER_NA:
+        key += "_alt"
+    elif syllable['consonant'] == LETTER_RA:
+        key += "_alt_alt"
+    elif "uVowel" in syllable:
+        key += "_alt_alt" if 'yayit' in syllable else '_alt'
+    elif "yapin" in syllable:
+        key += "_alt"
+    elif  "wasway" in syllable:
+        key += "_alt_alt"
+
     return key
 
 def main  ():

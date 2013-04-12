@@ -39,10 +39,10 @@ class BaseEncoding ():
                 node = pattern
                 #or_expr = "|".join(["--%s--(%s)" %(x, x.encode ('unicode_escape')) \
                 #for x in sorted(self.json_data[node].values (), reverse=True, key= lambda s: len(s)) if x])
-                or_expr = "|".join([x for x in sorted(self.json_data[node].values (),
-                                                      key=lambda s: len(s),
-                                                      reverse=True)
-                                                      if x])
+                or_expr = "|".join(set([x for x in sorted(self.json_data[node].values (),
+                                                          key=lambda s: len(s),
+                                                          reverse=True)
+                                        if x]))
                 return '(?P<' + pattern + '>'+  or_expr + ')'
 
             if isinstance (pattern, tuple):
@@ -74,7 +74,7 @@ class UnicodeEncoding (BaseEncoding):
     def __init__ (self, *args, **kwargs):
         self.syllable_pattern = [("kinzi",), "consonant", ("stack",),
                                  ("yapin",), ("yayit",), ("wasway",), ("hatoh",),
-                                 ("eVowel",), ("iVowel",), ("uVowel",), ("anusvara",),
+                                 ("eVowel",), ("iVowel",), ("uVowel", "anusvara"),
                                  ("aiVowel",), ("aaVowel", "asat", "dotBelow"), ("visarga",)]
         self.syllable_form = [
             "independent",
@@ -103,4 +103,7 @@ class LegacyEncoding (BaseEncoding):
         super ().__init__(*args, **kwargs)
 
 class ZawgyiEncoding (LegacyEncoding):
+    pass
+
+class WininnwaEncoding (LegacyEncoding):
     pass

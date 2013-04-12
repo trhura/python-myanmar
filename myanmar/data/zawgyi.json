@@ -83,7 +83,7 @@
         "nna-dda":"႑",
         "tta-ttha":"႒",
         "tta-tta":"႗",
-        "kyat":""
+        "kyat":"က်ပ္"
     },
     "stack": {
         "stack-ka":"ၠ",
@@ -183,7 +183,7 @@
     "dotBelow": {
         "dotBelow":"့",
         "dotBelow_alt":"႔",
-        "dotBelow_left":"႕"
+        "dotBelow_alt_alt":"႕"
     },
     "asat": {
         "asat":"္"
