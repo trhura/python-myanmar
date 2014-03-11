@@ -2,7 +2,7 @@ import os.path
 import itertools
 import glob
 import imp
-from language import *
+from myanmar.language import *
 
 # FIXME:
 enc = imp.load_source ('encodings',
