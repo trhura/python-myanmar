@@ -59,7 +59,7 @@ def convert ():
     else:
         for fil in args:
             try:
-                ifile   = open (fil, 'r')
+                ifile   = open (fil, 'rb')
                 rawdata = ifile.read ()
                 encoding = chardet.detect(rawdata)['encoding']
                 if encoding == None:
@@ -74,8 +74,8 @@ def convert ():
         print(myanmar.converter.convert (data, options.fro, options.to).encode ('utf-8'), end=' ')
     else:
         try:
-            ifil = codecs.open (options.output_file, mode='w', encoding='utf-8')
-        except Exception as e :
+            ifil = open (options.output_file, mode='w', encoding='utf-8')
+        except Exception as e:
             print(e)
             sys.exit (-1)
 
