@@ -2,6 +2,7 @@ import os.path
 import itertools
 import glob
 import imp
+import sys
 from myanmar.language import *
 
 # FIXME:
@@ -98,7 +99,6 @@ def convert (text, from_encoding, to_encoding):
         if 'uVowel' in syllable and 'hatoh' in syllable:
             del syllable['uVowel']
             syllable['hatoh'] = syllable['hatoh'] + '_' + flags['uVowel']
-            print(syllable['hatoh'])
 
         if 'wasway' in syllable and 'hatoh' in syllable:
             del syllable['hatoh']
@@ -108,8 +108,11 @@ def convert (text, from_encoding, to_encoding):
             if each_pattern not in syllable:
                 continue
 
-            key = syllable[each_pattern]
-            otext += to_encoding.table[key]
+            try:
+                key = syllable[each_pattern]
+                otext += to_encoding.table[key]
+            except Exception as e:
+                print(key, syllable,file=sys.stderr)
 
     #pprint (to_encoding.table)
     #pprint (from_encoding.reverse_table)

@@ -152,7 +152,9 @@
         "hatoh": "ှ",
         "hatoh_small": "ှ",
         "hatoh_uVowel": "ှု",
-        "hatoh_uuVowel": "ှူ"
+        "hatoh_uuVowel": "ှူ",
+        "hatoh_uVowel_tall": "ှူ",
+        "hatoh_uuVowel_tall": "ှူ"
     },
     "eVowel": {
         "eVowel": "ေ"
