@@ -1,5 +1,5 @@
 import json
-import regex as re
+import re
 import os
 
 class BaseEncoding ():
