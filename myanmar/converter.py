@@ -143,19 +143,7 @@ class _TlsMyanmarConverter():
         # if isUnicode:
         # print pattern
         return re.compile(pattern, re.UNICODE)
-
-    def sortLongestFirst(self, a, b):
-        # print a.encode ('utf-8'), b.encode ('utf-8')
-        if len(a) > len(b):
-            return -1
-        elif len(a) < len(b):
-            return 1
-        elif (a < b):
-            return -1
-        elif (a > b):
-            return 1
-        return 0
-
+    
     def convertToUnicodeSyllables(self, inputText):
         outputText = ""
         syllables = []
