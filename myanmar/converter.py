@@ -4,11 +4,7 @@ import glob
 import imp
 import sys
 from myanmar.language import *
-
-# FIXME:
-enc = imp.load_source ('encodings',
-                       os.path.join (os.path.dirname (os.path.abspath (__file__)),
-                                     'encodings.py'))
+from myanmar import encodings as enc
 
 def get_available_encodings ():
     encodings = []

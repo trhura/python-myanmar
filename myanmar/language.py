@@ -1,10 +1,7 @@
 import os
 import imp
 
-# FIXME:
-enc = imp.load_source ('encodings',
-                       os.path.join (os.path.dirname (os.path.abspath (__file__)),
-                                     'encodings.py'))
+from myanmar import encodings as enc
 
 LETTER_KA               = chr(0x1000)
 LETTER_KHA              = chr(0x1001)
