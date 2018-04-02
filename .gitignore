@@ -1,5 +1,1 @@
-build/
-dist/
-myanmar/*.pyc
-python_myanmar.egg-info/
-myanmar/.ropeproject
+.venv
