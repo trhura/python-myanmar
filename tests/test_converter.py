@@ -61,15 +61,17 @@ def test_conversion():
     for line in fil.readlines():
         line = line.strip()
         strs = line.split('\t')
+
         encodings = converter.get_available_encodings()
         encodings.sort()
-        if len(strs) != len(encodings):
-            continue
+        assert len(strs) == len(encodings)
+
         i = 0
         strings = {}
         for encoding in encodings:
             strings[encoding] = strs[i]
             i += 1
+
         for encoding in encodings:
             if strings[encoding] == '-':
                 continue
@@ -80,12 +82,12 @@ def test_conversion():
             assert strings['unicode'] == converter.convert(
                 strings[encoding], encoding, 'unicode'
             )
-            assert strings[encoding] == converter.convert(
-                strings['wininnwa'], 'wininnwa', encoding
-            )
-            assert strings['wininnwa'] == converter.convert(
-                strings[encoding], encoding, 'wininnwa'
-            )
+            # assert strings[encoding] == converter.convert(
+            #     strings['wininnwa'], 'wininnwa', encoding
+            # )
+            # assert strings['wininnwa'] == converter.convert(
+            #     strings[encoding], encoding, 'wininnwa'
+            # )
             assert strings[encoding] == converter.convert(
                 strings['zawgyi'], 'zawgyi', encoding
             )
