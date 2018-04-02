@@ -35,7 +35,6 @@ def convert (text, from_encoding, to_encoding):
 
     otext = ""
     for each_syllable in iterator:
-        #print(each_syllable)
         complete_syllable = each_syllable['syllable']
 
         if len(each_syllable) == 1:

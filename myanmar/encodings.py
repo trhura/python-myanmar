@@ -30,7 +30,6 @@ class BaseEncoding ():
         return ret
 
     def get_compiled_pattern (self):
-        #print (self.get_pattern () + '\n')
         return re.compile (self.get_pattern(), re.UNICODE)
 
     def get_pattern (self):
@@ -39,7 +38,7 @@ class BaseEncoding ():
                 node = pattern
                 #or_expr = "|".join(["--%s--(%s)" %(x, x.encode ('unicode_escape')) \
                 #for x in sorted(self.json_data[node].values (), reverse=True, key= lambda s: len(s)) if x])
-                or_expr = "|".join(set([x for x in sorted(self.json_data[node].values (),
+                or_expr = "|".join(set([re.escape(x) for x in sorted(self.json_data[node].values (),
                                                           key=lambda s: len(s),
                                                           reverse=True)
                                         if x]))
