@@ -90,7 +90,7 @@ class SyllableIter ():
     """
     def __init__ (self, text, encoding):
         if not isinstance(encoding, enc.BaseEncoding):
-            raise TypeError ("is not a valid encoding.")
+            raise TypeError (encdoing + " is not a valid encoding.")
 
         self.text = text
         self.pattern  = encoding.get_compiled_pattern ()
@@ -102,9 +102,13 @@ class SyllableIter ():
     def __next__ (self):
         match = self.pattern.search (self.text, self.start)
         if not match:
-            raise StopIteration
-
-        if match.start () == self.start:
+            if self.start < len(self.text):
+                # there are still non Burmese chars at the end
+                ret = {'syllable': self.text[self.start:]}
+                self.start = len(self.text)
+            else:
+                raise StopIteration
+        elif match.start () == self.start:
             # no unmatched text
             self.start = match.end ()
             ret = { k: v for k , v in match.groupdict().items() if v }
