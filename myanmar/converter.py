@@ -1,37 +1,58 @@
-import os.path
-import itertools
-import glob
-import imp
+# converter.py - converter module
+# coding: utf-8
+# The MIT License (MIT)
+# Copyright (c) 2018 Thura Hlaing
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+# OR OTHER DEALINGS IN THE SOFTWARE.
+
 import sys
+import itertools
+
 from myanmar.language import *
-from myanmar import encodings as enc
+from myanmar import encodings
 
 def get_available_encodings ():
-    encodings = []
-    _ROOT = os.path.dirname (os.path.abspath (__file__))
-    for path in glob.glob (os.path.join (_ROOT, 'data', '*.json')):
-        encodings += [os.path.splitext (os.path.basename(path))[0]]
-    return encodings
+    return ['unicode', 'zawgyi']
 
-def convert (text, from_encoding, to_encoding):
+encoders = {
+    "unicode": encodings.UnicodeEncoding(),
+    "zawgyi": encodings.ZawgyiEncoding(),
+}
+
+def convert (text, from_enc, to_enc):
     """
-    Take a unicode string, and convert it to from_encoding to
-    to_encoding.
+    Take a unicode string, and convert it to from_encoder to
+    to_encoder.
 
     Supported encodings can be obtained by get_available_encodings ()
     function.
     """
-    encodings = { encoding:  getattr(enc, encoding.title() + 'Encoding') \
-                  for encoding in get_available_encodings() }
+    if from_enc not in encoders:
+        raise NotImplementedError ("Unsupported encoding: %s" % from_encoder)
 
-    for encoding  in [from_encoding, to_encoding]:
-        if not encoding in encodings:
-            raise NotImplementedError ("Unsupported encoding: %s" % encoding)
+    if to_enc not in encoders:
+        raise NotImplementedError ("Unsupported encoding: %s" % to_encoder)
 
-    from_encoding = encodings[from_encoding]()
-    to_encoding = encodings[to_encoding]()
-    iterator = SyllableIter (text=text, encoding=from_encoding)
-    #print (from_encoding.get_pattern())
+    from_encoder = encoders[from_enc]
+    to_encoder = encoders[to_enc]
+    iterator = SyllableIter (text=text, encoding=from_encoder)
+    #print (from_encoder.get_pattern())
 
     otext = ""
     for each_syllable in iterator:
@@ -41,15 +62,15 @@ def convert (text, from_encoding, to_encoding):
             otext += complete_syllable
             continue
 
-        if complete_syllable in from_encoding.reverse_table:
+        if complete_syllable in from_encoder.reverse_table:
             # Direct mapping
-            key = from_encoding.reverse_table[complete_syllable]
+            key = from_encoder.reverse_table[complete_syllable]
             key = key[:key.find('_')] if '_' in key else key # remove variant suffixes
-            otext += to_encoding.table[key]
+            otext += to_encoder.table[key]
             continue
 
         # flattern syllable_pattern, convert to a list of tuples first
-        syllable_pattern = [(x,) if isinstance(x, str) else x for x in to_encoding.syllable_pattern]
+        syllable_pattern = [(x,) if isinstance(x, str) else x for x in to_encoder.syllable_pattern]
         syllable_pattern = list(itertools.chain(*syllable_pattern))
 
         # collect codepoints in syllable, in correct syllable order
@@ -59,7 +80,7 @@ def convert (text, from_encoding, to_encoding):
         for each_part in each_syllable.keys():
             if each_part == 'syllable': continue # skip complete syllable
 
-            key = from_encoding.reverse_table[each_syllable[each_part]]
+            key = from_encoder.reverse_table[each_syllable[each_part]]
             key = key[:key.find('_')] if '_' in key else key # remove variant suffixes
 
             if each_part == "consonant":
@@ -104,12 +125,12 @@ def convert (text, from_encoding, to_encoding):
 
             try:
                 key = syllable[each_pattern]
-                otext += to_encoding.table[key]
+                otext += to_encoder.table[key]
             except Exception as e:
                 print(key, syllable,file=sys.stderr)
 
-    #pprint (to_encoding.table)
-    #pprint (from_encoding.reverse_table)
+    #pprint (to_encoder.table)
+    #pprint (from_encoder.reverse_table)
     return otext
 
 def is_wide_consonant (char):

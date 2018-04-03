@@ -22,10 +22,10 @@
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-"""A Python module to convert text in various Burmese encodings.
+"""A Python module to convert Burmese text in different encodings.
 """
 __author__ = 'Thura Hlaing'
 __email__ = 'trhura@gmail.com'
 __version__ = '0.1.0'
 __license__ = 'MIT'
-__copyright__ == 'Copyright (c) 2018 Thura Hlaing'
+__copyright__ = 'Copyright (c) 2018 Thura Hlaing'
