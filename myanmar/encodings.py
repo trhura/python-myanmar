@@ -38,10 +38,10 @@ class BaseEncoding ():
                 node = pattern
                 #or_expr = "|".join(["--%s--(%s)" %(x, x.encode ('unicode_escape')) \
                 #for x in sorted(self.json_data[node].values (), reverse=True, key= lambda s: len(s)) if x])
-                or_expr = "|".join(set([re.escape(x) for x in sorted(self.json_data[node].values (),
-                                                          key=lambda s: len(s),
-                                                          reverse=True)
-                                        if x]))
+                or_expr = "|".join([x for x in sorted(set(self.json_data[node].values()),
+                                                      key=len,
+                                                      reverse=True)
+                                        if x])
                 return '(?P<' + pattern + '>'+  or_expr + ')'
 
             if isinstance (pattern, tuple):

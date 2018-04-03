@@ -177,10 +177,10 @@
         "anusvara":"ံ"
     },
     "aaVowel": {
-		"aaVowel-asat": "ာ္",
         "aaVowel":"ာ",
-        "aaVowel-asat_tall":"ၚ",
-        "aaVowel_tall":"ါ"
+        "aaVowel_tall":"ါ",
+		"aaVowel-asat": "ာ္",
+        "aaVowel-asat_tall":"ၚ"
     },
     "dotBelow": {
         "dotBelow":"့",
