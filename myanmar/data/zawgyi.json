@@ -151,10 +151,10 @@
     "hatoh": {
         "hatoh":"ွ",
         "hatoh_small":"ႇ",
-        "hatoh_uVowel":"ႈ",
-        "hatoh_uuVowel":"ႉ",
-        "hatoh_uVowel_tall": "ွဳ" ,
-        "hatoh_uuVowel_tall": "ွဴ"
+        "hatoh-uVowel":"ႈ",
+        "hatoh-uuVowel":"ႉ",
+        "hatoh-uVowel_tall": "ွဳ" ,
+        "hatoh-uuVowel_tall": "ွဴ"
     },
     "eVowel": {
         "eVowel":"ေ"
