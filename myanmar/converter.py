@@ -147,7 +147,7 @@ def has_upper_marks (syllable, filters=[]):
     return False
 
 def choose_ra_variant (syllable):
-    key = "_alt" if "uVowel" in syllable else ""
+    key = "_alt" if has_lower_marks (syllable, ["hatoh"]) else ""
     return key
 
 def choose_na_variant (syllable):
