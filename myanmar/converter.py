@@ -36,7 +36,6 @@ def convert (text, from_encoding, to_encoding):
     otext = ""
     for each_syllable in iterator:
         complete_syllable = each_syllable['syllable']
-
         if len(each_syllable) == 1:
             # unmatched text, no need to convert
             otext += complete_syllable
@@ -64,13 +63,13 @@ def convert (text, from_encoding, to_encoding):
             key = key[:key.find('_')] if '_' in key else key # remove variant suffixes
 
             if each_part == "consonant":
-                if each_syllable["consonant"] == LETTER_NA:
+                if key == "na":
                     key += choose_na_variant (each_syllable)
 
-                if each_syllable["consonant"] == LETTER_RA:
+                if key == "ra":
                     key += choose_ra_variant (each_syllable)
 
-                if each_syllable["consonant"] == LETTER_NNYA:
+                if key == "nnya":
                     key += choose_nnya_variant (each_syllable)
 
             if each_part == "yapin":
@@ -97,7 +96,7 @@ def convert (text, from_encoding, to_encoding):
 
         if 'wasway' in syllable and 'hatoh' in syllable:
             del syllable['hatoh']
-            syllable['wasway'] = syllable['wasway'] + '_' + 'hatoh'
+            syllable['wasway'] = syllable['wasway'] + '-' + 'hatoh'
 
         for each_pattern in syllable_pattern:
             if each_pattern not in syllable:
@@ -208,10 +207,7 @@ def choose_dot_below_variant (syllable):
     return key
 
 def main  ():
-    with open ('data/test2.txt', mode='r', encoding='utf-8') as iFile:
-        data = iFile.read ()
-        print(convert (data, 'unicode', 'zawgyi'))
-        #convert (data, 'unicode', 'zawgyi')
+    pass
 
 if __name__ == "__main__":
     main ()
