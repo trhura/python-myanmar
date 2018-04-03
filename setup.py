@@ -5,7 +5,7 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 requirements = [ ]
@@ -34,7 +34,7 @@ setup(
     include_package_data=True,
     keywords='python-myanmar',
     name='python-myanmar',
-    packages=find_packages(include=['python-myanmar']),
+    packages=find_packages(include=['myanmar']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
