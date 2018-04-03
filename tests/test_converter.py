@@ -23,7 +23,7 @@ def test_json_files():
 
 def test_uni2zgy_conversion():
     try:
-        path = os.path.join(os.path.dirname(__file__), 'converter-tests.txt')
+        path = os.path.join(os.path.dirname(__file__), 'data', 'converter.txt')
         fil = open(path, 'r', encoding='utf-8')
     except Exception as e:
         sys.exit(-1)
@@ -38,7 +38,7 @@ def test_uni2zgy_conversion():
 
 def test_zgy2uni_conversion():
     try:
-        path = os.path.join(os.path.dirname(__file__), 'converter-tests.txt')
+        path = os.path.join(os.path.dirname(__file__), 'data', 'converter.txt')
         fil = open(path, 'r', encoding='utf-8')
     except Exception as e:
         sys.exit(-1)

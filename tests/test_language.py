@@ -7,7 +7,9 @@ from myanmar import encodings
 
 def test_zawgyi_syllable_iter():
     for path in glob.glob(
-        os.path.join(os.path.dirname(__file__), 'zawgyi-syllable-iter*.txt')
+        os.path.join(
+            os.path.dirname(__file__), 'data', 'zgy-syllableiter*.txt'
+        )
     ):
         with open(path, 'r', encoding='utf-8') as iFile:
             text = iFile.readline().strip()
@@ -21,7 +23,9 @@ def test_zawgyi_syllable_iter():
 
 def test_unicode_syllable_iter():
     for path in glob.glob(
-        os.path.join(os.path.dirname(__file__), 'unicode-syllable-iter*.txt')
+        os.path.join(
+            os.path.dirname(__file__), 'data', 'uni-syllableiter*.txt'
+        )
     ):
         with open(path, 'r', encoding='utf-8') as iFile:
             text = iFile.readline().strip()
