@@ -1,52 +1,47 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# setup.py - python-myanmar installation script
-#
-# Copyright (C) 2012 Thura Hlaing <trhura@gmail.com>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301 USA
-
-"""python-myanmar installation script."""
+"""The setup script."""
 
 from setuptools import setup, find_packages
 
-setup(name='python-myanmar',
-      version='0.0.1',
-      packages= find_packages(exclude='tests'),
-      package_data={
-        'myanmar': ['data/*.json'],
-        },
-      author='Thura Hlaing',
-      author_email='trhura@gmail.com',
-      url='http://code.google.com/p/python-myanmar',
-      license='GPL-3',
-      description='Python Routines for Myanmar Language Processing',
-      long_description=open('README.md').read(),
-      classifiers=[
-          'Development Status :: 3 - Alpha',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
-          'Operating System :: OS Independent',
-          'Programming Language :: Python',
-          'Topic :: Software Development :: Libraries :: Python Modules',
-          'Topic :: Text Processing :: General',
-          ],
-      entry_points = {
-          'console_scripts' : ['myanmar-converter = myanmar._private:convert']
-      },
+with open('README.rst') as readme_file:
+    readme = readme_file.read()
 
-        test_suite = 'tests',
-      )
+requirements = [ ]
+
+setup_requirements = ['pytest-runner', ]
+
+test_requirements = ['pytest', ]
+
+setup(
+    author="Thura Hlaing",
+    author_email='trhura@gmail.com',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+    description="Various Python Routines for Myanmar Language",
+    install_requires=requirements,
+    license="MIT license",
+    long_description=readme,
+    include_package_data=True,
+    keywords='python-myanmar',
+    name='python-myanmar',
+    packages=find_packages(include=['python-myanmar']),
+    setup_requires=setup_requirements,
+    test_suite='tests',
+    tests_require=test_requirements,
+    url='https://github.com/trhura/python-myanmar',
+    version='1.0.0',
+    zip_safe=False,
+    package_data={
+        'myanmar': ['data/*.json'],
+    },
+)
