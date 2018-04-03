@@ -87,9 +87,9 @@ def convert (text, from_encoding, to_encoding):
 
             if each_part == "dotBelow":
                 key += choose_dot_below_variant (each_syllable)
-
             syllable[each_part] = key
 
+        # print(each_syllable, "---", syllable)
         if 'uVowel' in syllable and 'hatoh' in syllable:
             del syllable['uVowel']
             syllable['hatoh'] = syllable['hatoh'] + '_' + flags['uVowel']
@@ -168,8 +168,8 @@ def choose_aavowel_variant (syllable):
 
     #FIXME: asat
     key = ''
-    if 'asat' in syllable:
-        key += '-asat'
+    # if 'asat' in syllable:
+    #     key += '-asat'
 
     if syllable['consonant'] in _C:
         for c in ['yapin', 'yayit', 'wasway', 'hatoh']:
