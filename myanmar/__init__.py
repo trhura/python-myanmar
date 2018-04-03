@@ -21,9 +21,6 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-"""A Python module to convert Burmese text in different encodings.
-"""
 __author__ = 'Thura Hlaing'
 __email__ = 'trhura@gmail.com'
 __version__ = '1.0.1'
