@@ -1,5 +1,6 @@
 ## About
-![PyPi](https://badge.fury.io/py/python-myanmar.svg)
+
+![PyPI](https://img.shields.io/pypi/v/python-myanmar.svg)
 ![Travis](https://img.shields.io/travis/trhura/python-myanmar.svg)
 
 
