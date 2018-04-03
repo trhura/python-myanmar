@@ -24,15 +24,15 @@
 import re
 import os
 import json
+import pkgutil
 
 class BaseEncoding ():
 
     def __init__ (self):
         # get json file name dynamically from class name
-        name = self.__class__.__name__
-        name = name[:name.find('Encoding')].lower() + '.json'
-        _ROOT = os.path.dirname(os.path.dirname(os.path.abspath (__file__)))
-        self.json_data = self.load_json (os.path.join(_ROOT, 'data', name))
+        encname = self.__class__.__name__
+        filename = encname[:encname.find('Encoding')].lower() + '.json'
+        self.json_data = json.loads(pkgutil.get_data('myanmar', 'data/' + filename))
 
         self.reverse_table = self.get_reverse_table ()
         self.table = self.get_table ()
