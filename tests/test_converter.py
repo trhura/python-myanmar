@@ -51,7 +51,7 @@ def test_unicode_syllable_iter():
                 assert each['syllable'] == syllables[i]
 
 
-def test_conversion():
+def test_uni2zgy_conversion():
     try:
         path = os.path.join(os.path.dirname(__file__), 'converter-tests.txt')
         fil = codecs.open(path, 'r', encoding='utf-8')
@@ -60,38 +60,27 @@ def test_conversion():
 
     for line in fil.readlines():
         line = line.strip()
-        strs = line.split('\t')
+        unistr, zgystr = line.split('\t')
 
-        encodings = converter.get_available_encodings()
-        encodings.sort()
-        assert len(strs) == len(encodings)
+        assert zgystr == converter.convert(
+            unistr, 'unicode', 'zawgyi'
+        )
 
-        i = 0
-        strings = {}
-        for encoding in encodings:
-            strings[encoding] = strs[i]
-            i += 1
+        fil.close()
 
-        for encoding in encodings:
-            if strings[encoding] == '-':
-                continue
-            # assert 'အဂၤါ' == converter.convert('အင်္ဂါ', 'unicode', 'zawgyi')
-            assert strings[encoding] == converter.convert(
-                strings['unicode'], 'unicode', encoding
-            )
-            assert strings['unicode'] == converter.convert(
-                strings[encoding], encoding, 'unicode'
-            )
-            # assert strings[encoding] == converter.convert(
-            #     strings['wininnwa'], 'wininnwa', encoding
-            # )
-            # assert strings['wininnwa'] == converter.convert(
-            #     strings[encoding], encoding, 'wininnwa'
-            # )
-            assert strings[encoding] == converter.convert(
-                strings['zawgyi'], 'zawgyi', encoding
-            )
-            assert strings['zawgyi'] == converter.convert(
-                strings[encoding], encoding, 'zawgyi'
-            )
+def test_zgy2uni_conversion():
+    try:
+        path = os.path.join(os.path.dirname(__file__), 'converter-tests.txt')
+        fil = codecs.open(path, 'r', encoding='utf-8')
+    except Exception as e:
+        sys.exit(-1)
+
+    for line in fil.readlines():
+        line = line.strip()
+        unistr, zgystr = line.split('\t')
+
+        assert unistr == converter.convert(
+            zgystr, 'zawgyi', 'unicode'
+        )
+
         fil.close()
