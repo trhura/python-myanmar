@@ -122,7 +122,7 @@ def MorphoSyllableBreak(text, encoding):
     """
     Return an iterable of morphological / visual syllables in text.
 
-    >>> from myanmar.encodings import UnicodeEncoding
+    >>> from myanmar.encodings import UnicodeEncoding, ZawgyiEncoding
     >>> syllables = list(MorphoSyllableBreak("အကြွေးပေး", UnicodeEncoding()))
     >>> syllables[2]
     {'syllable': 'ပေး', 'consonant': 'ပ', 'eVowel': 'ေ', 'visarga': 'း'}
