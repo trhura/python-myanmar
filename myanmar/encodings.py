@@ -33,7 +33,7 @@ class BaseEncoding():
         encname = self.__class__.__name__
         filename = encname[:encname.find('Encoding')].lower() + '.json'
         self.json_data = json.loads(
-            pkgutil.get_data('myanmar', 'data/' + filename)
+            pkgutil.get_data('myanmar', 'data/' + filename).decode('utf-8')
         )
 
         self.reverse_table = self.get_reverse_table()
