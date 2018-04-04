@@ -1,9 +1,9 @@
 Introduction
 ============
 
-.. image:: https://img.shields.io/pypi/v/python-myanmar.svg   
+.. image:: https://badge.fury.io/py/python-myanmar.svg 
       :alt: Pypi Version
-.. image:: https://img.shields.io/travis/trhura/python-myanmar.svg
+.. image:: https://travis-ci.org/trhura/python-myanmar.svg
      :alt: Build Status
 
 This package contains various Myanmar-related python routines, such as *encoding conversion*,
