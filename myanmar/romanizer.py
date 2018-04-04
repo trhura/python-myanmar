@@ -48,7 +48,7 @@ class Romanizer():
                 lookuplen = len(phoneme)
                 while lookuplen > 0:
                     lookupstr = phoneme[curpos:lookuplen]
-                    # '\t'+ str(lookuplen)+ phoneme[curpos:lookuplen]+ romanstr)
+                    # str(lookuplen)+ phoneme[curpos:lookuplen]+ romanstr)
                     if lookupstr in cls.data:
                         romanstr += cls.data[lookupstr]
                         curpos += (lookuplen - curpos)
@@ -56,7 +56,7 @@ class Romanizer():
                     else:
                         lookuplen -= 1
                 else:
-                    # sys.stderr.write("Unable to romanize " + phoneme[curpos] )
+                    # sys.stderr.write("Unable romanize " + phoneme[curpos] )
                     romanstr += phoneme[curpos]
                     curpos += 1
             romans.append(romanstr)
