@@ -6,6 +6,7 @@
 
    installation
    converter
+   syllable
    phonenumber
    authors
 
