@@ -3,7 +3,6 @@ Introduction
 
 .. image:: https://img.shields.io/pypi/v/python-myanmar.svg   
       :alt: Pypi Version
-
 .. image:: https://img.shields.io/travis/trhura/python-myanmar.svg
      :alt: Build Status
 
