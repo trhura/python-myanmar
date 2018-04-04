@@ -105,6 +105,65 @@ SYMBOL_AFOREMENTIONED = chr(0x104e)
 SYMBOL_GENITIVE = chr(0x104f)
 
 
+def ismyanmar(wc):
+    return (wc >= LETTER_KA and wc <= SYMBOL_GENITIVE)
+
+
+def ismyconsonant(wc):
+    return ((wc >= LETTER_KA) and (wc <= LETTER_A)) or wc == LETTER_U
+
+
+def ismymedial(wc):
+    return (wc >= SIGN_MEDIAL_YA) and (wc <= SIGN_MEDIAL_HA)
+
+
+def ismyvowel(wc):
+    return ((wc >= VOWEL_SIGN_TALL_AA) and (wc <= VOWEL_SIGN_AI))
+
+
+def ismytone(wc):
+    return (wc == SIGN_DOT_BELOW or wc == SIGN_VISARGA)
+
+
+def ismydiac(wc):
+    return (
+        ismyvowel(wc) or ismymedial(wc) or ismytone(wc) or wc == SIGN_ANUSVARA
+        or wc == SIGN_ASAT
+    )
+
+
+def ismydigit(wc):
+    return (wc >= DIGIT_ZERO and wc <= DIGIT_NINE)
+
+
+def ismypunct(wc):
+    return (wc == SIGN_LITTLE_SECTION or wc == SIGN_SECTION)
+
+
+def ismyindependvowel(wc):
+    return (
+        wc >= LETTER_I and wc <= LETTER_E
+    ) or wc == LETTER_O or wc == LETTER_AU
+
+
+def ismyindependsymbol(wc):
+    return (wc >= SYMBOL_LOCATIVE and wc <= SYMBOL_GENITIVE)
+
+
+def ismyletter(wc):
+    return (
+        ismyconsonant(wc) or ismyindependvowel(wc)
+        or wc == SYMBOL_AFOREMENTIONED
+    )
+
+
+def ismymark(wc):
+    return (
+        ismymedial(wc) or ismyvowel(wc)
+        or (wc >= SIGN_ANUSVARA and wc <= SIGN_ASAT)
+    )
+
+
 class SyllableIter():
     """
     Return an iterator of clusters, in given encoding.
@@ -139,3 +198,71 @@ class SyllableIter():
             ret = {'syllable': self.text[self.start:match.start()]}
             self.start = match.start()
         return ret
+
+
+def find_first_position(string, func):
+    for i, c in enumerate(string):
+        if func(c):
+            return i
+    return -1
+
+
+def myanmar_phonemic_iter(string):
+    startpos = 0
+    while startpos < len(string):
+        curstr = string[startpos:]
+
+        if not ismyanmar(curstr[0]):
+            yield curstr[0]
+            startpos += 1
+            continue
+
+        # first cons position
+        fcp = find_first_position(curstr, ismyconsonant)
+        if fcp > 0:
+            # if the string do not start with consonant
+            endpos = 1
+            while ismyanmar(curstr[endpos]) and endpos < fcp:
+                endpos += 1
+            startpos = startpos + endpos
+            yield curstr[:endpos]
+            continue
+
+        endpos = 1
+        while endpos < len(curstr) and ismymark(curstr[endpos]):
+            endpos += 1
+        if endpos < len(curstr) and ismyconsonant(curstr[endpos]):
+            if endpos + 1 < len(curstr) and curstr[endpos + 1] == SIGN_ASAT:
+                endpos += 2
+                while endpos < len(curstr) and ismytone(curstr[endpos]):
+                    endpos += 1
+                yield curstr[:endpos]
+                # skip kinzi virama
+                if endpos < len(curstr) and curstr[endpos] == SIGN_VIRAMA:
+                    endpos += 1
+                startpos = startpos + endpos
+                continue
+            if endpos + 2 < len(curstr) and \
+                curstr[endpos + 1] == SIGN_DOT_BELOW and \
+                    curstr[endpos + 2] == SIGN_ASAT:
+                endpos += 3
+                while endpos < len(curstr) and ismytone(curstr[endpos]):
+                    endpos += 1
+                yield curstr[:endpos]
+                startpos = startpos + endpos
+                continue
+
+            if endpos + 1 < len(curstr) and curstr[endpos + 1] == SIGN_VIRAMA:
+                endpos += 2
+                syll = curstr[:endpos - 1
+                              ] + SIGN_ASAT  # replace virama with asat
+                # syll[-1] = SIGN_ASAT
+                yield syll
+                startpos = startpos + endpos
+                continue
+
+        yield curstr[:endpos]
+        startpos = startpos + endpos
+        continue
+
+    raise StopIteration
