@@ -6,7 +6,7 @@ Welcome to Python Myanmar's documentation!
    :caption: Contents:
 
    installation
-   usage
+   converter
    authors
 
 Indices and tables
