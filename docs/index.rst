@@ -1,5 +1,4 @@
-Welcome to Python Myanmar's documentation!
-==========================================
+.. include:: ../README.rst
 
 .. toctree::
    :maxdepth: 2
@@ -7,6 +6,7 @@ Welcome to Python Myanmar's documentation!
 
    installation
    converter
+   phonenumber
    authors
 
 Indices and tables

@@ -1,10 +1,9 @@
-Converter
-=========
+Encoding Conversion
+===================
 
 Convert text in various Myanmar encodings. It currently supports **zawgyi**
-and **unicode*.
+and **unicode**.
 
--------------------
 
 .. toctree::
    :maxdepth: 2
