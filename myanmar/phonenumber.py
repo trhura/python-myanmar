@@ -22,17 +22,17 @@ country_code_re = "(\\+?95)"
 
 ooredoo_re = "(?:9(?:7|6|5)\\d{7})$"
 telenor_re = "(?:7(?:9|8|7|6)\\d{7})$"
-mpt_5_series = "5\\d{6}"
-mpt_4_series = "4\\d{7,8}"
 mpt_2_series = "2\\d{6,8}"
 mpt_3_series = "3\\d{7,8}"
+mpt_4_series = "4\\d{7,8}"
+mpt_5_series = "5\\d{6}"
 mpt_6_series = "6\\d{6}"
-mpt_8_series = "8\\d{6}"
 mpt_7_series = "7\\d{7}"
+mpt_8_series = "8\\d{6}"
 mpt_9_series = "9(?:0|1|9)\\d{5,6}"
 mpt_re = "(?:{}|{}|{}|{}|{}|{}|{}|{})$".format(
-    mpt_5_series, mpt_4_series, mpt_2_series, mpt_3_series, mpt_6_series,
-    mpt_8_series, mpt_8_series, mpt_9_series
+    mpt_2_series, mpt_3_series, mpt_4_series, mpt_5_series, mpt_6_series,
+    mpt_7_series, mpt_8_series, mpt_9_series
 )
 
 all_operators_re = "({0}|{1}|{2})".format(ooredoo_re, telenor_re, mpt_re)
