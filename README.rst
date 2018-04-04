@@ -5,7 +5,7 @@ Introduction
    :target: https://pypi.python.org/pypi/python-myanmar
    :alt: Pypi Version
 
-.. image:: https://img.shields.io/travis/trhura/python-myanmar.svg?branch=master
+.. image:: https://img.shields.io/travis/trhura/python-myanmar.svg
    :target: https://travis-ci.org/trhura/python-myanmar
    :alt: Build Status
 
