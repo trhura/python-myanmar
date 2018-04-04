@@ -61,7 +61,7 @@ def convert(text, fromenc, toenc):
 
     from_encoder = encoders[fromenc]
     to_encoder = encoders[toenc]
-    iterator = language.SyllableIter(text=text, encoding=from_encoder)
+    iterator = language.MorphoSyllableBreak(text=text, encoding=from_encoder)
     # print (from_encoder.get_pattern())
 
     otext = ""

@@ -104,100 +104,55 @@ SYMBOL_COMPLETED = chr(0x104d)
 SYMBOL_AFOREMENTIONED = chr(0x104e)
 SYMBOL_GENITIVE = chr(0x104f)
 
-
-def ismyanmar(wc):
-    return (wc >= LETTER_KA and wc <= SYMBOL_GENITIVE)
-
-
-def ismyconsonant(wc):
-    return ((wc >= LETTER_KA) and (wc <= LETTER_A)) or wc == LETTER_U
-
-
-def ismymedial(wc):
-    return (wc >= SIGN_MEDIAL_YA) and (wc <= SIGN_MEDIAL_HA)
-
-
-def ismyvowel(wc):
-    return ((wc >= VOWEL_SIGN_TALL_AA) and (wc <= VOWEL_SIGN_AI))
+ismyanmar = lambda c: (c >= LETTER_KA and c <= SYMBOL_GENITIVE)  # noqa
+ismyconsonant = lambda c: (c >= LETTER_KA and c <= LETTER_A) or c == LETTER_U # noqa
+ismymedial = lambda c: (c >= SIGN_MEDIAL_YA and c <= SIGN_MEDIAL_HA)  # noqa
+ismyvowel = lambda c: (c >= VOWEL_SIGN_TALL_AA and c <= VOWEL_SIGN_AI)  # noqa
+ismytone = lambda c: (c == SIGN_DOT_BELOW or c == SIGN_VISARGA)  # noqa
+ismydigit = lambda c: (c >= DIGIT_ZERO and c <= DIGIT_NINE)  # noqa
+ismypunct = lambda c: (c == SIGN_LITTLE_SECTION or c == SIGN_SECTION)  # noqa
+ismydiac = lambda c: (ismyvowel(c) or ismymedial(c) or ismytone(c) or c == SIGN_ANUSVARA or c == SIGN_ASAT) # noqa
+ismyindependvowel = lambda c: (c >= LETTER_I and c <= LETTER_E) or c == LETTER_O or c == LETTER_AU # noqa
+ismyindependsymbol = lambda c: (c >= SYMBOL_LOCATIVE and c <= SYMBOL_GENITIVE) # noqa
+ismyletter = lambda c: (ismyconsonant(c) or ismyindependvowel(c) or c == SYMBOL_AFOREMENTIONED) # noqa
+ismymark = lambda c:(ismymedial(c) or ismyvowel(c) or (c >= SIGN_ANUSVARA and c <= SIGN_ASAT)) # noqa
 
 
-def ismytone(wc):
-    return (wc == SIGN_DOT_BELOW or wc == SIGN_VISARGA)
-
-
-def ismydiac(wc):
-    return (
-        ismyvowel(wc) or ismymedial(wc) or ismytone(wc) or wc == SIGN_ANUSVARA
-        or wc == SIGN_ASAT
-    )
-
-
-def ismydigit(wc):
-    return (wc >= DIGIT_ZERO and wc <= DIGIT_NINE)
-
-
-def ismypunct(wc):
-    return (wc == SIGN_LITTLE_SECTION or wc == SIGN_SECTION)
-
-
-def ismyindependvowel(wc):
-    return (
-        wc >= LETTER_I and wc <= LETTER_E
-    ) or wc == LETTER_O or wc == LETTER_AU
-
-
-def ismyindependsymbol(wc):
-    return (wc >= SYMBOL_LOCATIVE and wc <= SYMBOL_GENITIVE)
-
-
-def ismyletter(wc):
-    return (
-        ismyconsonant(wc) or ismyindependvowel(wc)
-        or wc == SYMBOL_AFOREMENTIONED
-    )
-
-
-def ismymark(wc):
-    return (
-        ismymedial(wc) or ismyvowel(wc)
-        or (wc >= SIGN_ANUSVARA and wc <= SIGN_ASAT)
-    )
-
-
-class SyllableIter():
+def MorphoSyllableBreak(text, encoding):
     """
-    Return an iterator of clusters, in given encoding.
+    Return an iterable of morphological / visual syllables in text.
+
+    >>> from myanmar.encodings import UnicodeEncoding
+    >>> syllables = list(MorphoSyllableBreak("အကြွေးပေး", UnicodeEncoding()))
+    >>> syllables[2]
+    {'syllable': 'ပေး', 'consonant': 'ပ', 'eVowel': 'ေ', 'visarga': 'း'}
+    >>> list(s['syllable'] for s in syllables)
+    ['အ', 'ကြွေး', 'ပေး']
     """
+    if not isinstance(encoding, encodings.BaseEncoding):
+        raise TypeError(encoding + "is not a valid encoding")
 
-    def __init__(self, text, encoding):
-        if not isinstance(encoding, encodings.BaseEncoding):
-            raise TypeError(encoding + " is not a valid encoding.")
+    start = 0
+    pattern = encoding.get_compiled_pattern()
 
-        self.text = text
-        self.pattern = encoding.get_compiled_pattern()
-        self.start = 0
+    while start < len(text):
+        match = pattern.search(text, start)
 
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        match = self.pattern.search(self.text, self.start)
         if not match:
-            if self.start < len(self.text):
-                # there are still non Burmese chars at the end
-                ret = {'syllable': self.text[self.start:]}
-                self.start = len(self.text)
-            else:
-                raise StopIteration
-        elif match.start() == self.start:
-            # no unmatched text
-            self.start = match.end()
-            ret = {k: v for k, v in match.groupdict().items() if v}
+            syllable = {'syllable': text[start:]}
+            start = len(text)
+        elif start < match.start():
+            # unmached text (aka non-Burmese characters)
+            syllable = {'syllable': text[start:match.start()]}
+            start = match.start()
         else:
-            # if there is unmatched text,
-            ret = {'syllable': self.text[self.start:match.start()]}
-            self.start = match.start()
-        return ret
+            # no unmatched text
+            syllable = {k: v for k, v in match.groupdict().items() if v}
+            start = match.end()
+
+        yield syllable
+
+    raise StopIteration
 
 
 def find_first_position(string, func):

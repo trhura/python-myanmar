@@ -16,7 +16,7 @@ def test_zawgyi_syllable_iter():
             syllables = [l.strip('\n') for l in iFile.readlines()]
             print('syllables:', syllables)
             zgy = encodings.ZawgyiEncoding()
-            itr = language.SyllableIter(text=text, encoding=zgy)
+            itr = language.MorphoSyllableBreak(text=text, encoding=zgy)
             for i, each in enumerate(itr):
                 assert each['syllable'] == syllables[i]
 
@@ -32,7 +32,7 @@ def test_unicode_syllable_iter():
             syllables = [l.strip('\n') for l in iFile.readlines()]
 
             uni = encodings.UnicodeEncoding()
-            itr = language.SyllableIter(text=text, encoding=uni)
+            itr = language.MorphoSyllableBreak(text=text, encoding=uni)
 
             for i, each in enumerate(itr):
                 assert each['syllable'] == syllables[i]
