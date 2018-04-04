@@ -133,10 +133,9 @@ def MorphoSyllableBreak(text, encoding):
         raise TypeError(encoding + "is not a valid encoding")
 
     start = 0
-    pattern = encoding.get_compiled_pattern()
 
     while start < len(text):
-        match = pattern.search(text, start)
+        match = encoding.pattern.search(text, start)
 
         if not match:
             syllable = {'syllable': text[start:]}

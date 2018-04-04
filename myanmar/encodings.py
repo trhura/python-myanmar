@@ -22,9 +22,43 @@
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
 import re
-import os
 import json
 import pkgutil
+
+
+def build_pattern(pattern, data):
+    # build regular expression from a pattern
+    if isinstance(pattern, str):
+        node = pattern
+        or_expr = "|".join(
+            [
+                x for x in
+                sorted(set(data[node].values()), key=len, reverse=True) if x
+            ]
+        )
+        return '(?P<{}>{})'.format(pattern, or_expr)
+
+    if isinstance(pattern, tuple):
+        lst = [build_pattern(x, data) for x in pattern]
+        if len(lst) > 1:
+            or_expr = "|".join(lst)
+            return '({})*'.format(or_expr)
+        else:
+            return '{}*'.format(lst[0])
+
+    if isinstance(pattern, list):
+        return ''.join([build_pattern(x, data) for x in pattern])
+
+
+def build_table(data, reverse=False):
+    # build conversion table from json mapping data.
+    ret = {}
+    for key, value in data.items():
+        if reverse:
+            ret.update({v: k for k, v in value.items() if v})
+        else:
+            ret.update({k: v for k, v in value.items() if v})
+    return ret
 
 
 class BaseEncoding():
@@ -36,87 +70,38 @@ class BaseEncoding():
             pkgutil.get_data('myanmar', 'data/' + filename).decode('utf-8')
         )
 
-        self.reverse_table = self.get_reverse_table()
-        self.table = self.get_table()
-        self.pattern = self.get_compiled_pattern()
+        self.table = build_table(self.json_data)
+        self.reverse_table = build_table(self.json_data, reverse=True)
 
-    def get_table(self):
-        ret = {}
-        for key, value in self.json_data.items():
-            ret.update({k: v for k, v in value.items() if v})
-        return ret
+        patterns = [
+            build_pattern(x, self.json_data) for x in self.syllable_patterns
+        ]
 
-    def get_reverse_table(self):
-        ret = {}
-        for key, value in self.json_data.items():
-            ret.update({v: k for k, v in value.items() if v})
-        return ret
-
-    def get_compiled_pattern(self):
-        return re.compile(self.get_pattern(), re.UNICODE)
-
-    def get_pattern(self):
-        def build_pattern(pattern):
-            if isinstance(pattern, str):
-                node = pattern
-                or_expr = "|".join(
-                    [
-                        x for x in sorted(
-                            set(self.json_data[node].values()),
-                            key=len,
-                            reverse=True
-                        ) if x
-                    ]
-                )
-                return '(?P<' + pattern + '>' + or_expr + ')'
-
-            if isinstance(pattern, tuple):
-                ret_list = [build_pattern(x) for x in pattern]
-                if len(ret_list) > 1:
-                    return '(' + "|".join(ret_list) + ')*'
-                else:
-                    return ret_list[0] + '*'
-
-            if isinstance(pattern, list):
-                return ''.join([build_pattern(x) for x in pattern])
-
-        return "(?P<syllable>" + "|".join(
-            [build_pattern(x) for x in self.syllable_form]
-        ) + ")"
-
-    @classmethod
-    def load_json(cls, jsonFile):
-        if not jsonFile:
-            raise RuntimeError("jsonFile must not be None.")
-
-        if not os.path.exists(jsonFile):
-            raise RuntimeError("jsonFile doesn't exists on the system.")
-
-        with open(jsonFile, 'r') as iFile:
-            data = json.load(iFile)
-            return data
+        _pattern = "|".join(patterns)
+        self._pattern = "(?P<syllable>{})".format(_pattern)
+        self.pattern = re.compile(self._pattern, re.UNICODE)
 
 
 class UnicodeEncoding(BaseEncoding):
     def __init__(self, *args, **kwargs):
-        self.syllable_pattern = [
+        self.syllable_form = [
             ("kinzi", ), "consonant", ("stack", ), ("yapin", ), ("yayit", ),
             ("wasway", ), ("hatoh", ), ("eVowel", ), ("iVowel", ),
             ("uVowel",
              "anusvara"), ("aiVowel", ), ("aaVowel", "asat",
                                           "dotBelow"), ("visarga", )
         ]
-        self.syllable_form = [
+        self.syllable_patterns = (
             "independent", "digit", "punctuation", "ligature",
-            self.syllable_pattern
-        ]
+            self.syllable_form
+        )
 
         super().__init__(*args, **kwargs)
 
 
 class LegacyEncoding(BaseEncoding):
     def __init__(self, *args, **kwargs):
-        self.syllable_pattern = [
+        self.syllable_form = [
             ("eVowel", ), ("yayit", ), "consonant", ("kinzi", ), ("stack", ), (
                 "yapin",
                 "wasway",
@@ -124,10 +109,10 @@ class LegacyEncoding(BaseEncoding):
             ), ("iVowel", "uVowel", "anusvara", "aiVowel"),
             ("aaVowel", "asat", "dotBelow"), ("visarga", )
         ]
-        self.syllable_form = [
+        self.syllable_patterns = (
             "independent", "digit", "punctuation", "ligature",
-            self.syllable_pattern
-        ]
+            self.syllable_form
+        )
         super().__init__(*args, **kwargs)
 
 
