@@ -143,7 +143,7 @@ def convert(text, fromenc, toenc):
                 key = syllable[each_pattern]
                 otext += to_encoder.table[key]
             except Exception as e:
-                print(key, syllable, file=sys.stderr)
+                print(key, syllable)
 
     # pprint (to_encoder.table)
     # pprint (from_encoder.reverse_table)
