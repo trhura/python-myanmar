@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
+  "python.pythonPath": ".venv/bin/python",
   "editor.formatOnSave": true,
   "python.formatting.provider": "yapf",
   "python.venvPath": "${workspaceFolder}/.venv/bin",
