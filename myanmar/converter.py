@@ -28,7 +28,13 @@ from myanmar import language
 from myanmar import encodings
 
 
-def get_available_encodings():
+def get_supported_encodings():
+    """
+    Get a list of encodings supported by ``converter`` module.
+
+    >>> get_supported_encodings()
+    ['unicode', 'zawgyi']
+    """
     return ['unicode', 'zawgyi']
 
 
@@ -38,22 +44,24 @@ encoders = {
 }
 
 
-def convert(text, from_enc, to_enc):
+def convert(text, fromenc, toenc):
     """
-    Take a unicode string, and convert it to from_encoder to
-    to_encoder.
+    Convert text in ``fromenc`` encoding to ``toenc`` encoding.
 
-    Supported encodings can be obtained by get_available_encodings ()
-    function.
+    >>> convert('အကျိုးတရား', 'unicode', 'zawgyi')
+    'အက်ိဳးတရား'
+
+    >>> convert('ဉာဏ္ႀကီးရွင္', 'zawgyi', 'unicode')
+    'ဉာဏ်ကြီးရှင်'
     """
-    if from_enc not in encoders:
-        raise NotImplementedError("Unsupported encoding: %s" % from_enc)
+    if fromenc not in encoders:
+        raise NotImplementedError("Unsupported encoding: %s" % fromenc)
 
-    if to_enc not in encoders:
-        raise NotImplementedError("Unsupported encoding: %s" % to_enc)
+    if toenc not in encoders:
+        raise NotImplementedError("Unsupported encoding: %s" % toenc)
 
-    from_encoder = encoders[from_enc]
-    to_encoder = encoders[to_enc]
+    from_encoder = encoders[fromenc]
+    to_encoder = encoders[toenc]
     iterator = language.SyllableIter(text=text, encoding=from_encoder)
     # print (from_encoder.get_pattern())
 
@@ -252,7 +260,58 @@ def choose_dot_below_variant(syllable):
 
 
 def main():
-    pass
+    import argparse
+    import fileinput
+
+    parser = argparse.ArgumentParser(
+        description='Convert between various Myanmar encodings'
+    )
+    parser.add_argument(
+        '-f',
+        '--from',
+        dest='fro',
+        action='store',
+        required=True,
+        help='convert characters from ENCODING',
+        metavar="ENCODING",
+    )
+    parser.add_argument(
+        '-t',
+        '--to',
+        dest='to',
+        action='store',
+        required=True,
+        help='convert characters to ENCODING',
+        metavar="ENCODING",
+    )
+    parser.add_argument(
+        'files',
+        metavar='FILE',
+        nargs='*',
+        help='files to convert, if empty, stdin is used'
+    )
+
+    args = parser.parse_args()
+    if args.fro not in get_supported_encodings():
+        print(
+            "%s is not a supported encoding. Should be any of %s." %
+            (args.fro, get_supported_encodings())
+        )
+        sys.exit(-1)
+
+    if args.to not in get_supported_encodings():
+        print(
+            "%s is not a supported encoding. Should be any of %s." %
+            (args.to, get_supported_encodings())
+        )
+        sys.exit(-1)
+
+    if args.fro == args.to:
+        print("from encoding must not be the same as to encoding.")
+        sys.exit(-1)
+
+    for line in fileinput.input(files=args.files):
+        print(convert(line, args.fro, args.to), end='')
 
 
 if __name__ == "__main__":
