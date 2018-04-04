@@ -50,7 +50,6 @@ def convert(text, fromenc, toenc):
 
     >>> convert('အကျိုးတရား', 'unicode', 'zawgyi')
     'အက်ိဳးတရား'
-
     >>> convert('ဉာဏ္ႀကီးရွင္', 'zawgyi', 'unicode')
     'ဉာဏ်ကြီးရှင်'
     """

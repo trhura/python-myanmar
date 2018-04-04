@@ -51,19 +51,19 @@ def test_mm_phone_re():
 
 
 def test_is_valid_mm_phone_number():
-    assert mp.is_valid_mm_phonenumber("+959420090065") is True
-    assert mp.is_valid_mm_phonenumber("959420090065") is True
-    assert mp.is_valid_mm_phonenumber("09420090065") is True
-    assert mp.is_valid_mm_phonenumber("9420090065") is True
-    assert mp.is_valid_mm_phonenumber("420090065") is True
+    assert mp.is_valid_phonenumber("+959420090065") is True
+    assert mp.is_valid_phonenumber("959420090065") is True
+    assert mp.is_valid_phonenumber("09420090065") is True
+    assert mp.is_valid_phonenumber("9420090065") is True
+    assert mp.is_valid_phonenumber("420090065") is True
 
-    assert mp.is_valid_mm_phonenumber("+95") is False
-    assert mp.is_valid_mm_phonenumber("959") is False
-    assert mp.is_valid_mm_phonenumber("+95420090065") is False
+    assert mp.is_valid_phonenumber("+95") is False
+    assert mp.is_valid_phonenumber("959") is False
+    assert mp.is_valid_phonenumber("+95420090065") is False
 
 
 def test_normalize_mm_phone_number():
-    assert mp.normalize_mm_phonenumber("+959420090065") == 959420090065
-    assert mp.normalize_mm_phonenumber("09420090065") == 959420090065
-    assert mp.normalize_mm_phonenumber("9420090065") == 959420090065
-    assert mp.normalize_mm_phonenumber("420090065") == 959420090065
+    assert mp.normalize_phonenumber("+959420090065") == 959420090065
+    assert mp.normalize_phonenumber("09420090065") == 959420090065
+    assert mp.normalize_phonenumber("9420090065") == 959420090065
+    assert mp.normalize_phonenumber("420090065") == 959420090065
