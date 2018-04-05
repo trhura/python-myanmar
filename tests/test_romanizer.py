@@ -1,33 +1,34 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# from myanmar.romanizer import Romanizer, BGN_PCGN
+from myanmar.romanizer import romanize, BGN_PCGN
 
-# def test_bgp_pcgn_romanizer():
-#     assert Romanizer.romanize(BGN_PCGN, 'ကို') == "ko"
-#     assert Romanizer.romanize(BGN_PCGN, 'အက') == "aga"
-#     assert Romanizer.romanize(BGN_PCGN, 'မဒမ') == "madama"
-#     assert Romanizer.romanize(BGN_PCGN, 'သာငယ်') == 'thangè'
-#     assert Romanizer.romanize(BGN_PCGN, 'ပြစင်') == 'pyazin'
-#     assert Romanizer.romanize(BGN_PCGN, 'အကာ') == 'aga'
-#     assert Romanizer.romanize(BGN_PCGN, 'အိုဘဲ့') == 'obè'
-#     assert Romanizer.romanize(BGN_PCGN, "အပ်") == "at"
-#     assert Romanizer.romanize(BGN_PCGN, "မအူ") == "ma-u"
-#     assert Romanizer.romanize(BGN_PCGN, "သီးပင်အိုင်") == 'thibin-aing'
-#     assert Romanizer.romanize(BGN_PCGN, "ဩဘာ") == "awba"
-#     assert Romanizer.romanize(BGN_PCGN, "ဧဏီ") == "eni"
-#     assert Romanizer.romanize(BGN_PCGN, "ကြောင်ဥကျဉ်") == "kyaung-ugyin"
-#     assert Romanizer.romanize(BGN_PCGN, "သဒ္ဒါ") == "thadda"
-#     assert Romanizer.romanize(BGN_PCGN, "အန္တိမဘဝ") == "andimabawa"
-#     assert Romanizer.romanize(BGN_PCGN, "ဥက္ကဌ") == "ukkada"
-#     assert Romanizer.romanize(BGN_PCGN, "ရွှေငန်း") == "shwengan"
-#     assert Romanizer.romanize(BGN_PCGN, "ညီညာ") == "nyinya"
-#     assert Romanizer.romanize(BGN_PCGN, "အင်းကွတ်") == "in-gut"
-#     assert Romanizer.romanize(BGN_PCGN, "ကွန်ရက်") == "kun-yet"
-#     assert Romanizer.romanize(BGN_PCGN, "တိုင်အောင်") == "taing-aung"
-#     assert Romanizer.romanize(BGN_PCGN, "ဟက်ဟက်ပက်ပက်ရယ်") == "het-hetpetpetyè" # noqa
-#     assert Romanizer.romanize(BGN_PCGN, "ဝသီ") == "wathi"
-#     assert Romanizer.romanize(BGN_PCGN, "ဘေးမဲ့") == "bemè"
-#     assert Romanizer.romanize(BGN_PCGN, "သင်္ဘော") == "thinbaw"
-#     assert Romanizer.romanize(BGN_PCGN, "ဘင်္ဂလားအော်") == "bin-gala-aw"
-#     assert Romanizer.romanize(BGN_PCGN, "စင်္ကာပူ") == "sin-gabu"
+
+def test_bgp_pcgn_romanizer():
+    assert romanize('ကို', BGN_PCGN) == "ko"
+    assert romanize('အက', BGN_PCGN) == "aga"
+    assert romanize('မဒမ', BGN_PCGN) == "madama"
+    assert romanize('သာငယ်', BGN_PCGN) == 'thangè'
+    assert romanize('ပြစင်', BGN_PCGN) == 'pyazin'
+    assert romanize('အကာ', BGN_PCGN) == 'aga'
+    assert romanize('အိုဘဲ့', BGN_PCGN) == 'obè'
+    assert romanize("အပ်", BGN_PCGN) == "at"
+    assert romanize("မအူ", BGN_PCGN) == "ma-u"
+    assert romanize("သီးပင်အိုင်", BGN_PCGN) == 'thibin-aing'
+    assert romanize("ဩဘာ", BGN_PCGN) == "awba"
+    assert romanize("ဧဏီ", BGN_PCGN) == "eni"
+    assert romanize("ကြောင်ဥကျဉ်", BGN_PCGN) == "kyaung-ugyin"
+    assert romanize("သဒ္ဒါ", BGN_PCGN) == "thadda"
+    assert romanize("အန္တိမဘဝ", BGN_PCGN) == "andimabawa"
+    assert romanize("ဥက္ကဌ", BGN_PCGN) == "ukkada"
+    assert romanize("ရွှေငန်း", BGN_PCGN) == "shwengan"
+    assert romanize("ညီညာ", BGN_PCGN) == "nyinya"
+    assert romanize("အင်းကွတ်", BGN_PCGN) == "in-gut"
+    assert romanize("ကွန်ရက်", BGN_PCGN) == "kun-yet"
+    assert romanize("တိုင်အောင်", BGN_PCGN) == "taing-aung"
+    assert romanize("ဟက်ဟက်ပက်ပက်ရယ်", BGN_PCGN) == "het-hetpetpetyè"  # noqa
+    assert romanize("ဝသီ", BGN_PCGN) == "wathi"
+    assert romanize("ဘေးမဲ့", BGN_PCGN) == "bemè"
+    assert romanize("သင်္ဘော", BGN_PCGN) == "thinbaw"
+    assert romanize("ဘင်္ဂလားအော်", BGN_PCGN) == "bin-gala-aw"
+    assert romanize("စင်္ကာပူ", BGN_PCGN) == "sin-gabu"

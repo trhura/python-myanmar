@@ -21,127 +21,126 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
-# import json
-# import pkgutil
+import sys
+import json
+import pkgutil
 
-# from myanmar.language import myanmar_phonemic_iter
+from myanmar.encodings import UnicodeEncoding
+from myanmar.language import PhonemicSyllableBreak
+from myanmar.language import SIGN_ASAT, SIGN_VIRAMA
 
-# class Romanizer():
-#     data = None  # subclass needs to override this
 
-#     @staticmethod
-#     def romanize(cls_type, string):
-#         if not issubclass(cls_type, Romanizer):
-#             raise TypeError("cls type must be a subclass of Romanizer.")
-#         return cls_type.romanize_(string)
+def romanize(string, system, encoding=UnicodeEncoding()):
+    romans = []
 
-#     @classmethod
-#     def romanize_(cls, string):
-#         romans = []
-#         # maxkeylen = max(len(k) for k in cls.data.keys())
-#         for phoneme in myanmar_phonemic_iter(string):
-#             romanstr = ""
-#             curpos = 0
-#             print(phoneme)
-#             while curpos < len(phoneme):
-#                 lookuplen = len(phoneme)
-#                 while lookuplen > 0:
-#                     lookupstr = phoneme[curpos:lookuplen]
-#                     # str(lookuplen)+ phoneme[curpos:lookuplen]+ romanstr)
-#                     if lookupstr in cls.data:
-#                         romanstr += cls.data[lookupstr]
-#                         curpos += (lookuplen - curpos)
-#                         break
-#                     else:
-#                         lookuplen -= 1
-#                 else:
-#                     # sys.stderr.write("Unable romanize " + phoneme[curpos] )
-#                     romanstr += phoneme[curpos]
-#                     curpos += 1
-#             romans.append(romanstr)
+    for syllable in PhonemicSyllableBreak(string, encoding):
+        phoneme = syllable['syllable']
 
-#         return cls.join_(romans)
+        # FIXME do normalization
+        if "virama_stack" in syllable:
+            phoneme = phoneme.replace(SIGN_VIRAMA, SIGN_ASAT)
 
-#     @classmethod
-#     def join_(cls, romans):
-#         return "".join(romans)
+        length = len(phoneme)
+        string = ""
+        scan = 0
 
-# class BGN_PCGN(Romanizer):
-#     data = json.loads(
-#         pkgutil.get_data('myanmar', 'data/bgn-pcgn.json').decode('utf-8')
-#     )
-#     vowels = 'aeèioôu'
+        while scan < length:
+            # longest matching
+            matches = [phoneme[scan:length - i] for i in range(length)]
+            for match in matches:
+                if match in system.table:
+                    string += system.table[match]
+                    scan += len(match)
+                    break
+            else:
+                sys.stderr.write("Unable to romanize " + phoneme[scan])
+                string += phoneme[scan]
+                scan += 1
 
-#     @classmethod
-#     def join_(cls, romans):
-#         new_romans = []
-#         for i, roman in enumerate(romans):
-#             roman = cls.handle_letter_a(roman)
-#             roman = cls.add_vowel_a_if_necessary(roman)
+        if string:  # if not empty
+            romans.append(string)
 
-#             if roman.startswith('k') and i > 0:
-#                 if new_romans[i - 1][
-#                     -1
-#                 ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
-#                     # change ka to ga after vowel sound
-#                     roman = 'g' + roman[1:]
+    return system.join_(romans)
 
-#             if roman.startswith('s') and i > 0:
-#                 if new_romans[i - 1][
-#                     -1
-#                 ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
-#                     # change sa to za after vowel sound
-#                     roman = 'z' + roman[1:]
 
-#             if roman.startswith('p') and i > 0:
-#                 if new_romans[i - 1][
-#                     -1
-#                 ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
-#                     # change pa to ba after vowel sound
-#                     roman = 'b' + roman[1:]
+class BGN_PCGN():
+    table = json.loads(
+        pkgutil.get_data('myanmar', 'data/bgn-pcgn.json').decode('utf-8')
+    )
+    vowels = 'aeèioôu'
 
-#             if roman.startswith('t') and not roman.startswith('th') and i > 0: # noqa
-#                 if new_romans[i - 1][
-#                     -1
-#                 ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
-#                     # change ta to da after vowel sound
-#                     roman = 'd' + roman[1:]
+    @classmethod
+    def join_(cls, romans):
+        new_romans = []
+        for i, roman in enumerate(romans):
+            roman = cls.handle_letter_a(roman)
+            roman = cls.add_vowel_a_if_necessary(roman)
 
-#             if roman[
-#                 0
-#             ] in cls.vowels and i > 0 and not new_romans[i - 1][-1].isspace(): # noqa
-#                 # add hyphen if started with a vowel
-#                 roman = '-' + roman
+            if roman.startswith('k') and i > 0:
+                if new_romans[i - 1][
+                    -1
+                ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
+                    # change ka to ga after vowel sound
+                    roman = 'g' + roman[1:]
 
-#             if roman[0] in 'gy' and i > 0 and new_romans[i - 1][-1] == 'n':
-#                 # to differetiate ng & ny
-#                 roman = '-' + roman
+            if roman.startswith('s') and i > 0:
+                if new_romans[i - 1][
+                    -1
+                ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
+                    # change sa to za after vowel sound
+                    roman = 'z' + roman[1:]
 
-#             if roman[0] == 'h' and i > 0 and new_romans[i - 1][-1] == 't':
-#                 roman = '-' + roman
+            if roman.startswith('p') and i > 0:
+                if new_romans[i - 1][
+                    -1
+                ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
+                    # change pa to ba after vowel sound
+                    roman = 'b' + roman[1:]
 
-#             new_romans.append(roman)
+            if roman.startswith(
+                't'
+            ) and not roman.startswith('th') and i > 0:  # noqa
+                if new_romans[i - 1][
+                    -1
+                ] in 'aeioun' or new_romans[i - 1].endswith('ng'):
+                    # change ta to da after vowel sound
+                    roman = 'd' + roman[1:]
 
-#         # print(new_romans)
-#         return "".join(new_romans)
+            if roman[0] in cls.vowels and i > 0 and not new_romans[i - 1][
+                -1
+            ].isspace():  # noqa
+                # add hyphen if started with a vowel
+                roman = '-' + roman
 
-#     @classmethod
-#     def handle_letter_a(cls, roman):
-#         if roman.startswith('a') and cls.has_vowel(roman[1:]):
-#             return roman[1:]
-#         return roman
+            if roman[0] in 'gy' and i > 0 and new_romans[i - 1][-1] == 'n':
+                # to differetiate ng & ny
+                roman = '-' + roman
 
-#     @classmethod
-#     def has_vowel(cls, roman):
-#         for v in cls.vowels:
-#             # print type(v), type(roman)
-#             if roman.find(v) != -1:
-#                 return True
-#         return False
+            if roman[0] == 'h' and i > 0 and new_romans[i - 1][-1] == 't':
+                roman = '-' + roman
 
-#     @classmethod
-#     def add_vowel_a_if_necessary(cls, roman):
-#         if cls.has_vowel(roman):
-#             return roman
-#         else:
-#             return roman + 'a'
+            new_romans.append(roman)
+
+        # print(new_romans)
+        return "".join(new_romans)
+
+    @classmethod
+    def handle_letter_a(cls, roman):
+        if roman.startswith('a') and cls.has_vowel(roman[1:]):
+            return roman[1:]
+        return roman
+
+    @classmethod
+    def has_vowel(cls, roman):
+        for v in cls.vowels:
+            # print type(v), type(roman)
+            if roman.find(v) != -1:
+                return True
+        return False
+
+    @classmethod
+    def add_vowel_a_if_necessary(cls, roman):
+        if cls.has_vowel(roman):
+            return roman
+        else:
+            return roman + 'a'
