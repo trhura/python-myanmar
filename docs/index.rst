@@ -5,8 +5,9 @@
    :caption: Contents:
 
    installation
-   converter
    syllable
+   converter
+   romanization
    phonenumber
    authors
 

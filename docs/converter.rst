@@ -1,5 +1,5 @@
-Encoding conversion
-===================
+Encodings
+=========
 
 Convert text in various Myanmar encodings. It currently supports **zawgyi**
 and **unicode**.

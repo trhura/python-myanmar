@@ -1,5 +1,5 @@
-Phonenumber validation
-======================
+Phonenumbers
+============
 
 Validation and normalization for Myanmar phonenumbers. Based on
 *mm_phonenumber* module from Melomap.

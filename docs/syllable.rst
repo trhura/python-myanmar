@@ -1,5 +1,5 @@
-Syllable Break
-==============
+Syllabification
+===============
 
 Morphological and phonetic syllable break for Burmese text. Syllable break
 with zawgyi text will not be accurate / reliable. You probably should
@@ -10,4 +10,4 @@ convert it to unicode before processing.
    :caption: Contents:
 
 .. automodule:: myanmar.language
-    :members: MorphoSyllableBreak
+    :members: MorphoSyllableBreak, PhonemicSyllableBreak
