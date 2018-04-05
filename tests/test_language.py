@@ -41,7 +41,7 @@ def test_unicode_morpho_syllable_break():
         assert item['syllable'] == syllables[i]
 
 
-def test_myanmar_phonemic_iter():
+def test_myanmar_phonemic_syllable_break():
     test = "တ|ရား|စီ|ရင်|ရေး|အာ|ဏာ|နှင့်|ဥ|ပ|ဒေ|ပြု|ရေး|အာ|ဏာ|တို့|ကို|" + \
             "မည်|သူ|မ|ဆို| |ကြည့်|ရှု|ပြင်|ဆင်|နိုင်|သော| |" + \
             "အ|ခ|မဲ့|လွတ်|လပ်|စွယ်|စုံ|ကျမ်း| |ဖြစ်|ပါ|သည်|။|" + \
