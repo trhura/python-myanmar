@@ -122,12 +122,12 @@ def MorphoSyllableBreak(text, encoding):
     """
     Return an iterable of morphological / visual syllables in text.
 
-    >>> from myanmar.encodings import UnicodeEncoding, ZawgyiEncoding
-    >>> syllables = list(MorphoSyllableBreak("အကြွေးပေး", UnicodeEncoding()))
-    >>> syllables[2]
-    {'syllable': 'ပေး', 'consonant': 'ပ', 'eVowel': 'ေ', 'visarga': 'း'}
-    >>> list(s['syllable'] for s in syllables)
+    >>> from myanmar.encodings import UnicodeEncoding
+    >>> slb = list(MorphoSyllableBreak("အကြွေးပေး", UnicodeEncoding()))
+    >>> list(s['syllable'] for s in slb)
     ['အ', 'ကြွေး', 'ပေး']
+    >>> slb[2]
+    {'syllable': 'ပေး', 'consonant': 'ပ', 'eVowel': 'ေ', 'visarga': 'း'}
     """
     if not isinstance(encoding, encodings.BaseEncoding):
         raise TypeError(encoding + "is not a valid encoding")
@@ -156,8 +156,14 @@ def MorphoSyllableBreak(text, encoding):
 
 def PhonemicSyllableBreak(text, encoding):
     """
-    Return an iterable of morphological / visual syllables in text.
+    Return an iterable of phonemic syllables in text.
 
+    >>> from myanmar.encodings import UnicodeEncoding
+    >>> slb = list(PhonemicSyllableBreak("သီးပင်အိုင်", UnicodeEncoding()))
+    >>> list(s['syllable'] for s in slb)
+    ['သီး', 'ပင်', 'အိုင်']
+    >>> slb[0]
+    {'syllable': 'သီး', 'consonant': 'သ', 'iVowel': 'ီ', 'visarga': 'း'}
     """
     if not isinstance(encoding, encodings.BaseEncoding):
         raise TypeError(encoding + "is not a valid encoding")
