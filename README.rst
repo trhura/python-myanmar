@@ -1,13 +1,14 @@
 Introduction
 ============
 
-.. image:: https://badge.fury.io/py/python-myanmar.svg 
+.. image:: https://badge.fury.io/py/python-myanmar.svg
       :alt: Pypi Version
 .. image:: https://travis-ci.org/trhura/python-myanmar.svg
      :alt: Build Status
 
-This package contains various Myanmar-related python routines, such as *encoding conversion*,
-*phonenumber validation*, etc. Only python3 is currently supported.
+This package contains various Myanmar-related python modules, such as *syllabification*,
+*romanization*, *encoding conversion*, *phonenumber validation*, etc. Only python3 is
+currently supported at the moment.
 
 Installation
 ============
