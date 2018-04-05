@@ -42,21 +42,17 @@ def test_unicode_morpho_syllable_break():
 
 
 def test_myanmar_phonemic_iter():
-    def test_myanmar_phonemic_iter_(string, ts=None):
-        if not ts:
-            ts = "".join(string.split('|'))
-        tr = list(language.myanmar_phonemic_iter(ts))
-        er = list(e for e in string.split('|'))
-        assert tr == er
+    test = "တ|ရား|စီ|ရင်|ရေး|အာ|ဏာ|နှင့်|ဥ|ပ|ဒေ|ပြု|ရေး|အာ|ဏာ|တို့|ကို|" + \
+            "မည်|သူ|မ|ဆို| |ကြည့်|ရှု|ပြင်|ဆင်|နိုင်|သော| |" + \
+            "အ|ခ|မဲ့|လွတ်|လပ်|စွယ်|စုံ|ကျမ်း| |ဖြစ်|ပါ|သည်|။|" + \
+            "နာ|နို|တက္|က|နော်|လော်|ဂျီ|" + \
+            "အို|ရှန်း|နီး|ယား"
 
-    test_myanmar_phonemic_iter_(
-        "တ|ရား|စီ|ရင်|ရေး|အာ|ဏာ|နှင့်|ဥ|ပ|ဒေ|ပြု|ရေး|အာ|ဏာ|တို့|ကို"
-    )
-    test_myanmar_phonemic_iter_(
-        "မည်|သူ|မ|ဆို| |ကြည့်|ရှု|ပြင်|ဆင်|နိုင်|သော| |" +
-        "အ|ခ|မဲ့|လွတ်|လပ်|စွယ်|စုံ|ကျမ်း| |ဖြစ်|ပါ|သည်|။"
-    )
-    test_myanmar_phonemic_iter_(
-        "နာ|နို|တက်|က|နော်|လော်|ဂျီ", ts="နာနိုတက္ကနော်လော်ဂျီ"
-    )
-    test_myanmar_phonemic_iter_("အို|ရှန်း|နီး|ယား")
+    syllables = test.split("|")
+    text = "".join(syllables)
+
+    unienc = encodings.UnicodeEncoding()
+    iterable = language.PhonemicSyllableBreak(text=text, encoding=unienc)
+
+    for i, item in enumerate(iterable):
+        assert item['syllable'] == syllables[i]

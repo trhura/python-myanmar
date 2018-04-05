@@ -135,7 +135,7 @@ def MorphoSyllableBreak(text, encoding):
     start = 0
 
     while start < len(text):
-        match = encoding.pattern.search(text, start)
+        match = encoding.morphologic_pattern.search(text, start)
 
         if not match:
             syllable = {'syllable': text[start:]}
@@ -154,69 +154,31 @@ def MorphoSyllableBreak(text, encoding):
     raise StopIteration
 
 
-def find_first_position(string, func):
-    for i, c in enumerate(string):
-        if func(c):
-            return i
-    return -1
+def PhonemicSyllableBreak(text, encoding):
+    """
+    Return an iterable of morphological / visual syllables in text.
 
+    """
+    if not isinstance(encoding, encodings.BaseEncoding):
+        raise TypeError(encoding + "is not a valid encoding")
 
-def myanmar_phonemic_iter(string):
-    startpos = 0
-    while startpos < len(string):
-        curstr = string[startpos:]
+    start = 0
 
-        if not ismyanmar(curstr[0]):
-            yield curstr[0]
-            startpos += 1
-            continue
+    while start < len(text):
+        match = encoding.phonemic_pattern.search(text, start)
 
-        # first cons position
-        fcp = find_first_position(curstr, ismyconsonant)
-        if fcp > 0:
-            # if the string do not start with consonant
-            endpos = 1
-            while ismyanmar(curstr[endpos]) and endpos < fcp:
-                endpos += 1
-            startpos = startpos + endpos
-            yield curstr[:endpos]
-            continue
+        if not match:
+            syllable = {'syllable': text[start:]}
+            start = len(text)
+        elif start < match.start():
+            # unmached text (aka non-Burmese characters)
+            syllable = {'syllable': text[start:match.start()]}
+            start = match.start()
+        else:
+            # no unmatched text
+            syllable = {k: v for k, v in match.groupdict().items() if v}
+            start = match.end()
 
-        endpos = 1
-        while endpos < len(curstr) and ismymark(curstr[endpos]):
-            endpos += 1
-        if endpos < len(curstr) and ismyconsonant(curstr[endpos]):
-            if endpos + 1 < len(curstr) and curstr[endpos + 1] == SIGN_ASAT:
-                endpos += 2
-                while endpos < len(curstr) and ismytone(curstr[endpos]):
-                    endpos += 1
-                yield curstr[:endpos]
-                # skip kinzi virama
-                if endpos < len(curstr) and curstr[endpos] == SIGN_VIRAMA:
-                    endpos += 1
-                startpos = startpos + endpos
-                continue
-            if endpos + 2 < len(curstr) and \
-                curstr[endpos + 1] == SIGN_DOT_BELOW and \
-                    curstr[endpos + 2] == SIGN_ASAT:
-                endpos += 3
-                while endpos < len(curstr) and ismytone(curstr[endpos]):
-                    endpos += 1
-                yield curstr[:endpos]
-                startpos = startpos + endpos
-                continue
-
-            if endpos + 1 < len(curstr) and curstr[endpos + 1] == SIGN_VIRAMA:
-                endpos += 2
-                syll = curstr[:endpos - 1
-                              ] + SIGN_ASAT  # replace virama with asat
-                # syll[-1] = SIGN_ASAT
-                yield syll
-                startpos = startpos + endpos
-                continue
-
-        yield curstr[:endpos]
-        startpos = startpos + endpos
-        continue
+        yield syllable
 
     raise StopIteration

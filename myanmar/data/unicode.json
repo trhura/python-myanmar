@@ -1,197 +1,200 @@
 {
-    "kinzi": {
-        "kinzi": "င်္",
-        "kinzi_i_lig": "င်္ိ",
-        "kinzi_ii_lig": "င်္ီ",
-        "kinzi_anusvara_lig": "င်္ံ"
-    },
-    "consonant": {
-        "ka": "က",
-        "kha": "ခ",
-        "ga": "ဂ",
-        "gha": "ဃ",
-        "nga": "င",
-        "ca": "စ",
-        "cha": "ဆ",
-        "ja": "ဇ",
-        "jha": "ဈ",
-        "nya": "ဉ",
-        "nya_alt": "ဉ",
-        "nya_aa_lig": "ဉ",
-        "nnya": "ည",
-        "nnya_alt": "ည",
-        "tta": "ဋ",
-        "ttha": "ဌ",
-        "dda": "ဍ",
-        "ddha": "ဎ",
-        "nna": "ဏ",
-        "ta": "တ",
-        "tha": "ထ",
-        "da": "ဒ",
-        "dha": "ဓ",
-        "na": "န",
-        "na_alt": "န",
-        "pa": "ပ",
-        "pha": "ဖ",
-        "ba": "ဗ",
-        "bha": "ဘ",
-        "ma": "မ",
-        "ya": "ယ",
-        "ra": "ရ",
-        "ra_alt": "ရ",
-        "la": "လ",
-        "wa": "ဝ",
-        "sa": "သ",
-        "ha": "ဟ",
-        "lla": "ဠ",
-        "a": "အ",
-        "greatSa": "ဿ",
-        "u": "ဥ",
-        "uu": "ဦ",
-        "e": "ဧ",
-        "o": "ဩ",
-        "aforementioned": "၎"
-    },
-    "independent": {
-        "i": "ဣ",
-        "ii": "ဤ",
-        "au": "ဪ",
-        "locative": "၌",
-        "completed": "၍",
-        "aforementioned-lig": "၎င်း",
-        "genitive": "၏"
-    },
-    "digit": {
-        "zero": "၀",
-        "one": "၁",
-        "two": "၂",
-        "three": "၃",
-        "four": "၄",
-        "five": "၅",
-        "six": "၆",
-        "seven": "၇",
-        "eight": "၈",
-        "nine": "၉"
-    },
-    "punctuation": {
-        "section": "။",
-        "little-section": "၊"
-    },
-    "ligature": {
-        "dda-dda": "ဍ္ဍ",
-        "tta-ddha": "ဍ္ဎ",
-        "nna-dda": "ဏ္ဍ",
-        "tta-ttha": "ဋ္ဌ",
-        "tta-tta": "ဋ္ဋ",
-        "kyat": "ကျပ်"
-    },
-    "stack": {
-        "stack-ka": "္က",
-        "stack-kha": "္ခ",
-        "stack-ga": "္ဂ",
-        "stack-gha": "္ဃ",
-        "stack-ca": "္စ",
-        "stack-cha": "္ဆ",
-		"stack-cha_alt": "္ဆ",
-        "stack-ja": "္ဇ",
-        "stack-jha": "္ဈ",
-        "stack-tta": "္ဋ",
-        "stack-ttha": "္ဌ",
-        "stack-dda": "္ဍ",
-        "stack-ddha": "္ဎ",
-        "stack-nna": "္ဏ",
-        "stack-ta": "္တ",
-        "stack-tha": "္ထ",
-        "stack-tha_alt": "္ထ",
-        "stack-da": "္ဒ",
-        "stack-dha": "္ဓ",
-        "stack-na": "္န",
-        "stack-pa": "္ပ",
-        "stack-pha": "္ဖ",
-        "stack-ba": "္ဗ",
-        "stack-bha": "္ဘ",
-        "stack-ma": "္မ",
-        "stack-ya": "္ယ",
-        "stack-ra": "္ရ",
-        "stack-la": "္လ",
-        "stack-sa": "္သ",
-        "stack-ha": "္ဟ",
-        "stack-a": "္​အ"
-    },
-    "yapin": {
-        "yapin": "ျ",
-        "yapin_alt": "ျ",
-        "yapin_wasway_alt": "ျွ",
-        "yapin_hatoh_alt": "ျှ",
-        "yapin_wasway_hatoh_alt": "ျွှ"
-    },
-    "yayit": {
-        "yayit_narrow": "ြ",
-        "yayit_wide": "ြ",
-        "yayit_narrow_upper": "ြ",
-        "yayit_wide_upper": "ြ",
-        "yayit_narrow_lower": "ြ",
-        "yayit_wide_lower": "ြ",
-        "yayit_narrow_lower_upper": "ြ",
-        "yayit_wide_lower_upper": "ြ",
-        "yayit_narrow_wasway": "ြွ",
-        "yayit_wide_wasway": "ြွ",
-        "yayit_narrow_wasway_upper": "ြွ",
-        "yayit_wide_wasway_upper": "ြွ",
-        "yayit_narrow_u": "",
-        "yayit_wide_u": "",
-        "yayit_narrow_u_upper": "",
-        "yayit_wide_u_upper": ""
-    },
-    "wasway": {
-        "wasway": "ွ",
-        "wasway-hatoh": "ွှ",
-        "wasway-hatoh_small": "ွှ"
-    },
-    "hatoh": {
-        "hatoh": "ှ",
-        "hatoh_small": "ှ",
-        "hatoh-uVowel": "ှု",
-        "hatoh-uuVowel": "ှူ",
-        "hatoh-uVowel_tall": "ှူ",
-        "hatoh-uuVowel_tall": "ှူ"
-    },
-    "eVowel": {
-        "eVowel": "ေ"
-    },
-    "iVowel": {
-        "iVowel": "ိ",
-        "iVowel_anusvara_lig": "ိံ",
-        "iiVowel": "ီ"
-    },
-	"aiVowel": {
-		"aiVowel": "ဲ"
-	},
-    "uVowel": {
-        "uVowel": "ု",
-        "uVowel_tall": "ု",
-        "uuVowel": "ူ",
-        "uuVowel_tall": "ူ"
-    },
-    "anusvara": {
-        "anusvara": "ံ"
-    },
-    "aaVowel": {
-        "aaVowel": "ာ",
-        "aaVowel_tall": "ါ",
-        "aaVowel-asat": "ာ်",
-		"aaVowel-asat_tall": "ါ်"
-    },
+  "kinzi": {
+    "kinzi": "င်္",
+    "kinzi_i_lig": "င်္ိ",
+    "kinzi_ii_lig": "င်္ီ",
+    "kinzi_anusvara_lig": "င်္ံ"
+  },
+  "consonant": {
+    "ka": "က",
+    "kha": "ခ",
+    "ga": "ဂ",
+    "gha": "ဃ",
+    "nga": "င",
+    "ca": "စ",
+    "cha": "ဆ",
+    "ja": "ဇ",
+    "jha": "ဈ",
+    "nya": "ဉ",
+    "nya_alt": "ဉ",
+    "nya_aa_lig": "ဉ",
+    "nnya": "ည",
+    "nnya_alt": "ည",
+    "tta": "ဋ",
+    "ttha": "ဌ",
+    "dda": "ဍ",
+    "ddha": "ဎ",
+    "nna": "ဏ",
+    "ta": "တ",
+    "tha": "ထ",
+    "da": "ဒ",
+    "dha": "ဓ",
+    "na": "န",
+    "na_alt": "န",
+    "pa": "ပ",
+    "pha": "ဖ",
+    "ba": "ဗ",
+    "bha": "ဘ",
+    "ma": "မ",
+    "ya": "ယ",
+    "ra": "ရ",
+    "ra_alt": "ရ",
+    "la": "လ",
+    "wa": "ဝ",
+    "sa": "သ",
+    "ha": "ဟ",
+    "lla": "ဠ",
+    "a": "အ",
+    "greatSa": "ဿ",
+    "u": "ဥ",
+    "uu": "ဦ",
+    "e": "ဧ",
+    "o": "ဩ",
+    "aforementioned": "၎"
+  },
+  "independent": {
+    "i": "ဣ",
+    "ii": "ဤ",
+    "au": "ဪ",
+    "locative": "၌",
+    "completed": "၍",
+    "aforementioned-lig": "၎င်း",
+    "genitive": "၏"
+  },
+  "digit": {
+    "zero": "၀",
+    "one": "၁",
+    "two": "၂",
+    "three": "၃",
+    "four": "၄",
+    "five": "၅",
+    "six": "၆",
+    "seven": "၇",
+    "eight": "၈",
+    "nine": "၉"
+  },
+  "punctuation": {
+    "section": "။",
+    "little-section": "၊"
+  },
+  "ligature": {
+    "dda-dda": "ဍ္ဍ",
+    "tta-ddha": "ဍ္ဎ",
+    "nna-dda": "ဏ္ဍ",
+    "tta-ttha": "ဋ္ဌ",
+    "tta-tta": "ဋ္ဋ",
+    "kyat": "ကျပ်"
+  },
+  "stack": {
+    "stack-ka": "္က",
+    "stack-kha": "္ခ",
+    "stack-ga": "္ဂ",
+    "stack-gha": "္ဃ",
+    "stack-ca": "္စ",
+    "stack-cha": "္ဆ",
+    "stack-cha_alt": "္ဆ",
+    "stack-ja": "္ဇ",
+    "stack-jha": "္ဈ",
+    "stack-tta": "္ဋ",
+    "stack-ttha": "္ဌ",
+    "stack-dda": "္ဍ",
+    "stack-ddha": "္ဎ",
+    "stack-nna": "္ဏ",
+    "stack-ta": "္တ",
+    "stack-tha": "္ထ",
+    "stack-tha_alt": "္ထ",
+    "stack-da": "္ဒ",
+    "stack-dha": "္ဓ",
+    "stack-na": "္န",
+    "stack-pa": "္ပ",
+    "stack-pha": "္ဖ",
+    "stack-ba": "္ဗ",
+    "stack-bha": "္ဘ",
+    "stack-ma": "္မ",
+    "stack-ya": "္ယ",
+    "stack-ra": "္ရ",
+    "stack-la": "္လ",
+    "stack-sa": "္သ",
+    "stack-ha": "္ဟ",
+    "stack-a": "္​အ"
+  },
+  "yapin": {
+    "yapin": "ျ",
+    "yapin_alt": "ျ",
+    "yapin_wasway_alt": "ျွ",
+    "yapin_hatoh_alt": "ျှ",
+    "yapin_wasway_hatoh_alt": "ျွှ"
+  },
+  "yayit": {
+    "yayit_narrow": "ြ",
+    "yayit_wide": "ြ",
+    "yayit_narrow_upper": "ြ",
+    "yayit_wide_upper": "ြ",
+    "yayit_narrow_lower": "ြ",
+    "yayit_wide_lower": "ြ",
+    "yayit_narrow_lower_upper": "ြ",
+    "yayit_wide_lower_upper": "ြ",
+    "yayit_narrow_wasway": "ြွ",
+    "yayit_wide_wasway": "ြွ",
+    "yayit_narrow_wasway_upper": "ြွ",
+    "yayit_wide_wasway_upper": "ြွ",
+    "yayit_narrow_u": "",
+    "yayit_wide_u": "",
+    "yayit_narrow_u_upper": "",
+    "yayit_wide_u_upper": ""
+  },
+  "wasway": {
+    "wasway": "ွ",
+    "wasway-hatoh": "ွှ",
+    "wasway-hatoh_small": "ွှ"
+  },
+  "hatoh": {
+    "hatoh": "ှ",
+    "hatoh_small": "ှ",
+    "hatoh-uVowel": "ှု",
+    "hatoh-uuVowel": "ှူ",
+    "hatoh-uVowel_tall": "ှူ",
+    "hatoh-uuVowel_tall": "ှူ"
+  },
+  "eVowel": {
+    "eVowel": "ေ"
+  },
+  "iVowel": {
+    "iVowel": "ိ",
+    "iVowel_anusvara_lig": "ိံ",
+    "iiVowel": "ီ"
+  },
+  "aiVowel": {
+    "aiVowel": "ဲ"
+  },
+  "uVowel": {
+    "uVowel": "ု",
+    "uVowel_tall": "ု",
+    "uuVowel": "ူ",
+    "uuVowel_tall": "ူ"
+  },
+  "anusvara": {
+    "anusvara": "ံ"
+  },
+  "aaVowel": {
+    "aaVowel": "ာ",
+    "aaVowel_tall": "ါ",
+    "aaVowel-asat": "ာ်",
+    "aaVowel-asat_tall": "ါ်"
+  },
 
-    "dotBelow": {
-        "dotBelow": "့",
-        "dotBelow_alt": "့",
-        "dotBelow_alt_alt": "့"
-    },
-    "asat": {
-        "asat": "်"
-    },
-    "visarga": {
-        "visarga": "း"
-    }
+  "dotBelow": {
+    "dotBelow": "့",
+    "dotBelow_alt": "့",
+    "dotBelow_alt_alt": "့"
+  },
+  "asat": {
+    "asat": "်"
+  },
+  "visarga": {
+    "visarga": "း"
+  },
+  "virama": {
+    "virama": "္"
+  }
 }

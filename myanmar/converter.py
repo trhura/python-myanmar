@@ -82,7 +82,7 @@ def convert(text, fromenc, toenc):
         # flattern syllable_pattern, convert to a list of tuples first
         syllable_pattern = [
             (x, ) if isinstance(x, str) else x
-            for x in to_encoder.syllable_form
+            for x in to_encoder._morphologic_syllable
         ]
         syllable_pattern = list(itertools.chain(*syllable_pattern))
 

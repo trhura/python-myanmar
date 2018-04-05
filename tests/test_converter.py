@@ -4,21 +4,6 @@ import os
 import sys
 
 from myanmar import converter
-from myanmar import encodings
-
-
-def test_json_files():
-    uni = encodings.UnicodeEncoding()
-    zgy = encodings.ZawgyiEncoding()
-
-    def sub_keys(json):
-        ret = []
-        for key, value in json.items():
-            ret += json[key].keys()
-        return ret
-
-    assert sorted(uni.json_data.keys()) == sorted(zgy.json_data.keys())
-    assert sorted(sub_keys(uni.json_data)) == sorted(sub_keys(zgy.json_data))
 
 
 def test_uni2zgy_conversion():

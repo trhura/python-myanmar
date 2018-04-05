@@ -29,7 +29,7 @@ import pkgutil
 def build_pattern(pattern, data):
     # build regular expression from a pattern
     if isinstance(pattern, str):
-        node = pattern
+        node = pattern[:pattern.find('_')] if '_' in pattern else pattern
         or_expr = "|".join(
             [
                 x for x in
@@ -42,9 +42,9 @@ def build_pattern(pattern, data):
         lst = [build_pattern(x, data) for x in pattern]
         if len(lst) > 1:
             or_expr = "|".join(lst)
-            return '({})*'.format(or_expr)
+            return '(%s){0,%d}' % (or_expr, len(lst))
         else:
-            return '{}*'.format(lst[0])
+            return '({})?'.format(lst[0])
 
     if isinstance(pattern, list):
         return ''.join([build_pattern(x, data) for x in pattern])
@@ -73,46 +73,80 @@ class BaseEncoding():
         self.table = build_table(self.json_data)
         self.reverse_table = build_table(self.json_data, reverse=True)
 
-        patterns = [
-            build_pattern(x, self.json_data) for x in self.syllable_patterns
-        ]
+        _pattern = "|".join(
+            [
+                build_pattern(x, self.json_data)
+                for x in self._morphologic_pattern
+            ]
+        )
+        self.morphologic_pattern = re.compile(
+            "(?P<syllable>{})".format(_pattern), re.UNICODE
+        )
 
-        _pattern = "|".join(patterns)
-        self._pattern = "(?P<syllable>{})".format(_pattern)
-        self.pattern = re.compile(self._pattern, re.UNICODE)
+        if hasattr(self, '_phonemic_pattern'):
+            _pattern = "|".join(
+                [
+                    build_pattern(x, self.json_data)
+                    for x in self._phonemic_pattern
+                ]
+            )
+            self.phonemic_pattern = re.compile(
+                "(?P<syllable>{})".format(_pattern), re.UNICODE
+            )
 
 
 class UnicodeEncoding(BaseEncoding):
     def __init__(self, *args, **kwargs):
-        self.syllable_form = [
-            ("kinzi", ), "consonant", ("stack", ), ("yapin", ), ("yayit", ),
-            ("wasway", ), ("hatoh", ), ("eVowel", ), ("iVowel", ),
-            ("uVowel",
-             "anusvara"), ("aiVowel", ), ("aaVowel", "asat",
-                                          "dotBelow"), ("visarga", )
+        self._morphologic_syllable = [
+            ("kinzi", ),
+            "consonant",
+            ("stack", ),
+            ("yapin", "yayit", "wasway", "hatoh"),
+            ("eVowel", "iVowel"),
+            ("uVowel", "anusvara", "aiVowel"),
+            ("aaVowel", "asat"),
+            ("dotBelow", "visarga"),
         ]
-        self.syllable_patterns = (
-            "independent", "digit", "punctuation", "ligature",
-            self.syllable_form
+        self._morphologic_pattern = (
+            "independent",
+            "digit",
+            "punctuation",
+            "ligature",
+            self._morphologic_syllable,
         )
 
+        self._phonemic_syllable = [
+            "consonant",
+            ("yapin", "yayit", "wasway", "hatoh"),
+            ("eVowel", "iVowel"),
+            ("uVowel", "anusvara", "aiVowel"),
+            ("aaVowel", "asat"),
+            (["consonant_devowel", ("dotBelow_devowel", ), "asat_devowel"], ),
+            ("dotBelow", "visarga"),
+            (["consonant_stack", "virama_stack"], ),
+        ]
+        self._phonemic_pattern = (
+            "independent",
+            "digit",
+            "punctuation",
+            "ligature",
+            self._phonemic_syllable,
+        )
         super().__init__(*args, **kwargs)
 
 
 class LegacyEncoding(BaseEncoding):
     def __init__(self, *args, **kwargs):
-        self.syllable_form = [
-            ("eVowel", ), ("yayit", ), "consonant", ("kinzi", ), ("stack", ), (
-                "yapin",
-                "wasway",
-                "hatoh",
-            ), ("iVowel", "uVowel", "anusvara", "aiVowel"),
-            ("aaVowel", "asat", "dotBelow"), ("visarga", )
+        self._morphologic_syllable = [
+            ("eVowel", ), ("yayit", ), "consonant", ("kinzi", "stack"),
+            ("yapin", "wasway", "hatoh"), ("iVowel", "uVowel", "anusvara"),
+            ("aiVowel", ), ("aaVowel", "asat", "dotBelow"), ("visarga", )
         ]
-        self.syllable_patterns = (
+        self._morphologic_pattern = (
             "independent", "digit", "punctuation", "ligature",
-            self.syllable_form
+            self._morphologic_syllable
         )
+
         super().__init__(*args, **kwargs)
 
 
