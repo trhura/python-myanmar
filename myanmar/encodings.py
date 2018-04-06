@@ -24,6 +24,7 @@
 import re
 import json
 import pkgutil
+import itertools
 
 
 def build_pattern(pattern, data):
@@ -73,25 +74,32 @@ class BaseEncoding():
         self.table = build_table(self.json_data)
         self.reverse_table = build_table(self.json_data, reverse=True)
 
-        _pattern = "|".join(
+        pattern = "|".join(
             [
                 build_pattern(x, self.json_data)
                 for x in self._morphologic_pattern
             ]
         )
         self.morphologic_pattern = re.compile(
-            "(?P<syllable>{})".format(_pattern), re.UNICODE
+            "(?P<syllable>{})".format(pattern), re.UNICODE
         )
 
+        # flattern syllable_pattern, convert to a list of tuples first
+        syllable_parts = [
+            (x, ) if isinstance(x, str) else x
+            for x in self._morphologic_syllable
+        ]
+        self.syllable_parts = list(itertools.chain(*syllable_parts))
+
         if hasattr(self, '_phonemic_pattern'):
-            _pattern = "|".join(
+            pattern = "|".join(
                 [
                     build_pattern(x, self.json_data)
                     for x in self._phonemic_pattern
                 ]
             )
             self.phonemic_pattern = re.compile(
-                "(?P<syllable>{})".format(_pattern), re.UNICODE
+                "(?P<syllable>{})".format(pattern), re.UNICODE
             )
 
 

@@ -22,7 +22,7 @@
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
 import sys
-import itertools
+import functools
 
 from myanmar import language
 from myanmar import encodings
@@ -59,113 +59,100 @@ def convert(text, fromenc, toenc):
     if toenc not in encoders:
         raise NotImplementedError("Unsupported encoding: %s" % toenc)
 
-    from_encoder = encoders[fromenc]
-    to_encoder = encoders[toenc]
-    iterator = language.MorphoSyllableBreak(text=text, encoding=from_encoder)
+    fromencoder = encoders[fromenc]
+    toencoder = encoders[toenc]
+    iterator = language.MorphoSyllableBreak(text=text, encoding=fromencoder)
 
     otext = ""
-    for each_syllable in iterator:
-        complete_syllable = each_syllable['syllable']
-        if len(each_syllable) == 1:
+    for syllable in iterator:
+        full_syllable = syllable['syllable']
+        if len(syllable) == 1:
             # unmatched text, no need to convert
-            otext += complete_syllable
+            otext += full_syllable
             continue
 
-        if complete_syllable in from_encoder.reverse_table:
+        if full_syllable in fromencoder.reverse_table:
             # Direct mapping
-            key = from_encoder.reverse_table[complete_syllable]
-            key = key[:key.find('_')
-                      ] if '_' in key else key  # remove variant suffixes
-            otext += to_encoder.table[key]
+            key = fromencoder.reverse_table[full_syllable]
+            key = key[:key.find('_')] if '_' in key else key  # remove _part
+            otext += toencoder.table[key]
             continue
 
-        # flattern syllable_pattern, convert to a list of tuples first
-        syllable_pattern = [
-            (x, ) if isinstance(x, str) else x
-            for x in to_encoder._morphologic_syllable
-        ]
-        syllable_pattern = list(itertools.chain(*syllable_pattern))
+        otext += convert_syllable(HashSyllable(syllable), fromenc, toenc)
 
-        # collect codepoints in syllable, in correct syllable order
-        syllable = {}
-        flags = {}
-
-        for each_part in each_syllable.keys():
-            if each_part == 'syllable':
-                continue  # skip complete syllable
-
-            key = from_encoder.reverse_table[each_syllable[each_part]]
-            key = key[:key.find('_')
-                      ] if '_' in key else key  # remove variant suffixes
-
-            if each_part == "consonant":
-                if key == "na":
-                    key += choose_na_variant(each_syllable)
-
-                if key == "ra":
-                    key += choose_ra_variant(each_syllable)
-
-                if key == "nnya":
-                    key += choose_nnya_variant(each_syllable)
-
-            if each_part == "yapin":
-                key += choose_yapin_variant(each_syllable)
-
-            if each_part == "yayit":
-                key += choose_yayit_variant(each_syllable)
-
-            if each_part == "uVowel":
-                key += choose_uvowel_variant(each_syllable)
-                flags[each_part] = key
-
-            if each_part == "aaVowel":
-                key += choose_aavowel_variant(each_syllable)
-
-            if each_part == "dotBelow":
-                key += choose_dot_below_variant(each_syllable)
-            syllable[each_part] = key
-
-        # print(each_syllable, "---", syllable)
-        if 'uVowel' in syllable and 'hatoh' in syllable:
-            del syllable['uVowel']
-            syllable['hatoh'] = syllable['hatoh'] + '_' + flags['uVowel']
-
-        if 'wasway' in syllable and 'hatoh' in syllable:
-            del syllable['hatoh']
-            syllable['wasway'] = syllable['wasway'] + '-' + 'hatoh'
-
-        for each_pattern in syllable_pattern:
-            if each_pattern not in syllable:
-                continue
-
-            try:
-                key = syllable[each_pattern]
-                otext += to_encoder.table[key]
-            except Exception as e:
-                print(key, syllable)
-
-    # pprint (to_encoder.table)
-    # pprint (from_encoder.reverse_table)
     return otext
+
+
+class HashSyllable(dict):
+    def __hash__(self):
+        return hash(self.get("syllable"))
+
+
+@functools.lru_cache(maxsize=512)
+def convert_syllable(syllable, fromenc, toenc):
+    fromencoder = encoders[fromenc]
+    toencoder = encoders[toenc]
+
+    for part in syllable.keys():
+        if part == 'syllable': continue  # noqa skip complete syllable
+
+        key = fromencoder.reverse_table[syllable[part]]
+        key = key[:key.find('_')] if '_' in key else key  # remove _part
+
+        if part == "consonant":
+            if key == "na":
+                key += choose_na_variant(syllable)
+            if key == "ra":
+                key += choose_ra_variant(syllable)
+            if key == "nnya":
+                key += choose_nnya_variant(syllable)
+        elif part == "yapin":
+            key += choose_yapin_variant(syllable)
+        elif part == "yayit":
+            key += choose_yayit_variant(syllable)
+        elif part == "uVowel":
+            key += choose_uvowel_variant(syllable)
+        elif part == "aaVowel":
+            key += choose_aavowel_variant(syllable)
+        elif part == "dotBelow":
+            key += choose_dot_below_variant(syllable)
+
+        syllable[part] = key
+
+    if 'uVowel' in syllable and 'hatoh' in syllable:
+        syllable['hatoh'] = syllable['hatoh'] + '-' + syllable['uVowel']
+        del syllable['uVowel']
+    if 'wasway' in syllable and 'hatoh' in syllable:
+        syllable['wasway'] = syllable['wasway'] + '-' + syllable['hatoh']
+        del syllable['hatoh']
+
+    osyllable = ""
+    # collect codepoints in syllable, in correct syllable order
+    for part in toencoder.syllable_parts:
+        if part not in syllable: continue  # noqa
+
+        try:
+            key = syllable[part]
+            osyllable += toencoder.table[key]
+        except Exception as e:
+            print(key, syllable)
+
+    return osyllable
 
 
 def is_wide_consonant(char):
     WIDE_CONSONANTS = [
-        language.LETTER_KA, language.LETTER_GHA, language.LETTER_CA,
-        language.LETTER_CHA, language.LETTER_NYA, language.LETTER_NNA,
-        language.LETTER_TA, language.LETTER_THA, language.LETTER_BHA,
-        language.LETTER_YA, language.LETTER_LA, language.LETTER_SA,
-        language.LETTER_HA, language.LETTER_A, language.LETTER_GREAT_SA
+        "ka", "gha", "ca", "cha", "nya", "nna", "ta", "tha", "bha", "ya", "la",
+        "sa", "ha", "a", "greatSa"
     ]
     return char in WIDE_CONSONANTS
 
 
 def is_lower_consonant(char):
     LOWER_CONSONANTS = [
-        language.LETTER_NYA,
-        # ... more
-        language.LETTER_NA,
-        language.LETTER_RA,
+        "nya",
+        "na",
+        "ra",  # ... more
     ]
     return char in LOWER_CONSONANTS
 
@@ -207,17 +194,9 @@ def choose_uvowel_variant(syllable):
 
 
 def choose_aavowel_variant(syllable):
-    _C = [
-        language.LETTER_KHA, language.LETTER_GHA, language.LETTER_NGA,
-        language.LETTER_DA, language.LETTER_DHA, language.LETTER_PA,
-        language.LETTER_WA
-    ]
+    _C = ["kha", "gha", "nga", "da", "dha", "pa", "wa"]
 
-    # FIXME: asat
-    key = ''
-    # if 'asat' in syllable:
-    #     key += '-asat'
-
+    key = ""
     if syllable['consonant'] in _C:
         for c in ['yapin', 'yayit', 'wasway', 'hatoh']:
             if c in syllable:
@@ -243,9 +222,9 @@ def choose_yapin_variant(syllable):
 def choose_dot_below_variant(syllable):
     key = ""
 
-    if syllable['consonant'] == language.LETTER_NA:
+    if syllable['consonant'] == "na":
         key += "_alt"
-    elif syllable['consonant'] == language.LETTER_RA:
+    elif syllable['consonant'] == "ra":
         key += "_alt_alt"
     elif "uVowel" in syllable:
         key += "_alt_alt" if 'yayit' in syllable else '_alt'
