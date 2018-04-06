@@ -111,33 +111,30 @@ class BGN_PCGN():
     @classmethod
     def change_ka_to_ga(cls, roman, prev):
         # change ka to ga after vowel sound
-        if roman.startswith('k'):
-            if prev[-1] in 'aeioun' or prev.endswith('ng'):
-                roman = 'g' + roman[1:]
+        if roman.startswith('k') and cls.ends_with_vowel(prev):
+            roman = 'g' + roman[1:]
         return roman
 
     @classmethod
     def change_sa_to_za(cls, roman, prev):
         # change sa to za after vowel sound
-        if roman.startswith('s'):
-            if prev[-1] in 'aeioun' or prev.endswith('ng'):
-                roman = 'z' + roman[1:]
+        if roman.startswith('s') and cls.ends_with_vowel(prev):
+            roman = 'z' + roman[1:]
         return roman
 
     @classmethod
     def change_pa_to_ba(cls, roman, prev):
         # change pa to ba after vowel sound
-        if roman.startswith('p'):
-            if prev[-1] in 'aeioun' or prev.endswith('ng'):
-                roman = 'b' + roman[1:]
+        if roman.startswith('p') and cls.ends_with_vowel(prev):
+            roman = 'b' + roman[1:]
         return roman
 
     @classmethod
     def change_ta_to_da(cls, roman, prev):
-        if roman.startswith('t') and not roman.startswith('th'):
-            if prev[-1] in 'aeioun' or prev.endswith('ng'):
-                # change ta to da after vowel sound
-                roman = 'd' + roman[1:]
+        # change ta to da after vowel sound
+        startswitht = roman.startswith('t') and not roman.startswith('th')
+        if startswitht and cls.ends_with_vowel(prev):
+            roman = 'd' + roman[1:]
         return roman
 
     @classmethod
@@ -160,6 +157,10 @@ class BGN_PCGN():
         if roman[0] == 'h' and prev[-1] == 't':
             roman = '-' + roman
         return roman
+
+    @classmethod
+    def ends_with_vowel(cls, roman):
+        return roman[-1] in 'aeioun' or roman.endswith('ng')
 
     @classmethod
     def has_vowel(cls, roman):
