@@ -22,7 +22,6 @@
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
 import sys
-import functools
 
 from myanmar import language
 from myanmar import encodings
@@ -78,17 +77,11 @@ def convert(text, fromenc, toenc):
             otext += toencoder.table[key]
             continue
 
-        otext += convert_syllable(HashSyllable(syllable), fromenc, toenc)
+        otext += convert_syllable(syllable, fromenc, toenc)
 
     return otext
 
 
-class HashSyllable(dict):
-    def __hash__(self):
-        return hash(self.get("syllable"))
-
-
-@functools.lru_cache(maxsize=512)
 def convert_syllable(syllable, fromenc, toenc):
     fromencoder = encoders[fromenc]
     toencoder = encoders[toenc]

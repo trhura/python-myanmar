@@ -2,7 +2,7 @@ Encodings
 =========
 
 Convert text in various Myanmar encodings. It currently supports **zawgyi**
-and **unicode**.
+and **unicode**. Perfomance-wise, it is not as good as other regex-based converters.
 
 
 .. toctree::
