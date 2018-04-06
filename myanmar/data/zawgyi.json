@@ -121,9 +121,9 @@
   "yapin": {
     "yapin": "်",
     "yapin_alt": "ၽ",
-    "yapin_wasway_alt": "ြၽ",
-    "yapin_hatoh_alt": "ၽႇ",
-    "yapin_wasway_hatoh_alt": "ႊၽ"
+    "yapin-wasway": "ြၽ",
+    "yapin-hatoh": "ၽႇ",
+    "yapin-wasway-hatoh": "ႊၽ"
   },
   "yayit": {
     "yayit_narrow": "ျ",
