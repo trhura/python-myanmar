@@ -1,11 +1,26 @@
 # Config file for automatic testing at travis-ci.org
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=a1045acd9a066edb2fbc710e8618d74f4865f838ddf6b0d469b4f91774ba6958
+
 language: python
 python:
   - 3.6
 
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements.txt
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+
 # command to run tests, e.g. python setup.py test
-script: tox
+script:
+  - tox
+  - PYTHONPATH=. py.test --cov=. tests/
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
