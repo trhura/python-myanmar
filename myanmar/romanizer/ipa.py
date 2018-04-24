@@ -34,12 +34,6 @@ class IPA():
 
     @classmethod
     def normalize(cls, ipa, prev):
-        ipa = ipa.replace('kj', 'tɕ')
-        ipa = ipa.replace('kʰj', 'tɕʰ')
-        ipa = ipa.replace('ɡj', 'dʑ')
-        ipa = ipa.replace('j̥', 'ʃ')
-        ipa = ipa.replace('ŋ̥', 'ŋ̊')
-        ipa = ipa.replace('ŋj', 'ɲ')
         if prev:
             ipa = cls.add_ə(ipa, prev)
             ipa = cls.change_k_to_g(ipa, prev)
