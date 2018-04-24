@@ -192,8 +192,6 @@ class IPA():
 
     @classmethod
     def add_ə(cls, ipa, prev):
-        print('ipa:', ipa)
-        print('prev:', prev)
         prev_len = 0
         if prev[-1] == 'ʰ' and len(prev[-2]) == 1:
             prev_len = 1
