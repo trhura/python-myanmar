@@ -30,7 +30,7 @@ def test_ipa_romanizer():
     assert romanize("တာငါ", IPA) == "tàŋà"
     assert romanize("ခလုတ်", IPA) == "kʰəloʊʔ"
     assert romanize("ဆန်ပြုတ်", IPA) == "sʰàɴbjoʊʔ"
-    assert romanize("လျှင်", IPA) == "l̥jɪ̀ɴ"
+    assert romanize("လျှင်", IPA) == "ɬjɪ̀ɴ"
     assert romanize("ဘဲ", IPA) == "bɛ́"
     # fixme..IPA of "ဓာတ်" is daʔ
     assert romanize("ဓာတ်", IPA) == "dæt"
@@ -105,7 +105,7 @@ def test_ipa_romanizer():
     assert romanize("လိပ်စာ", IPA) == "leɪʔsà"
     assert romanize("ရွေးကောက်ပွဲ", IPA) == "jwékaʊʔpwɛ́"
     assert romanize("လူငယ်", IPA) == "lùŋɛ̀"
-    assert romanize("ချင်", IPA) == "tɕʰɪ̀ɴ"
+    assert romanize("ချင်", IPA) == "tʃʰɪ̀ɴ"
     assert romanize("ကြဉ်", IPA) == "tɕɪ̀ɴ"
     assert romanize("စီးပွားရေး", IPA) == "síbwájé"
     assert romanize("စတေဒီယံ", IPA) == "sətèdìjàɴ"

@@ -41,8 +41,8 @@ def romanize(string, system, encoding=UnicodeEncoding()):
     """
     Transliterate Burmese text with latin letters.
 
-    >>> romanize("ခလုတ်", IPA)
-    'kʰəloʊʔ'
+    >>> romanize("ကွန်ပျူတာ", IPA)
+    'kʊ̀ɴpjùtà'
     >>> romanize("ဘင်္ဂလားအော်", BGN_PCGN)
     'bin-gala-aw'
     """
