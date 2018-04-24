@@ -37,7 +37,7 @@ from .ipa import IPA  # noqa
 from .bgp_pgcn import BGN_PCGN  # noqa
 
 
-def romanize(string, system, encoding=UnicodeEncoding()):
+def romanize(string, system):
     """
     Transliterate Burmese text with latin letters.
 
@@ -48,8 +48,7 @@ def romanize(string, system, encoding=UnicodeEncoding()):
     """
 
     romans = []
-
-    for syllable in PhonemicSyllableBreak(string, encoding):
+    for syllable in PhonemicSyllableBreak(string, UnicodeEncoding()):
         phoneme = syllable['syllable']
 
         # TODO add more normalization
