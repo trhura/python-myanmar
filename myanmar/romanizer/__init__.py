@@ -34,6 +34,7 @@ __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2018 Thura Hlaing'
 
 from .ipa import IPA  # noqa
+from .mlc import MLC  # noqa
 from .bgp_pgcn import BGN_PCGN  # noqa
 
 
@@ -43,6 +44,8 @@ def romanize(string, system):
 
     >>> romanize("ကွန်ပျူတာ", IPA)
     'kʊ̀ɴpjùtà'
+    >>> romanize("ပဒေသရာဇာ", MLC)
+    'pedazarājā'
     >>> romanize("ဘင်္ဂလားအော်", BGN_PCGN)
     'bin-gala-aw'
     """
