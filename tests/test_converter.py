@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
+import re
 import sys
 
 from myanmar import converter
@@ -38,3 +39,38 @@ def test_zgy2uni_conversion():
 
         assert unistr == converter.convert(zgystr, 'zawgyi', 'unicode')
         fil.close()
+
+
+def test_uni2win_conversion():
+    try:
+        path = os.path.join(
+            os.path.dirname(__file__), 'data', 'uni2win-conversion.txt'
+        )
+        fil = open(path, 'r', encoding='utf-8')
+    except Exception as e:
+        sys.exit(-1)
+
+    for line in fil.readlines():
+        line = line.strip()
+        unistr, winstr = line.split('\t')
+
+        assert unistr == converter.convert(winstr, 'wininnwa', 'unicode')
+        fil.close()
+
+
+# FIXME ?
+# def test_win2uni_conversion():
+#     try:
+#         path = os.path.join(
+#             os.path.dirname(__file__), 'data', 'uni2win-conversion.txt'
+#         )
+#         fil = open(path, 'r', encoding='utf-8')
+#     except Exception as e:
+#         sys.exit(-1)
+
+#     for line in fil.readlines():
+#         line = line.strip()
+#         unistr, winstr = line.split('\t')
+
+#         assert winstr == converter.convert(unistr, 'unicode', 'wininnwa')
+#         fil.close()

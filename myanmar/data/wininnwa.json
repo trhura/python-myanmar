@@ -1,199 +1,199 @@
 {
-    "kinzi": {
-        "kinzi": "F",
-        "kinzi_i_lig": "\u00D8",
-        "kinzi_ii_lig": "\u00D0",
-        "kinzi_anusvara_lig": "\u00F8"
-    },
-    "consonant": {
-        "ka": "u",
-        "kha": "c",
-        "ga": "*",
-        "gha": "C",
-        "nga": "i",
-        "ca": "p",
-        "cha": "q",
-        "ja": "Z",
-        "jha": "ps",
-        "nya": "\u00DA",
-        "nya_alt": "\u00CD",
-        "nya_aa_lig": "\u00D3",
-        "nnya": "n",
-        "nnya_alt": "\u00F1",
-        "tta": "#",
-        "ttha": "X",
-        "dda": "!",
-        "ddha": "\u00A1",
-        "nna": "P",
-        "ta": "w",
-        "tha": "x",
-        "da": "\u0027",
-        "dha": "\u0022",
-        "na": "e",
-        "na_alt": "E",
-        "pa": "y",
-        "pha": "z",
-        "ba": "A",
-        "bha": "b",
-        "ma": "r",
-        "ya": ",",
-        "ra": "&",
-        "ra_alt": "\u00BD",
-        "la": "v",
-        "wa": "0",
-        "sa": "o",
-        "ha": "[",
-        "lla": "V",
-        "a": "t",
-        "greatSa": "\u00F3",
-        "u": "O",
-        "uu": "OD",
-        "e": "\u007B",
-        "o": "Mo",
-        "aforementioned": "\u00A4"
-    },
-    "independent": {
-        "i": "\u00A3",
-        "ii": "\u00FE",
-        "au": "aMomf",
-        "locative": "\u00FC",
-        "completed": "\u00ED",
-        "aforementioned-lig": "",
-        "genitive": "\u005C"
-    },
-    "digit": {
-        "zero": "0",
-        "one": "1",
-        "two": "2",
-        "three": "3",
-        "four": "4",
-        "five": "5",
-        "six": "6",
-        "seven": "7",
-        "eight": "8",
-        "nine": "9"
-    },
-    "punctuation": {
-        "section": "/",
-        "little-section": "?"
-    },
-    "ligature": {
-        "dda-dda": "\u00D7",
-        "tta-ddha": "\u00B9",
-        "nna-dda": "@",
-        "tta-ttha": "\u007C",
-        "tta-tta": "\u00A5",
-        "kyat": "$"
-    },
-    "stack": {
-        "stack-ka": "\u00FA",
-        "stack-kha": "\u00A9",
-        "stack-ga": "\u00BE",
-        "stack-gha": "\u00A2",
-        "stack-ca": "\u00F6",
-        "stack-cha": "\u00E4",
-        "stack-cha_alt": "",
-        "stack-ja": "\u00C6",
-        "stack-jha": "\u00D1",
-        "stack-tta": "\u00B3",
-        "stack-ttha": "\u00B2",
-        "stack-dda": "",
-        "stack-ddha": "",
-        "stack-nna": "\u00D6",
-        "stack-ta": "\u00E5",
-        "stack-tha": "\u00AC",
-        "stack-tha_alt": "\u00A6",
-        "stack-da": "\u00B4",
-        "stack-dha": "\u00A8",
-        "stack-na": "\u00E9",
-        "stack-pa": "\u00DC",
-        "stack-pha": "\u00E6",
-        "stack-ba": "\u00C1",
-        "stack-bha": "\u00C7",
-        "stack-ma": "\u00AE",
-        "stack-ya": "",
-        "stack-ra": "",
-        "stack-la": "\u2019",
-        "stack-ha": "",
-        "stack-sa": "",
-        "stack-a": ""
-    },
-    "yapin": {
-        "yapin": "s",
-        "yapin_alt": "\u00DF",
-        "yapin-wasway": "R",
-        "yapin-hatoh": "Q",
-        "yapin-wasway-hatoh": "W"
-    },
-    "yayit": {
-        "yayit_narrow": "j",
-        "yayit_wide": "M",
-        "yayit_narrow_upper": "N",
-        "yayit_wide_upper": "B",
-        "yayit_narrow_lower": "\u0060",
-        "yayit_wide_lower": "\u007E",
-        "yayit_narrow_lower_upper": "",
-        "yayit_wide_lower_upper": "",
-        "yayit_narrow_wasway": "\u003E",
-        "yayit_wide_wasway": "\u003C",
-        "yayit_narrow_wasway_upper": "",
-        "yayit_wide_wasway_upper": "",
-        "yayit_narrow_u": "\u00FB",
-        "yayit_wide_u": "\u00EA",
-        "yayit_narrow_u_upper": "",
-        "yayit_wide_u_upper": ""
-    },
-    "wasway": {
-        "wasway": "G",
-        "wasway-hatoh": "T",
-        "wasway-hatoh_small": ""
-    },
-    "hatoh": {
-        "hatoh": "S",
-        "hatoh_small": "\u00A7",
-        "hatoh-uVowel": "I",
-        "hatoh-uuVowel": "\u00AA",
-        "hatoh-uVowel_tall": "",
-        "hatoh-uuVowel_tall": ""
-    },
-    "eVowel": {
-        "eVowel": "a"
-    },
-    "iVowel": {
-        "iVowel": "d",
-        "iVowel_anusvara_lig": "\u00F0",
-        "iiVowel": "D"
-    },
-    "aiVowel": {
-        "aiVowel": "J"
-    },
-    "uVowel": {
-        "uVowel": "k",
-        "uVowel_tall": "K",
-        "uuVowel": "l",
-        "uuVowel_tall": "L"
-    },
-    "anusvara": {
-        "anusvara": "H"
-    },
-    "aaVowel": {
-        "aaVowel_tall": "g",
-        "aaVowel-asat_tall": ":",
-        "aaVowel-asat": "",
-        "aaVowel": "m"
-    },
-    "dotBelow": {
-        "dotBelow": "U",
-        "dotBelow_alt": "Y",
-        "dotBelow_alt_alt": "h"
-    },
-    "asat": {
-        "asat": "f"
-    },
-    "visarga": {
-        "visarga": ";"
-    },
-    "virama": {
-        "virama": ""
-    }
+  "kinzi": {
+    "kinzi": "F",
+    "kinzi_i_lig": "\u00D8",
+    "kinzi_ii_lig": "\u00D0",
+    "kinzi_anusvara_lig": "\u00F8"
+  },
+  "consonant": {
+    "ka": "u",
+    "kha": "c",
+    "ga": "*",
+    "gha": "C",
+    "nga": "i",
+    "ca": "p",
+    "cha": "q",
+    "ja": "Z",
+    "jha": "ps",
+    "nya": "\u00DA",
+    "nya_alt": "\u00CD",
+    "nya_aa_lig": "\u00D3",
+    "nnya": "n",
+    "nnya_alt": "\u00F1",
+    "tta": "#",
+    "ttha": "X",
+    "dda": "!",
+    "ddha": "\u00A1",
+    "nna": "P",
+    "ta": "w",
+    "tha": "x",
+    "da": "\u0027",
+    "dha": "\u0022",
+    "na": "e",
+    "na_alt": "E",
+    "pa": "y",
+    "pha": "z",
+    "ba": "A",
+    "bha": "b",
+    "ma": "r",
+    "ya": ",",
+    "ra": "&",
+    "ra_alt": "\u00BD",
+    "la": "v",
+    "wa": "0",
+    "sa": "o",
+    "ha": "[",
+    "lla": "V",
+    "a": "t",
+    "greatSa": "\u00F3",
+    "u": "O",
+    "uu": "OD",
+    "e": "\u007B",
+    "o": "Mo",
+    "aforementioned": "\u00A4"
+  },
+  "independent": {
+    "i": "\u00A3",
+    "ii": "\u00FE",
+    "au": "aMomf",
+    "locative": "\u00FC",
+    "completed": "\u00ED",
+    "aforementioned-lig": "",
+    "genitive": "\u005C"
+  },
+  "digit": {
+    "zero": "0",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9"
+  },
+  "punctuation": {
+    "section": "/",
+    "little-section": "?"
+  },
+  "ligature": {
+    "dda-dda": "\u00D7",
+    "tta-ddha": "\u00B9",
+    "nna-dda": "@",
+    "tta-ttha": "\u007C",
+    "tta-tta": "\u00A5",
+    "kyat": "$"
+  },
+  "stack": {
+    "stack-ka": "\u00FA",
+    "stack-kha": "\u00A9",
+    "stack-ga": "\u00BE",
+    "stack-gha": "\u00A2",
+    "stack-ca": "\u00F6",
+    "stack-cha": "\u00E4",
+    "stack-cha_alt": "",
+    "stack-ja": "\u00C6",
+    "stack-jha": "\u00D1",
+    "stack-tta": "\u00B3",
+    "stack-ttha": "\u00B2",
+    "stack-dda": "",
+    "stack-ddha": "",
+    "stack-nna": "\u00D6",
+    "stack-ta": "\u00E5",
+    "stack-tha": "\u00AC",
+    "stack-tha_alt": "\u00A6",
+    "stack-da": "\u00B4",
+    "stack-dha": "\u00A8",
+    "stack-na": "\u00E9",
+    "stack-pa": "\u00DC",
+    "stack-pha": "\u00E6",
+    "stack-ba": "\u00C1",
+    "stack-bha": "\u00C7",
+    "stack-ma": "\u00AE",
+    "stack-ya": "",
+    "stack-ra": "",
+    "stack-la": "\u2019",
+    "stack-ha": "",
+    "stack-sa": "",
+    "stack-a": ""
+  },
+  "yapin": {
+    "yapin": "s",
+    "yapin_alt": "\u00DF",
+    "yapin-wasway": "R",
+    "yapin-hatoh": "Q",
+    "yapin-wasway-hatoh": "W"
+  },
+  "yayit": {
+    "yayit_narrow": "j",
+    "yayit_wide": "M",
+    "yayit_narrow_upper": "N",
+    "yayit_wide_upper": "B",
+    "yayit_narrow_lower": "\u0060",
+    "yayit_wide_lower": "\u007E",
+    "yayit_narrow_lower_upper": "",
+    "yayit_wide_lower_upper": "",
+    "yayit_narrow_wasway": "\u003E",
+    "yayit_wide_wasway": "\u003C",
+    "yayit_narrow_wasway_upper": "",
+    "yayit_wide_wasway_upper": "",
+    "yayit_narrow_u": "\u00FB",
+    "yayit_wide_u": "\u00EA",
+    "yayit_narrow_u_upper": "",
+    "yayit_wide_u_upper": ""
+  },
+  "wasway": {
+    "wasway": "G",
+    "wasway-hatoh": "T",
+    "wasway-hatoh_small": ""
+  },
+  "hatoh": {
+    "hatoh": "S",
+    "hatoh_small": "\u00A7",
+    "hatoh-uVowel": "I",
+    "hatoh-uuVowel": "\u00AA",
+    "hatoh-uVowel_tall": "",
+    "hatoh-uuVowel_tall": ""
+  },
+  "eVowel": {
+    "eVowel": "a"
+  },
+  "iVowel": {
+    "iVowel": "d",
+    "iVowel_anusvara_lig": "\u00F0",
+    "iiVowel": "D"
+  },
+  "aiVowel": {
+    "aiVowel": "J"
+  },
+  "uVowel": {
+    "uVowel": "k",
+    "uVowel_tall": "K",
+    "uuVowel": "l",
+    "uuVowel_tall": "L"
+  },
+  "anusvara": {
+    "anusvara": "H"
+  },
+  "aaVowel": {
+    "aaVowel_tall": "g",
+    "aaVowel-asat_tall": ":",
+    "aaVowel-asat": "",
+    "aaVowel": "m"
+  },
+  "dotBelow": {
+    "dotBelow": "U",
+    "dotBelow_alt": "Y",
+    "dotBelow_alt_alt": "h"
+  },
+  "asat": {
+    "asat": "f"
+  },
+  "visarga": {
+    "visarga": ";"
+  },
+  "virama": {
+    "virama": ""
+  }
 }

@@ -33,7 +33,7 @@ def build_pattern(pattern, data):
         node = pattern[:pattern.find('_')] if '_' in pattern else pattern
         or_expr = "|".join(
             [
-                x for x in
+                re.escape(x) for x in
                 sorted(set(data[node].values()), key=len, reverse=True) if x
             ]
         )

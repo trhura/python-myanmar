@@ -32,7 +32,7 @@ def get_supported_encodings():
     Get a list of encodings supported by ``converter`` module.
 
     >>> get_supported_encodings()
-    ['unicode', 'zawgyi']
+    ['unicode', 'zawgyi', 'wininnwa']
     """
     return ['unicode', 'zawgyi', 'wininnwa']
 
@@ -40,6 +40,7 @@ def get_supported_encodings():
 encoders = {
     "unicode": encodings.UnicodeEncoding(),
     "zawgyi": encodings.ZawgyiEncoding(),
+    "wininnwa": encodings.WininnwaEncoding(),
 }
 
 
