@@ -34,7 +34,7 @@ def get_supported_encodings():
     >>> get_supported_encodings()
     ['unicode', 'zawgyi']
     """
-    return ['unicode', 'zawgyi']
+    return ['unicode', 'zawgyi', 'wininnwa']
 
 
 encoders = {

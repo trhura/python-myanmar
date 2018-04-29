@@ -45,7 +45,7 @@ def romanize(string, system):
     >>> romanize("ကွန်ပျူတာ", IPA)
     'kʊ̀ɴpjùtà'
     >>> romanize("ပဒေသရာဇာ", MLC)
-    'pedazarājā'
+    'padezarājā'
     >>> romanize("ဘင်္ဂလားအော်", BGN_PCGN)
     'bin-gala-aw'
     """
