@@ -5,9 +5,10 @@ Credits
 Development Lead
 ----------------
 
-* Thura Hlaing <trhura@gmail.com>
+* Thura Hlaing <trhura at gmail.com>
 
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Set Kyar Wa Lar <setkyar16 at gmail.com>
+* Aye Chan Mon <polestar.mon20 at gmail.com>
