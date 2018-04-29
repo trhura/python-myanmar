@@ -22,6 +22,7 @@
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 # OR OTHER DEALINGS IN THE SOFTWARE.
 
+import re
 import json
 import pkgutil
 
@@ -47,14 +48,7 @@ class MLC():
 
     @classmethod
     def check_a_that_with_vowel(cls, roman):
-        for index, value in enumerate(roman):
-            if value == 'ʻ' and index != len(roman)-1:
-                arr = list(roman)
-                if arr[index+1] == "a":
-                    arr[index]=''
-                    arr[index-1], arr[index+1] = arr[index+1], arr[index-1]
-                    roman = "".join(arr);
-        return roman
+        return re.sub(r'(.)(ʻ)(a)', r'\3\1', roman)
 
     @classmethod
     def change_sa_to_za(cls, roman, prev):
