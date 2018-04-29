@@ -2,7 +2,7 @@ Transliteration
 ===============
 
 Transliterate Burmese text with latin characters. Currently, romanization based
-on BGN_PCGN and IPA systems are available.
+on BGN_PCGN, MLCTS, IPA systems are available.
 
 .. toctree::
    :maxdepth: 2
