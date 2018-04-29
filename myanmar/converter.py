@@ -52,6 +52,8 @@ def convert(text, fromenc, toenc):
     'အက်ိဳးတရား'
     >>> convert('ဉာဏ္ႀကီးရွင္', 'zawgyi', 'unicode')
     'ဉာဏ်ကြီးရှင်'
+    >>> convert('&[ef;', 'wininnwa', 'unicode')
+    'ရဟန်း'
     """
     if fromenc not in encoders:
         raise NotImplementedError("Unsupported encoding: %s" % fromenc)
