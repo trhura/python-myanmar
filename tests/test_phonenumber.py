@@ -27,6 +27,12 @@ def test_ooredoo():
     assert re.match(mp.ooredoo_re, "950954940") is not None
 
 
+def test_mytel():
+    assert re.match(mp.mytel_re, "691778993") is not None
+    assert re.match(mp.mytel_re, "791000481") is None
+    assert re.match(mp.mytel_re, "690000966") is not None
+
+
 def test_mpt():
     assert re.match(mp.mpt_re, "420090065") is not None
     assert re.match(mp.mpt_re, "5093449") is not None
