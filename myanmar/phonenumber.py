@@ -25,8 +25,8 @@
 
 import re
 
-mobile_code_re = "(0?9)"
-country_code_re = "(\\+?95)"
+mobile_code_re = "(09)"
+country_code_re = "(\\+?959)"
 
 ooredoo_re = "(?:9(?:7|6|5)\\d{7})$"
 mytel_re = "(?:6(?:9)\\d{7})$"
@@ -49,7 +49,7 @@ all_operators_re = "({0}|{1}|{2}|{3})".format(
 )
 
 mm_phone_re = re.compile(
-    "^({0}?{1})?{2}".format(country_code_re, mobile_code_re, all_operators_re)
+    "^({0}|{1})?{2}".format(country_code_re, mobile_code_re, all_operators_re)
 )
 
 
@@ -62,7 +62,7 @@ def is_valid_phonenumber(phonenumber):
     >>> is_valid_phonenumber('+959420028187')
     True
     >>> is_valid_phonenumber(9420028187)
-    True
+    False
     >>> is_valid_phonenumber(94200281870)
     False
     """
@@ -78,7 +78,7 @@ def normalize_phonenumber(phonenumber):
     959420028187
     >>> normalize_phonenumber('+959420028187')
     959420028187
-    >>> normalize_phonenumber(9420028187)
+    >>> normalize_phonenumber('420028187')
     959420028187
     """
     phonenumber = str(phonenumber).strip()
