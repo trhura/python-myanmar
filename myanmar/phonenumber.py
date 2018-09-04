@@ -37,7 +37,7 @@ mpt_4_series = "4\\d{7,8}"
 mpt_5_series = "5\\d{6}"
 mpt_6_series = "6\\d{6}"
 mpt_7_series = "7\\d{7}"
-mpt_8_series = "8\\d{6}"
+mpt_8_series = "8\\d{6,8}"
 mpt_9_series = "9(?:0|1|9)\\d{5,6}"
 mpt_re = "(?:{}|{}|{}|{}|{}|{}|{}|{})$".format(
     mpt_2_series, mpt_3_series, mpt_4_series, mpt_5_series, mpt_6_series,
