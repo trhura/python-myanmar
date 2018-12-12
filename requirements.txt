@@ -3,7 +3,6 @@ bumpversion==0.5.3
 coverage==4.5.1
 flake8==3.5.0
 mccabe==0.6.1
-pkg-resources==0.0.0
 pluggy==0.6.0
 py==1.7.0
 pycodestyle==2.3.1
