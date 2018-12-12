@@ -29,7 +29,7 @@ mobile_code_re = "(09)"
 country_code_re = "(\\+?959)"
 
 ooredoo_re = "(?:9(?:7|6|5)\\d{7})$"
-mytel_re = "(?:6(?:9)\\d{7})$"
+mytel_re = "(?:6(?:9|8)\\d{7})$"
 telenor_re = "(?:7(?:9|8|7|6)\\d{7})$"
 mpt_2_series = "2\\d{6,8}"
 mpt_3_series = "3\\d{7,8}"
