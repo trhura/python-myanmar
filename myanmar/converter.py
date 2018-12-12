@@ -130,7 +130,7 @@ def convert_syllable(syllable, fromenc, toenc):
         try:
             key = syllable[part]
             osyllable += toencoder.table[key]
-        except Exception as e:
+        except Exception:
             print(key, syllable)
 
     return osyllable
