@@ -5,8 +5,6 @@ Introduction
       :alt: Pypi Version
 .. image:: https://travis-ci.org/trhura/python-myanmar.svg
      :alt: Build Status
-.. image:: https://api.codeclimate.com/v1/badges/51163159d264485328a5/maintainability
-   :alt: Maintainability
 .. image:: https://api.codeclimate.com/v1/badges/51163159d264485328a5/test_coverage
    :alt: Test Coverage
 
