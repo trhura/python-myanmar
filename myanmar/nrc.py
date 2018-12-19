@@ -173,7 +173,7 @@ nation_dict = {'naing': 'n', 'pyu': 'p', 'ae': 'a',
 
 def remove_spaces(word):
     """
-    >>>remove_spaces('is a joke?')
+    >>> remove_spaces('is a joke?')
     isajoke?
     """
     word = word.replace(' ', '')
@@ -182,7 +182,7 @@ def remove_spaces(word):
 
 def remove_vowel(word):
     """
-    >>>remove_vowel('god is a girl')
+    >>> remove_vowel('god is a girl')
     gd s  grl
     """
     List = list(word)
@@ -222,7 +222,6 @@ def is_valid_nrc(nrc):
         city_name = match.group(2)
         nation = match.group(3)
         # number = match.group(4)
-        ccode_final = ccode[city_code]
 
         cname_no_space = remove_spaces(city_name)
         cname_final = remove_vowel(cname_no_space)
@@ -231,6 +230,7 @@ def is_valid_nrc(nrc):
         if city_code not in ccode:
             cname = None
         else:
+            ccode_final = ccode[city_code]
             if cname_final not in all_data[ccode_final]:
                 cname = None
             else:
@@ -243,9 +243,9 @@ def is_valid_nrc(nrc):
 
 def normalize_nrc(nrc):
     """
-    >>>normalize_nrc('9/pmn(n)123456')
+    >>> normalize_nrc('9/pmn(n)123456')
     9 pamana n 123456
-    >>>normalize_nrc('5/pmn(n)123456')
+    >>> normalize_nrc('5/pmn(n)123456')
     This nrc is not a valid myanmar nrc
     """
     nrc = nrc.lower()
