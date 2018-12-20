@@ -1,12 +1,30 @@
 # nrc.py - myanmar nrc validation & normalization module
 # coding: utf-8
 # The MIT License (MIT)
+# Copyright (c) 2018 Soe Zayar
 
-# Copyright 2018 Soe Zayar (soezayar019@gmail.com)
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+# OR OTHER DEALINGS IN THE SOFTWARE.
 
 import re
 
-all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
+all_township_names = {
+              1: {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'mtn': 'matana', 'khphn': 'khaphana', 'tnn': 'tanana',
                   'phkn': 'phakana', 'kmn': 'kamana', 'khlph': 'khalapha',
                   'mkhb': 'makhaba', 'msn': 'masana', 'mkt': 'makata',
@@ -16,21 +34,21 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'hgy': 'ahgaya', 'nmn': 'namana', 'pth': 'pataah',
                   'ykn': 'yakana', 'sbn': 'sabana', 'sln': 'salana',
                   'wmn': 'wamana'},
-            '2': {'blkh': 'balakha', 'dms': 'damasa', 'ssn': 'sasana',
+              2: {'blkh': 'balakha', 'dms': 'damasa', 'ssn': 'sasana',
                   'phsn': 'phanasa', 'http': 'htatapa', 'khsn': 'khasana',
                   'phls': 'phalasa', 'phys': 'phayasa', 'lkn': 'lakana',
                   'msn': 'masana', 'ytn': 'yatana'},
-            '3': {'lbn': 'labana', 'pkn': 'pakana', 'yyth': 'yayatha',
+              3: {'lbn': 'labana', 'pkn': 'pakana', 'yyth': 'yayatha',
                   'phhn': 'phaahna', 'bhn': 'baahna', 'phpn': 'phapana',
                   'kmm': 'kamama', 'kky': 'kakaya', 'kdn': 'kadana',
                   'ksk': 'kasaka', 'mwt': 'mawata', 'skl': 'sakala',
                   'msl': 'masala', 'ktkh': 'katakha', 'wlm': 'walama',
                   'bgl': 'bagala', 'lthn': 'lathana', 'thtn': 'thatana',
                   'thtk': 'thataka'},
-            '4': {'phln': 'phalana', 'hkhn': 'hakhana', 'kpl': 'kapala',
+              4: {'phln': 'phalana', 'hkhn': 'hakhana', 'kpl': 'kapala',
                   'mtn': 'matana', 'plw': 'palawa', 'ttn': 'tatana',
                   'httl': 'htatala', 'tzn': 'tazana'},
-            '5': {'hyt': 'ahyata', 'bmn': 'bamana', 'btl': 'batala',
+              5: {'hyt': 'ahyata', 'bmn': 'bamana', 'btl': 'batala',
                   'khn': 'khauna', 'khtn': 'khatana', 'hml': 'hamala',
                   'htn': 'ahtana', 'hhtn': 'ahhtana', 'kln': 'kalana',
                   'klht': 'kalahta', 'klw': 'kalawa', 'kbl': 'kabala',
@@ -46,14 +64,14 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'htkhn': 'htakhana', 'klth': 'kalatha', 'ngsn': 'ngasana',
                   'dkn': 'dakana', 'hmz': 'ahmaza', 'wln': 'walana',
                   'wthn': 'wathana', 'yn': 'yauna', 'ymp': 'yamapa'},
-            '6': {'bpn': 'bapana', 'htwn': 'htawana', 'kyy': 'kayaya',
+              6: {'bpn': 'bapana', 'htwn': 'htawana', 'kyy': 'kayaya',
                   'kpn': 'kapana', 'kthm': 'kathama', 'htht': 'hathata',
                   'khmk': 'khamaka', 'mml': 'mamala', 'kthn': 'kathana',
                   'ksn': 'kasana', 'mhn': 'maahna', 'lln': 'lalana',
                   'mmn': 'mamana', 'mhy': 'maahya', 'hmy': 'ahmaya',
                   'pln': 'palana', 'tthy': 'tathaya', 'thykh': 'thayakha',
                   'yphn': 'yaphana'},
-            '7': {'pkhn': 'pakhana', 'mwt': 'mawata', 'dn': 'dauna',
+              7: {'pkhn': 'pakhana', 'mwt': 'mawata', 'dn': 'dauna',
                   'kpk': 'kapaka', 'http': 'htatapa', 'kwn': 'kawana',
                   'kkn': 'kakana', 'ktkh': 'katakha', 'ktn': 'katana',
                   'lpt': 'lapata', 'mln': 'malana', 'mnyn': 'manyana',
@@ -64,7 +82,7 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'tngn': 'tangana', 'thnp': 'thanapa', 'thwt': 'thawata',
                   'thkn': 'thakana', 'wmn': 'wamana', 'yty': 'yataya',
                   'zkn': 'zakana'},
-            '8': {'hln': 'ahlana', 'mhtn': 'mahtana', 'khmn': 'khamana',
+              8: {'hln': 'ahlana', 'mhtn': 'mahtana', 'khmn': 'khamana',
                   'bkl': 'bakala', 'ggn': 'gagana', 'kmn': 'kamana',
                   'mkn': 'makana', 'mbn': 'mabana', 'mtn': 'matana',
                   'mln': 'malana', 'mmn': 'mamana', 'mthn': 'mathana',
@@ -74,7 +92,7 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'spw': 'sapawa', 'mys': 'mayasa', 'mgd': 'magada',
                   'mhtl': 'mahtala', 'ttk': 'tataka', 'thyn': 'thayana',
                   'htln': 'htalana', 'ynkh': 'yanakha', 'ysk': 'yasaka'},
-            '9': {'hmy': 'ahmaya', 'khms': 'khamasa', 'khmkh': 'khamakha',
+              9: {'hmy': 'ahmaya', 'khms': 'khamasa', 'khmkh': 'khamakha',
                   'hyt': 'ahyata', 'thty': 'thataya', 'khmz': 'khamaza',
                   'nnm': 'nanama', 'pkhm': 'pakhama', 'kmn': 'kamana',
                   'hmz': 'ahmaza', 'mnm': 'manama', 'khhz': 'khaahza',
@@ -96,13 +114,13 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                   'lwn': 'lawana', 'utth': 'utatha', 'pbth': 'pabatha',
                   'pmn': 'pamana', 'tkn': 'takana', 'zbth': 'zabatha',
                   'zyth': 'zayatha', 'hkhn': 'ahkhana'},
-            '10': {'bln': 'balana', 'khsn': 'khasana', 'kmy': 'kamaya',
+              10: {'bln': 'balana', 'khsn': 'khasana', 'kmy': 'kamaya',
                    'bhn': 'baahna', 'khtn': 'kahtana', 'hthtn': 'htahtana',
                    'kml': 'kamala', 'phpn': 'phapana', 'msn': 'masana',
                    'mlm': 'malama', 'mdn': 'madana', 'pmn': 'pamana',
                    'thphy': 'thaphaya', 'thhtn': 'thahtana',
                    'khzn': 'khazana', 'lmn': 'lamana', 'ymn': 'yamana'},
-            '11': {'btht': 'bathata', 'gmn': 'gamana', 'ktl': 'katala',
+              11: {'btht': 'bathata', 'gmn': 'gamana', 'ktl': 'katala',
                    'kphn': 'kaphana', 'ktn': 'katana', 'mmn': 'mamana',
                    'mtn': 'matana', 'tpw': 'tapawa', 'mn': 'mauna',
                    'mpn': 'mapana', 'ptn': 'patana', 'pnk': 'panaka',
@@ -110,7 +128,7 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                    'ytn': 'yatana', 'mpt': 'mapata', 'ytth': 'yatatha',
                    'lmt': 'lamata', 'stn': 'satana', 'thtn': 'thatana',
                    'mhn': 'maahna', 'tkn': 'takana'},
-            '12': {'hln': 'ahlana', 'bhn': 'bahana', 'btht': 'batahta',
+              12: {'hln': 'ahlana', 'bhn': 'bahana', 'btht': 'batahta',
                    'kkk': 'kakaka', 'dgn': 'dagana', 'dgs': 'dagasa',
                    'dln': 'dalana', 'dpn': 'dapana', 'dgy': 'dagaya',
                    'lmn': 'lamana', 'lthy': 'lathaya', 'lkn': 'lakana',
@@ -126,7 +144,7 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                    'tk': 'tauka', 'tkn': 'takana', 'tmn': 'tamana',
                    'thkt': 'thakata', 'thln': 'thalana', 'thgk': 'thagaka',
                    'thkhn': 'thakhana', 'ttn': 'tatana', 'ykn': 'yakana'},
-            '13': {'mmn': 'mamana', 'mpn': 'mapana', 'hpn': 'hapana',
+              13: {'mmn': 'mamana', 'mpn': 'mapana', 'hpn': 'hapana',
                    'thnn': 'thanana', 'ssn': 'sasana', 'thpn': 'thapana',
                    'knl': 'kalana', 'ktn': 'katana', 'kkn': 'kakana',
                    'mhtt': 'mahtata', 'khn': 'kahana', 'kkhn': 'kakhana',
@@ -146,7 +164,7 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                    'pln': 'palana', 'tkhl': 'takhala', 'tyn': 'tayana',
                    'tkn': 'takana', 'ktl': 'katala', 'ynyn': 'yanyana',
                    'yngn': 'yangana'},
-            '14': {'bkl': 'bakala', 'dnph': 'danapha', 'ddy': 'dadaya',
+              14: {'bkl': 'bakala', 'dnph': 'danapha', 'ddy': 'dadaya',
                    'kmn': 'kamana', 'pkkh': 'pakakha', 'htht': 'hathata',
                    'hgp': 'ahgapa', 'tmn': 'tamana', 'kkht': 'kakahta',
                    'kln': 'kalana', 'kkhn': 'kakhana', 'kkn': 'kakana',
@@ -162,43 +180,26 @@ all_data = {'1': {'bkn': 'bakana', 'pmn': 'pamana', 'htn': 'ahtana',
                    'zln': 'zalana'}
             }
 
-ccode = {'01': '1', '02': '2', '03': '3', '04': '4', '05': '5', '06': '6',
-         '07': '7', '08': '8', '09': '9', '1': '1', '2': '2', '3': '3',
-         '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
-         '10': '10', '11': '11', '12': '12', '13': '13', '14': '14'}
+ccode = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
 nation_dict = {'naing': 'n', 'pyu': 'p', 'ae': 'a',
                'n': 'n', 'p': 'p', 'e': 'e'}
 
 
-def remove_spaces(word):
-    """
-    >>> remove_spaces('is a joke?')
-    isajoke?
-    """
-    word = word.replace(' ', '')
-    return word
+"""
+Valid nrc format is ./...(.)......
+But with this program,
+user can write ',''.'' ' instead of '/'
+and ','''.'' ' instead of '()'
+"""
+city_code_re = r'(\d{1,2}?)\s*'
+township_name_re = r'\s*(\b\w.*\s*\w.*\s*\b)\s*'
+nation_re = r'(\b\w.*\s*\w*.*\s*\b)'
+number_re = r'\s*(\b[0-9][0-9]{5}\b)'
 
-
-def remove_vowel(word):
-    """
-    >>> remove_vowel('god is a girl')
-    gd s  grl
-    """
-    List = list(word)
-    List_copy = List[:]
-    Vowels = ['a', 'e', 'i', 'o', 'u']
-    for letter in List:
-        if letter.lower() in Vowels:
-            List_copy.remove(letter)
-    word = ''.join(List_copy)
-    return word
-
-
-nrc_re1 = r'(\d{1,2}?)\s*[ /.,]\s*(\b\w.*\s*\w.*\s*\b)\s*'
-nrc_re2 = r'[( .,](\b\w.*\s*\w*.*\s*\b)[,. )]\s*(\b[0-9][0-9]{5}\b)'
 nrc_format = re.compile(
-    nrc_re1 + nrc_re2
+    city_code_re + r'[/ .,]' + township_name_re +
+    r'[( .,]' + nation_re + r'[,. )]' + number_re
 )
 
 
@@ -216,56 +217,55 @@ def is_valid_nrc(nrc):
     match = nrc_format.search(nrc)
 
     if not match:
-        cname = None
+        raise RuntimeError(
+            "%s is not a valid Myanmar nrc number." % nrc)
+
+    city_code = int(match.group(1))
+    township_name = match.group(2)
+    nation = match.group(3)
+
+    cname_no_space = township_name.replace(' ', '')
+    cname_no_vowel = re.sub(r'[aeiou]', '', cname_no_space)
+
+    if city_code not in ccode:
+        return False
+
+    if cname_no_vowel not in all_township_names[city_code]:
+        return False
+
+    if nation not in nation_dict:
+        return False
     else:
-        city_code = match.group(1)
-        city_name = match.group(2)
-        nation = match.group(3)
-        # number = match.group(4)
-
-        cname_no_space = remove_spaces(city_name)
-        cname_final = remove_vowel(cname_no_space)
-        nation_no_space = remove_spaces(nation)
-
-        if city_code not in ccode:
-            cname = None
-        else:
-            ccode_final = ccode[city_code]
-            if cname_final not in all_data[ccode_final]:
-                cname = None
-            else:
-                if nation_no_space not in nation_dict:
-                    cname = None
-                else:
-                    cname = nrc
-    return cname is not None
+        nrc
+    return nrc is not None
 
 
 def normalize_nrc(nrc):
     """
-    >>> normalize_nrc('9/pmn(n)123456')
-    9 pamana n 123456
-    >>> normalize_nrc('5/pmn(n)123456')
+    >>> normalize_nrc('9/pmn(n)217289')
+    9 pamana n 217289
+    >>> normalize_nrc('5/pmn(n)217289')
     This nrc is not a valid myanmar nrc
     """
     nrc = nrc.lower()
     search = is_valid_nrc(nrc)
 
     if not search:
-        nrc_normalize = 'This nrc is not a valid myanmar nrc'
-    else:
-        match = nrc_format.search(nrc)
-        city_code = match.group(1)
-        city_name = match.group(2)
-        nation = match.group(3)
-        number = match.group(4)
-        ccode_final = ccode[city_code]
+        raise RuntimeError(
+            "%s is not a valid Myanmar nrc number." % nrc)
 
-        cname_no_space = remove_spaces(city_name)
-        cname_final = remove_vowel(cname_no_space)
-        nation_no_space = remove_spaces(nation)
+    match = nrc_format.search(nrc)
+    city_code = int(match.group(1))
+    township_name = match.group(2)
+    nation = match.group(3)
+    number = match.group(4)
 
-        nrc_first = ccode_final + ' ' + all_data[ccode_final][cname_final]
-        nrc_final = ' ' + nation_dict[nation_no_space] + ' ' + number
-        nrc_normalize = nrc_first + nrc_final
+    cname_no_space = township_name.replace(' ', '')
+    cname_no_vowel = re.sub(r'[aeiou]', '', cname_no_space)
+    nation_no_space = nation.replace(' ', '')
+
+    nrc_normalize = (str(city_code) + ' '
+                     + all_township_names[city_code][cname_no_vowel]
+                     + ' ' + nation_dict[nation_no_space] + ' ' + number)
+
     return nrc_normalize
