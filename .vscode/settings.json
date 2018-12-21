@@ -7,13 +7,8 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "files.exclude": {
-    ".eggs": true,
-    ".vscode": true,
-    ".tox": true,
     ".venv": true,
     "**/.ropeproject": true,
-    "**/.pytest_*": true,
-    "**/__pycache__": true,
-},
-"editor.detectIndentation": false
+    "**/.pytest_*": true
+  }
 }
