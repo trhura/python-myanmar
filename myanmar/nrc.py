@@ -25,7 +25,7 @@ import re
 import json
 import pkgutil
 
-township_name = json.loads(
+township_names = json.loads(
     pkgutil.get_data('myanmar', 'data/nrc_townships.json').decode('utf-8'))
 
 ccode = range(1, 14)
