@@ -1,5 +1,5 @@
-Myanmar National Registration
-============
+Myanmar NRC
+===========
 
 Validation and normalization for Myanmar NRC number.
 

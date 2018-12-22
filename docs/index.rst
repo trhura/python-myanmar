@@ -9,8 +9,8 @@
    converter
    romanization
    phonenumber
-   authors
    nrc
+   authors
 
 Indices and tables
 ==================
