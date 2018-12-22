@@ -10,6 +10,7 @@
    romanization
    phonenumber
    authors
+   nrc
 
 Indices and tables
 ==================
