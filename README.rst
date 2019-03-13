@@ -10,7 +10,7 @@ Introduction
     :alt: Pypi Version
 
 This package contains a variety of python modules for Myanmar text proccesing, such as *syllabification*,
-*romanization*, *encoding conversion*, etc. Only python3 is currently supported at the moment.
+*romanization*, *encoding conversion*, *nrc validation* etc. Only python3 is currently supported at the moment.
 
 Installation
 ============
