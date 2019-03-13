@@ -104,18 +104,56 @@ SYMBOL_COMPLETED = chr(0x104d)
 SYMBOL_AFOREMENTIONED = chr(0x104e)
 SYMBOL_GENITIVE = chr(0x104f)
 
-ismyanmar = lambda c: (c >= LETTER_KA and c <= SYMBOL_GENITIVE)  # noqa
-ismyconsonant = lambda c: (c >= LETTER_KA and c <= LETTER_A) or c == LETTER_U # noqa
-ismymedial = lambda c: (c >= SIGN_MEDIAL_YA and c <= SIGN_MEDIAL_HA)  # noqa
-ismyvowel = lambda c: (c >= VOWEL_SIGN_TALL_AA and c <= VOWEL_SIGN_AI)  # noqa
-ismytone = lambda c: (c == SIGN_DOT_BELOW or c == SIGN_VISARGA)  # noqa
-ismydigit = lambda c: (c >= DIGIT_ZERO and c <= DIGIT_NINE)  # noqa
-ismypunct = lambda c: (c == SIGN_LITTLE_SECTION or c == SIGN_SECTION)  # noqa
-ismydiac = lambda c: (ismyvowel(c) or ismymedial(c) or ismytone(c) or c == SIGN_ANUSVARA or c == SIGN_ASAT) # noqa
-ismyindependvowel = lambda c: (c >= LETTER_I and c <= LETTER_E) or c == LETTER_O or c == LETTER_AU # noqa
-ismyindependsymbol = lambda c: (c >= SYMBOL_LOCATIVE and c <= SYMBOL_GENITIVE) # noqa
-ismyletter = lambda c: (ismyconsonant(c) or ismyindependvowel(c) or c == SYMBOL_AFOREMENTIONED) # noqa
-ismymark = lambda c:(ismymedial(c) or ismyvowel(c) or (c >= SIGN_ANUSVARA and c <= SIGN_ASAT)) # noqa
+
+def ismyanmar(c):
+    return (c >= LETTER_KA and c <= SYMBOL_GENITIVE)
+
+
+def ismyconsonant(c):
+    return (c >= LETTER_KA and c <= LETTER_A) or c == LETTER_U
+
+
+def ismymedial(c):
+    return (c >= SIGN_MEDIAL_YA and c <= SIGN_MEDIAL_HA)
+
+
+def ismyvowel(c):
+    return (c >= VOWEL_SIGN_TALL_AA and c <= VOWEL_SIGN_AI)
+
+
+def ismytone(c):
+    return (c == SIGN_DOT_BELOW or c == SIGN_VISARGA)
+
+
+def ismydigit(c):
+    return (c >= DIGIT_ZERO and c <= DIGIT_NINE)
+
+
+def ismypunct(c):
+    return (c == SIGN_LITTLE_SECTION or c == SIGN_SECTION)
+
+
+def ismydiac(c):
+    return (ismyvowel(c) or ismymedial(c) or ismytone(c) or c == SIGN_ANUSVARA
+            or c == SIGN_ASAT)
+
+
+def ismyindependvowel(c):
+    return (c >= LETTER_I and c <= LETTER_E) or c == LETTER_O or c == LETTER_AU
+
+
+def ismyindependsymbol(c):
+    return (c >= SYMBOL_LOCATIVE and c <= SYMBOL_GENITIVE)
+
+
+def ismyletter(c):
+    return (ismyconsonant(c) or ismyindependvowel(c)
+            or c == SYMBOL_AFOREMENTIONED)
+
+
+def ismymark(c):
+    return (ismymedial(c) or ismyvowel(c)
+            or (c >= SIGN_ANUSVARA and c <= SIGN_ASAT))
 
 
 def MorphoSyllableBreak(text, encoding):
@@ -151,7 +189,7 @@ def MorphoSyllableBreak(text, encoding):
 
         yield syllable
 
-    raise StopIteration
+    return
 
 
 def PhonemicSyllableBreak(text, encoding):
@@ -187,4 +225,4 @@ def PhonemicSyllableBreak(text, encoding):
 
         yield syllable
 
-    raise StopIteration
+    return
