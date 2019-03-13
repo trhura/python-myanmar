@@ -22,8 +22,7 @@ before_script:
 
 # command to run tests, e.g. python setup.py test
 script:
-  - tox
-  - PYTHONPATH=. py.test --cov=. tests/
+  - PYTHONPATH=. py.test --doctest-modules --cov=. tests/ myanmar/
 
 after_script:
   - coverage xml
