@@ -5,9 +5,11 @@ env:
     - CC_TEST_REPORTER_ID=a1045acd9a066edb2fbc710e8618d74f4865f838ddf6b0d469b4f91774ba6958
 
 language: python
+sudo: required
+dist: xenial
 python:
-  - 3.6
-  - 3.7
+  - "3.6"
+  - "3.7"
 
 install: pip install -r requirements.txt
 
