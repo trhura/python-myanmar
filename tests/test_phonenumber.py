@@ -3,44 +3,44 @@ from myanmar import phonenumber as mp
 
 
 def test_with_mobile_code():
-    assert re.match(mp.mobile_code_re, "09") is not None
-    assert re.match(mp.mobile_code_re, "9") is None
-    assert re.match(mp.mobile_code_re, "") is None
+    assert re.match(mp.mobile_code, "09") is not None
+    assert re.match(mp.mobile_code, "9") is None
+    assert re.match(mp.mobile_code, "") is None
 
 
 def test_with_country_code():
-    assert re.match(mp.country_code_re, "+959") is not None
-    assert re.match(mp.country_code_re, "959") is not None
-    assert re.match(mp.country_code_re, "") is None
+    assert re.match(mp.country_code, "+959") is not None
+    assert re.match(mp.country_code, "959") is not None
+    assert re.match(mp.country_code, "") is None
 
 
 def test_telenor():
-    assert re.match(mp.telenor_re, "791000481") is not None
-    assert re.match(mp.telenor_re, "763619515") is not None
-    assert re.match(mp.telenor_re, "991000481") is None
+    assert re.match(mp.telenor, "791000481") is not None
+    assert re.match(mp.telenor, "763619515") is not None
+    assert re.match(mp.telenor, "991000481") is None
 
 
 def test_ooredoo():
-    assert re.match(mp.ooredoo_re, "962038186") is not None
-    assert re.match(mp.ooredoo_re, "791000481") is None
-    assert re.match(mp.ooredoo_re, "763619515") is None
-    assert re.match(mp.ooredoo_re, "950954940") is not None
+    assert re.match(mp.ooredoo, "962038186") is not None
+    assert re.match(mp.ooredoo, "791000481") is None
+    assert re.match(mp.ooredoo, "763619515") is None
+    assert re.match(mp.ooredoo, "950954940") is not None
 
 
 def test_mytel():
-    assert re.match(mp.mytel_re, "691778993") is not None
-    assert re.match(mp.mytel_re, "791000481") is None
-    assert re.match(mp.mytel_re, "690000966") is not None
-    assert re.match(mp.mytel_re, "683004063") is not None
-    assert re.match(mp.mytel_re, "783004063") is None
+    assert re.match(mp.mytel, "691778993") is not None
+    assert re.match(mp.mytel, "791000481") is None
+    assert re.match(mp.mytel, "690000966") is not None
+    assert re.match(mp.mytel, "683004063") is not None
+    assert re.match(mp.mytel, "783004063") is None
 
 
 def test_mpt():
-    assert re.match(mp.mpt_re, "420090065") is not None
-    assert re.match(mp.mpt_re, "5093449") is not None
-    assert re.match(mp.mpt_re, "898941022") is not None
-    assert re.match(mp.mpt_re, "5093449") is not None
-    assert re.match(mp.mpt_re, "763619515") is None
+    assert re.match(mp.mpt, "420090065") is not None
+    assert re.match(mp.mpt, "5093449") is not None
+    assert re.match(mp.mpt, "898941022") is not None
+    assert re.match(mp.mpt, "5093449") is not None
+    assert re.match(mp.mpt, "763619515") is None
 
 
 def test_all_operators_re():
@@ -83,3 +83,10 @@ def test_normalize_mm_phone_number():
     assert mp.normalize_phonenumber("959972991100") == 959972991100
     assert mp.normalize_phonenumber("09972991100") == 959972991100
     assert mp.normalize_phonenumber("972991100") == 959972991100
+
+
+def test_check_operator():
+    assert mp.check_operator("+959262624625") is mp.Operator.Mpt
+    assert mp.check_operator("09970000234") is mp.Operator.Ooredoo
+    assert mp.check_operator("09770563818") is mp.Operator.Telenor
+    assert mp.check_operator("691877022") is mp.Operator.Mytel
