@@ -111,12 +111,11 @@ def normalize_phonenumber(phonenumber):
 def get_phone_operator(phonenumber):
     """
     Get operator type for a given phonenumber.
+
     >>> get_phone_operator('+959262624625')
     <Operator.Mpt: 'MPT'>
-
     >>> get_phone_operator('09970000234')
     <Operator.Ooredoo: 'Ooredoo'>
-
     >>> get_phone_operator('123456789')
     <Operator.Unknown: 'Unknown'>
     """
