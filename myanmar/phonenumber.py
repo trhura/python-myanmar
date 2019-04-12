@@ -67,6 +67,7 @@ class Operator(Enum):
     Ooredoo = "Oredoo"
     Telenor = "Telenor"
     Mytel = "Mytel"
+    Unknown = "Unknown"
 
 
 def is_valid_phonenumber(phonenumber):
@@ -108,9 +109,17 @@ def normalize_phonenumber(phonenumber):
     return int(phonenumber)
 
 
-def check_operator(phonenumber):
+def get_ph_operator(phonenumber):
     """
-    Check operator for a given phonenumber
+    Get operator type for a given phonenumber.
+    >>> get_ph_operator('+959262624625')
+    Operator.Mpt
+
+    >>> get_ph_operator('09970000234')
+    Operator.Ooredoo
+
+    >>> get_ph_operator('123456789')
+    Operator.Unknown
     """
     phonenumber = str(phonenumber).strip()
 
@@ -122,3 +131,4 @@ def check_operator(phonenumber):
         return (Operator.Telenor)
     if mytel_re.match(phonenumber):
         return (Operator.Mytel)
+    return (Operator.Unknown)
