@@ -64,7 +64,7 @@ telenor_re = re.compile("^({0}|{1})?{2}".format(country_code, mobile_code,
 
 class Operator(Enum):
     Mpt = "MPT"
-    Ooredoo = "Oredoo"
+    Ooredoo = "Ooredoo"
     Telenor = "Telenor"
     Mytel = "Mytel"
     Unknown = "Unknown"
@@ -113,13 +113,13 @@ def get_ph_operator(phonenumber):
     """
     Get operator type for a given phonenumber.
     >>> get_ph_operator('+959262624625')
-    Operator.Mpt
+    <Operator.Mpt: 'MPT'>
 
     >>> get_ph_operator('09970000234')
-    Operator.Ooredoo
+    <Operator.Ooredoo: 'Ooredoo'>
 
     >>> get_ph_operator('123456789')
-    Operator.Unknown
+    <Operator.Unknown: 'Unknown'>
     """
     phonenumber = str(phonenumber).strip()
 
