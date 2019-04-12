@@ -40,10 +40,9 @@ mpt_6_series = "6\\d{6}"
 mpt_7_series = "7\\d{7}"
 mpt_8_series = "8\\d{6,8}"
 mpt_9_series = "9(?:0|1|9)\\d{5,6}"
-mpt = "(?:{}|{}|{}|{}|{}|{}|{}|{})$".format(mpt_2_series, mpt_3_series,
-                                            mpt_4_series, mpt_5_series,
-                                            mpt_6_series, mpt_7_series,
-                                            mpt_8_series, mpt_9_series)
+mpt = "(?:{}|{}|{}|{}|{}|{}|{}|{})$".format(
+    mpt_2_series, mpt_3_series, mpt_4_series, mpt_5_series, mpt_6_series,
+    mpt_7_series, mpt_8_series, mpt_9_series)
 
 all_operators_re = "({0}|{1}|{2}|{3})".format(ooredoo, telenor, mpt, mytel)
 
@@ -101,24 +100,24 @@ def normalize_phonenumber(phonenumber):
     phonenumber = str(phonenumber).strip()
     match = mm_phone_re.match(phonenumber)
     if not match:
-        raise RuntimeError("%s is not a valid Myanmar phonenumber." %
-                           phonenumber)
+        raise RuntimeError(
+            "%s is not a valid Myanmar phonenumber." % phonenumber)
 
     phonenumber = match.groups()[3]
     phonenumber = '959' + phonenumber
     return int(phonenumber)
 
 
-def get_ph_operator(phonenumber):
+def get_phone_operator(phonenumber):
     """
     Get operator type for a given phonenumber.
-    >>> get_ph_operator('+959262624625')
+    >>> get_phone_operator('+959262624625')
     <Operator.Mpt: 'MPT'>
 
-    >>> get_ph_operator('09970000234')
+    >>> get_phone_operator('09970000234')
     <Operator.Ooredoo: 'Ooredoo'>
 
-    >>> get_ph_operator('123456789')
+    >>> get_phone_operator('123456789')
     <Operator.Unknown: 'Unknown'>
     """
     phonenumber = str(phonenumber).strip()

@@ -86,8 +86,8 @@ def test_normalize_mm_phone_number():
 
 
 def test_check_operator():
-    assert mp.get_ph_operator("+959262624625") is mp.Operator.Mpt
-    assert mp.get_ph_operator("09970000234") is mp.Operator.Ooredoo
-    assert mp.get_ph_operator("09770563818") is mp.Operator.Telenor
-    assert mp.get_ph_operator("691877022") is mp.Operator.Mytel
-    assert mp.get_ph_operator("123456789") is mp.Operator.Unknown
+    assert mp.get_phone_operator("+959262624625") is mp.Operator.Mpt
+    assert mp.get_phone_operator("09970000234") is mp.Operator.Ooredoo
+    assert mp.get_phone_operator("09770563818") is mp.Operator.Telenor
+    assert mp.get_phone_operator("691877022") is mp.Operator.Mytel
+    assert mp.get_phone_operator("123456789") is mp.Operator.Unknown
