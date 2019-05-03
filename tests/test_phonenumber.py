@@ -91,3 +91,8 @@ def test_check_operator():
     assert mp.get_phone_operator("09770563818") is mp.Operator.Telenor
     assert mp.get_phone_operator("691877022") is mp.Operator.Mytel
     assert mp.get_phone_operator("123456789") is mp.Operator.Unknown
+
+
+def test_landline_operator():
+    assert mp.get_landline_operator('+95674601234') is "MyanmarAPN"
+    assert mp.get_landline_operator('9514244321') is "FortuneInternational"

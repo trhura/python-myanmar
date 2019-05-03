@@ -25,6 +25,7 @@
 
 import re
 from enum import Enum
+from myanmar import _landlines
 
 mobile_code = "(09)"
 country_code = "(\\+?959)"
@@ -130,3 +131,23 @@ def get_phone_operator(phonenumber):
     if mytel_re.match(phonenumber):
         return (Operator.Mytel)
     return (Operator.Unknown)
+
+
+def get_landline_operator(phonenumber):
+    """
+    Get operator type for a given landline number.
+
+    >>> get_landline_operator('+95674601234')
+    'MyanmarAPN'
+    >>> get_landline_operator('9524261234')
+    'MyanmarSpeedNet'
+    >>> get_landline_operator('14681234')
+    'VoIPMyanmarGroup'
+    """
+    phonenumber = str(phonenumber).strip()
+
+    for pattern, operator in _landlines._patterns:
+        if pattern.match(phonenumber):
+            return operator
+
+    return "Unknown"
