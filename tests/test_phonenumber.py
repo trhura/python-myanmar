@@ -33,6 +33,7 @@ def test_mytel():
     assert re.match(mp.mytel, "690000966") is not None
     assert re.match(mp.mytel, "683004063") is not None
     assert re.match(mp.mytel, "783004063") is None
+    assert re.match(mp.mytel, "672623657") is not None
 
 
 def test_mpt():
