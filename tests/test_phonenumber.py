@@ -15,8 +15,16 @@ def test_with_country_code():
 
 
 def test_telenor():
-    assert re.match(mp.telenor, "791000481") is not None
-    assert re.match(mp.telenor, "763619515") is not None
+    numbers = [
+        "791000481",
+        "781000481",
+        "771000001",
+        "763619515",
+        "750000001",
+        "759000001"
+    ]
+    for each in numbers:
+        assert re.match(mp.telenor, each) is not None
     assert re.match(mp.telenor, "991000481") is None
 
 
