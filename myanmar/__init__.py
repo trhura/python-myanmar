@@ -23,6 +23,6 @@
 
 __author__ = 'Thura Hlaing'
 __email__ = 'trhura@gmail.com'
-__version__ = '1.8.1'
+__version__ = '1.9.0'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2018 Thura Hlaing'
