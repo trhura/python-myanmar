@@ -29,6 +29,7 @@ def test_telenor():
 
 
 def test_ooredoo():
+    assert re.match(mp.ooredoo, "988833358") is not None
     assert re.match(mp.ooredoo, "962038186") is not None
     assert re.match(mp.ooredoo, "791000481") is None
     assert re.match(mp.ooredoo, "763619515") is None

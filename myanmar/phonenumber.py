@@ -30,7 +30,7 @@ from myanmar import _landlines
 mobile_code = "(09)"
 country_code = "(\\+?959)"
 
-ooredoo = "(?:9(?:7|6|5)\\d{7})$"
+ooredoo = "(?:9(?:9|8|7|6|5)\\d{7})$"
 mytel = "(?:6(?:9|8|7|6|5)\\d{7})$"
 telenor = "(?:7(?:9|8|7|6|5)\\d{7})$"
 mpt_2_series = "2\\d{6,8}"
