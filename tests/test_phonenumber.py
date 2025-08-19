@@ -104,5 +104,5 @@ def test_check_operator():
 
 
 def test_landline_operator():
-    assert mp.get_landline_operator('+95674601234') is "MyanmarAPN"
-    assert mp.get_landline_operator('9514244321') is "FortuneInternational"
+    assert mp.get_landline_operator('+95674601234') == "MyanmarAPN"
+    assert mp.get_landline_operator('9514244321') == "FortuneInternational"
